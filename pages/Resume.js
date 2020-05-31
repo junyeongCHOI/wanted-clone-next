@@ -2,10 +2,12 @@ import React from "react";
 import Head from "next/head";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { loginModalOn } from "../actions";
 import LayoutUser from "../components/LayoutUser";
-import ResumeTop from "../components/resume/ResumeTop";
+import ResumeTop from "../components/Resume/ResumeTop";
+import ResumeBottom from "../components/Resume/ResumeBottom";
 
-const Resume = () => {
+const Resume = ({ loginModalOn }) => {
   const checkToken = () => {
     const token = localStorage.getItem("loginToken");
 
@@ -24,6 +26,7 @@ const Resume = () => {
       <LayoutUser>
         <ResumeWrap>
           <ResumeTop checkToken={checkToken} />
+          <ResumeBottom checkToken={checkToken} />
         </ResumeWrap>
       </LayoutUser>
     </>
