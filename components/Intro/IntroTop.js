@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { homeIntroSmall } from "../../config";
 
-const IntroTop = () => {
+const IntroTop = ({ loginModalOn }) => {
   return (
     <IntroWrap>
       <Go />
       <MainTitle>요즘 이직, 원티드</MainTitle>
       <SubTitle>나에게 딱 맞는 회사, 원티드에서 찾아보세요!</SubTitle>
-      <StartBtn>지금 시작하기</StartBtn>
+      <StartBtn onClick={loginModalOn}>지금 시작하기</StartBtn>
     </IntroWrap>
   );
 };

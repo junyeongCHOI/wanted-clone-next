@@ -6,8 +6,8 @@ import NavMenu from "./NavMenu";
 import UserSide from "./UserSide";
 
 const menuMock = [
-  { title: "탐색", link: "/wdlist" },
-  { title: "이력서", link: "/resume" },
+  { title: "탐색", link: "/Wdlist" },
+  { title: "이력서", link: "/Resume" },
   { title: "매치업", link: "/matchup" },
 ];
 

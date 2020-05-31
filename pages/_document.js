@@ -1,4 +1,4 @@
-import Document from "next/document";
+import Document, { Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 import { Globalstyle } from "../components/GlobalStyle";
 
@@ -32,5 +32,38 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal();
     }
+  }
+
+  render() {
+    return (
+      <html>
+        <Head>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"
+          />
+          <meta name="description" content="wanted-clone-with-nextjs" />
+          <meta name="keywords" content="nextjs,static,website" />
+          <link
+            rel="shortcut icon"
+            href="../static/favicon.ico"
+            type="image/x-icon"
+          />
+          <link
+            rel="stylesheet"
+            href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"
+          />
+          <script
+            src="https://kit.fontawesome.com/64e36ccb37.js"
+            crossOrigin="anonymous"
+          />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </html>
+    );
   }
 }

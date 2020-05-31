@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { StartBtn } from "./IntroTop";
 import { homeIntroSmall } from "../../config";
 
-const IntroBottom = () => {
+const IntroBottom = ({ loginModalOn }) => {
   return (
     <IntroBottomWrap>
       <h1>나에게 딱 맞는 회사 찾기</h1>
@@ -53,7 +53,7 @@ const IntroBottom = () => {
           />
         </BrandImgs>
       </Brands>
-      <StartBtn>지금 시작하기</StartBtn>
+      <StartBtn onClick={loginModalOn}>지금 시작하기</StartBtn>
     </IntroBottomWrap>
   );
 };
