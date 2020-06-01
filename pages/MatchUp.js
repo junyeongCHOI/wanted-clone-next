@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { loginModalOn } from "../actions";
+import Head from "next/head";
+import LayoutUser from "../components/LayoutUser";
 import MatchUpTop from "../components/Matchup/MatchUpTop";
 import MatchUpCards from "../components/Matchup/MatchUpCards";
 import MatchUpSlide from "../components/Matchup/MatchUpSlide";
@@ -19,12 +21,19 @@ const MatchUp = ({ loginModalOn }) => {
   };
 
   return (
-    <MatchUpWrap>
-      <MatchUpTop checkToken={checkToken} />
-      <MatchUpCards />
-      <MatchUpSlide />
-      <MatchUpBottom checkToken={checkToken} />
-    </MatchUpWrap>
+    <>
+      <Head>
+        <title>MatchUp, 이제 지원하지 말고 제안 받으세요!</title>
+      </Head>
+      <LayoutUser>
+        <MatchUpWrap>
+          <MatchUpTop checkToken={checkToken} />
+          <MatchUpCards />
+          <MatchUpSlide />
+          <MatchUpBottom checkToken={checkToken} />
+        </MatchUpWrap>
+      </LayoutUser>
+    </>
   );
 };
 

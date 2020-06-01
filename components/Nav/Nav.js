@@ -6,9 +6,9 @@ import NavMenu from "./NavMenu";
 import UserSide from "./UserSide";
 
 const menuMock = [
-  { title: "탐색", link: "/Wdlist" },
+  { title: "탐색", link: "/WdList" },
   { title: "이력서", link: "/Resume" },
-  { title: "매치업", link: "/matchup" },
+  { title: "매치업", link: "/MatchUp" },
 ];
 
 const Nav = ({ router }) => {
@@ -25,6 +25,14 @@ const Nav = ({ router }) => {
             <Link href="/">
               <a>
                 <NavMenu title="홈" />
+              </a>
+            </Link>
+            <Link key={menuMock[0].title} href={menuMock[0].link}>
+              <a>
+                <NavMenu
+                  title={menuMock[0].title}
+                  isOn={router.asPath === menuMock[0].link ? true : false}
+                />
               </a>
             </Link>
           </HomeMenu>
@@ -90,9 +98,9 @@ const NavMenuWrap = styled.div`
 const HomeMenu = styled.div`
   display: none;
   @media only screen and (max-width: ${navSmall}) {
-    display: unset;
+    display: flex;
     a {
-      display: unset;
+      display: flex;
     }
   }
 `;

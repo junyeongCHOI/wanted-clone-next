@@ -24,7 +24,10 @@ const LoginModal = ({ loginModalOff, registerModalOn }) => {
 
   const submitEmail = (e) => {
     e.preventDefault();
-    if (!isValuable) {
+    if (value === "") {
+      return;
+    } else if (isValuable) {
+      // Post 응답이 회원이 아닐 때, 회원가입으로 넘어가고 회원이면 로그인.
       registerModalOn();
       loginModalOff();
     }
