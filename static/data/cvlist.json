@@ -1,0 +1,28 @@
+{
+  "cvlist": [
+    {
+      "id": 12,
+      "type": "file",
+      "title": "JunYeong CHOI Resume.pdf",
+      "date": "2020.06.01",
+      "state": "첨부 완료",
+      "download_link": "/"
+    },
+    {
+      "id": 124,
+      "type": "post",
+      "title": "최준영 3",
+      "date": "2020.06.01",
+      "state": "작성 중",
+      "download_link": "/"
+    },
+    {
+      "id": 11112,
+      "type": "post",
+      "title": "최준영 2",
+      "date": "2020.06.01",
+      "state": "작성 완료",
+      "download_link": "/"
+    }
+  ]
+}

@@ -6,6 +6,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "babel-plugin-styled-components": "^1.10.7",
+    "express": "^4.17.1",
     "google-maps-react": "^2.0.6",
     "next": "^9.4.4",
     "next-redux-wrapper": "^6.0.0",

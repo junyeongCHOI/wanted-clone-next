@@ -1,9 +1,21 @@
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { loginModalOn } from "../../actions";
 import { navSmall } from "../../config";
 
 const UserSide = ({ loginModalOn }) => {
+  const [userImg, setuserImg] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setuserImg(
+        "https://lh3.googleusercontent.com/a-/AOh14GhSRRCqTFvxUCuImCg26qjZur0TW9YFY83Pi0PwVg=s96-c"
+      );
+    }
+  }, []);
+
   return (
     <>
       <UserSideWrap>
@@ -11,7 +23,11 @@ const UserSide = ({ loginModalOn }) => {
           <i className="xi-search" />
         </Search>
         <Line />
-        <RegNLogin onClick={loginModalOn}>회원가입/로그인</RegNLogin>
+        {userImg ? (
+          <UserImg style={{ backgroundImage: `url(${userImg})` }} />
+        ) : (
+          <RegNLogin onClick={loginModalOn}>회원가입/로그인</RegNLogin>
+        )}
         <Service>기업 서비스</Service>
       </UserSideWrap>
       <SmallUserSideWrap>
@@ -86,4 +102,13 @@ const Register = styled.div`
   border-radius: 3px;
   margin-right: 10px;
   line-height: 34px;
+`;
+
+const UserImg = styled.div`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  margin-right: 10px;
 `;

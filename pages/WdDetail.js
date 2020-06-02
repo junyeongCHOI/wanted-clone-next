@@ -47,7 +47,7 @@ const WdDetail = ({ data, loginModalOn }) => {
               />
               <WdDetailBottom data={data.info} />
             </Article>
-            <WdDetailRightSide reward={data.reward} />
+            <WdDetailRightSide reward={data.reward} applyBtn={applyBtn} />
           </BodyWrap>
           <WdDetailRecommend list={data.more} />
         </WdDetailWrap>
@@ -98,6 +98,7 @@ const BodyWrap = styled.div`
 
 const SubmitBtnMobile = styled.div`
   position: fixed;
+  display: none;
   bottom: 0;
   left: 0;
   right: 0;
@@ -111,4 +112,7 @@ const SubmitBtnMobile = styled.div`
   line-height: 50px;
   color: #fff;
   text-align: center;
+  @media only screen and (max-width: ${wdDetailSmall}) {
+    display: block;
+  }
 `;

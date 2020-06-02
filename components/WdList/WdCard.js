@@ -1,31 +1,34 @@
 import React from "react";
 import styled from "styled-components";
-import Router from "next/router";
+import Link from "next/link";
 import { seekSmall } from "../../config";
 
 const WdCard = ({ item }) => {
-  const goDetail = () => {
-    Router.push(`/WdDetail?id=${item.item_id}`);
-  };
-
   return (
-    <WdCardWrap onClick={goDetail}>
-      <HeaderImg url={item.item_image} />
-      <BodyContent>
-        <BodyTitle>
-          {item.item_title.length > 35
-            ? item.item_title.slice(0, 35) + "..."
-            : item.item_title}
-        </BodyTitle>
-        <BodyInfo>
-          {item.item_company}
-          <br />
-          {item.item_location}
-          <Dot>.</Dot>
-          {item.item_country}
-        </BodyInfo>
-        <Reward>채용보상금 {item.item_reward}</Reward>
-      </BodyContent>
+    <WdCardWrap>
+      <Link
+        as={`/WdDetail/${item.item_id}`}
+        href={`/WdDetail?id=${item.item_id}`}
+      >
+        <a>
+          <HeaderImg url={item.item_image} />
+          <BodyContent>
+            <BodyTitle>
+              {item.item_title.length > 35
+                ? item.item_title.slice(0, 35) + "..."
+                : item.item_title}
+            </BodyTitle>
+            <BodyInfo>
+              {item.item_company}
+              <br />
+              {item.item_location}
+              <Dot>.</Dot>
+              {item.item_country}
+            </BodyInfo>
+            <Reward>채용보상금 {item.item_reward}</Reward>
+          </BodyContent>
+        </a>
+      </Link>
     </WdCardWrap>
   );
 };

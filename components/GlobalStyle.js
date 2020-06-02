@@ -53,4 +53,8 @@ a {
     all: unset;
     box-sizing: border-box;
 }
+textarea {
+    all:unset;
+    box-sizing: border-box;
+}
 `;

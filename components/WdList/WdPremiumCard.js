@@ -1,36 +1,39 @@
 import React from "react";
 import styled from "styled-components";
-import Router from "next/router";
+import Link from "next/link";
 import { seekSmall } from "../../config";
 
 const WdPremiumCard = ({ item, widthRef }) => {
-  const goDetail = () => {
-    Router.push(`/WdDetail?id=${item.item_id}`);
-  };
-
   return (
-    <WdPremiumCardWrap ref={widthRef} onClick={goDetail}>
-      <WdPremiumCardContainer>
-        <ImageWrap>
-          <MainImage url={item.item_image} />
-        </ImageWrap>
-        <BodyContent>
-          <Logo url={item.item_logo} />
-          <BodyTitle>
-            {item.item_title.length > 35
-              ? item.item_title.slice(0, 35) + "..."
-              : item.item_title}
-          </BodyTitle>
-          <BodyInfo>
-            {item.item_company}
-            <br />
-            {item.item_location}
-            <Dot>.</Dot>
-            {item.item_country}
-          </BodyInfo>
-          <Reward>채용보상금 {item.item_reward}</Reward>
-        </BodyContent>
-      </WdPremiumCardContainer>
+    <WdPremiumCardWrap ref={widthRef}>
+      <Link
+        as={`/WdDetail/${item.item_id}`}
+        href={`/WdDetail?id=${item.item_id}`}
+      >
+        <a>
+          <WdPremiumCardContainer>
+            <ImageWrap>
+              <MainImage url={item.item_image} />
+            </ImageWrap>
+            <BodyContent>
+              <Logo url={item.item_logo} />
+              <BodyTitle>
+                {item.item_title.length > 35
+                  ? item.item_title.slice(0, 35) + "..."
+                  : item.item_title}
+              </BodyTitle>
+              <BodyInfo>
+                {item.item_company}
+                <br />
+                {item.item_location}
+                <Dot>.</Dot>
+                {item.item_country}
+              </BodyInfo>
+              <Reward>채용보상금 {item.item_reward}</Reward>
+            </BodyContent>
+          </WdPremiumCardContainer>
+        </a>
+      </Link>
     </WdPremiumCardWrap>
   );
 };

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
+import Router from "next/router";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { loginModalOn } from "../actions";
@@ -17,6 +18,13 @@ const Resume = ({ loginModalOn }) => {
       return true;
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      Router.push("/CvList");
+    }
+  }, []);
 
   return (
     <>

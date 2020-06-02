@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { wdDetailSmall } from "../../config";
 
-const WdDetailRightSide = ({ reward }) => {
+const WdDetailRightSide = ({ reward, applyBtn }) => {
   const [isStop, setStop] = useState(false);
 
   const scrollCheck = (e) => {
@@ -34,7 +34,7 @@ const WdDetailRightSide = ({ reward }) => {
         </RewardContainer>
       </RewardWrap>
       <ButtonWrap>
-        <SubmitBtn>지원하기</SubmitBtn>
+        <SubmitBtn onClick={applyBtn}>지원하기</SubmitBtn>
         <BookmarkBtn>
           <i className="xi-bookmark" />
         </BookmarkBtn>
