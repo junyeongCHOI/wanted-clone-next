@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "next/router";
+import axios from "axios";
 import styled from "styled-components";
 import {
   typingCvTitle,
@@ -9,8 +11,11 @@ import {
   typingCvAbout,
 } from "../../actions";
 import CvWriteCareer from "./CvWriteCareer";
+import CvWriteReward from "./CvWriteReward";
+import { CvWriteBodyAPI } from "../../config";
 
 const CvWriteBody = ({
+  router,
   titleVal,
   nameVal,
   emailVal,
@@ -22,6 +27,24 @@ const CvWriteBody = ({
   typingCvPhone,
   typingCvAbout,
 }) => {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    (async () => {
+      const res = await axios.get(`${CvWriteBodyAPI}/${router.query.id}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      typingCvTitle(res.data.resume.title);
+      typingCvName(res.data.resume.name);
+      typingCvEmail(res.data.resume.email);
+      typingCvPhone(
+        res.data.resume.phone === null ? "" : res.data.resume.phone
+      );
+      typingCvAbout(res.data.resume.about);
+    })();
+  }, []);
+
   return (
     <CvWriteBodyWrap>
       <TitleInput
@@ -29,40 +52,41 @@ const CvWriteBody = ({
         type="text"
         maxLength="100"
         value={titleVal}
-        onChange={typingCvTitle}
+        onChange={(e) => typingCvTitle(e.target.value)}
       />
       <NameInput
         placeholder="이름(필수)"
         type="text"
         maxLength="100"
         value={nameVal}
-        onChange={typingCvName}
+        onChange={(e) => typingCvName(e.target.value)}
       />
       <EmailInput
         placeholder="이메일(필수)"
         type="text"
         maxLength="120"
         value={emailVal}
-        onChange={typingCvEmail}
+        onChange={(e) => typingCvEmail(e.target.value)}
       />
       <PhoneInput
         placeholder="연락처(필수) ex) 010-0000-0000"
         type="text"
         maxLength="200"
         value={phoneVal}
-        onChange={typingCvPhone}
+        onChange={(e) => typingCvPhone(e.target.value)}
       />
       <CvWriteSubtitle>간단 소개글</CvWriteSubtitle>
       <CvWriteTextArea
         placeholder="간단한 자기소개를 통해 이력서를 돋보이게 만들어보세요. (3~5줄 권장)"
         maxLength="3000"
         value={aboutVal}
-        onChange={typingCvAbout}
+        onChange={(e) => typingCvAbout(e.target.value)}
       />
       <CvWriteSubtitle>경력</CvWriteSubtitle>
       <CvWriteCareer />
       <CvWriteSubtitle>학력</CvWriteSubtitle>
       <CvWriteSubtitle>수상 및 기타</CvWriteSubtitle>
+      <CvWriteReward />
       <CvWriteSubtitle>외국어</CvWriteSubtitle>
       <CvWriteSubtitle>링크</CvWriteSubtitle>
     </CvWriteBodyWrap>
@@ -81,15 +105,18 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    typingCvTitle: (e) => dispatch(typingCvTitle(e)),
-    typingCvName: (e) => dispatch(typingCvName(e)),
-    typingCvEmail: (e) => dispatch(typingCvEmail(e)),
-    typingCvPhone: (e) => dispatch(typingCvPhone(e)),
-    typingCvAbout: (e) => dispatch(typingCvAbout(e)),
+    typingCvTitle: (val) => dispatch(typingCvTitle(val)),
+    typingCvName: (val) => dispatch(typingCvName(val)),
+    typingCvEmail: (val) => dispatch(typingCvEmail(val)),
+    typingCvPhone: (val) => dispatch(typingCvPhone(val)),
+    typingCvAbout: (val) => dispatch(typingCvAbout(val)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CvWriteBody);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(CvWriteBody));
 
 const CvWriteBodyWrap = styled.div``;
 

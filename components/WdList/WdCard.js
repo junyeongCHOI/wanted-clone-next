@@ -11,21 +11,21 @@ const WdCard = ({ item }) => {
         href={`/WdDetail?id=${item.item_id}`}
       >
         <a>
-          <HeaderImg url={item.item_image} />
+          <HeaderImg url={item.image} />
           <BodyContent>
             <BodyTitle>
-              {item.item_title.length > 35
-                ? item.item_title.slice(0, 35) + "..."
-                : item.item_title}
+              {item.name.length > 35
+                ? item.name.slice(0, 35) + "..."
+                : item.name}
             </BodyTitle>
             <BodyInfo>
-              {item.item_company}
+              {item.company}
               <br />
-              {item.item_location}
+              {item.city}
               <Dot>.</Dot>
-              {item.item_country}
+              {item.country}
             </BodyInfo>
-            <Reward>채용보상금 {item.item_reward}</Reward>
+            <Reward>채용보상금 {item.reward}</Reward>
           </BodyContent>
         </a>
       </Link>

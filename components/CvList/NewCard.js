@@ -1,11 +1,28 @@
 import React from "react";
 import styled from "styled-components";
+import axios from "axios";
+import Router from "next/router";
 import CvCard from "./CvCard";
+import { CvWriteBodyAPI } from "../../config";
 
 const NewCard = () => {
+  const makeNewResume = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.get(CvWriteBodyAPI, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      Router.push(`/CvWrite?id=${res.data.data.id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <CvCard>
-      <NewCardWrap>
+      <NewCardWrap onClick={makeNewResume}>
         <NewCardContainer>
           <Icon>
             <i className="far fa-clone" />

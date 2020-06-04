@@ -9,7 +9,7 @@ import WdDetailBody from "../components/WdDetail/WdDetailBody";
 import WdDetailBottom from "../components/WdDetail/WdDetailBottom";
 import WdDetailRecommend from "../components/WdDetail/WdDetailRecommend";
 import WdDetailRightSide from "../components/WdDetail/WdDetailRightSide";
-import { wdDetailSmall } from "../config";
+import { wdDetailSmall, WdDetailAPI } from "../config";
 import { loginModalOn } from "../actions";
 
 const WdDetail = ({ data, loginModalOn }) => {
@@ -28,7 +28,7 @@ const WdDetail = ({ data, loginModalOn }) => {
     <>
       <Head>
         <title>
-          {data.position_name} | {data.company_name}
+          {data.name} | {data.company}
         </title>
       </Head>
       <LayoutUser footer={false}>
@@ -37,11 +37,11 @@ const WdDetail = ({ data, loginModalOn }) => {
             <Article>
               <WdDetailSlide detailImages={data.detail_images} />
               <WdDetailBody
-                positionName={data.position_name}
-                companyName={data.company_name}
-                location={data.location}
+                positionName={data.name}
+                companyName={data.company}
+                location={data.city}
                 country={data.country}
-                tags={data.tags}
+                tags={data.tag}
                 reward={data.reward}
                 body={data.body}
               />
@@ -49,7 +49,7 @@ const WdDetail = ({ data, loginModalOn }) => {
             </Article>
             <WdDetailRightSide reward={data.reward} applyBtn={applyBtn} />
           </BodyWrap>
-          <WdDetailRecommend list={data.more} />
+          <WdDetailRecommend list={data.recommendation} />
         </WdDetailWrap>
         <SubmitBtnMobile onClick={applyBtn}>지원하기</SubmitBtnMobile>
       </LayoutUser>
@@ -57,10 +57,10 @@ const WdDetail = ({ data, loginModalOn }) => {
   );
 };
 
-WdDetail.getInitialProps = async () => {
-  const res = await axios("http://localhost:3000/static/data/wddetail.json");
+WdDetail.getInitialProps = async (ctx) => {
+  const res = await axios(`${WdDetailAPI}/${ctx.query.id}`);
   return {
-    data: res.data,
+    data: res.data.position[0],
   };
 };
 

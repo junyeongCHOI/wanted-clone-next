@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import Head from "next/head";
+import axios from "axios";
+import Router from "next/router";
 import LayoutUser from "../components/LayoutUser";
 import Loading from "../components/Loading";
 import NewCard from "../components/CvList/NewCard";
 import UploadCard from "../components/CvList/UploadCard";
 import ResumeCard from "../components/CvList/ResumeCard";
+import { MYIP } from "../config";
 
 const CvList = () => {
   const [CvCardList, setCvCardList] = useState(false);
 
   const getData = async () => {
-    const res = await axios("http://localhost:3000/static/data/cvlist.json");
+    const res = await axios(`${MYIP}/static/data/cvlist.json`);
     setCvCardList(res.data.cvlist);
   };
 
@@ -39,26 +41,31 @@ const CvList = () => {
   }
 
   return (
-    <LayoutUser footer={false}>
-      <CvListBg>
-        <CvListWrap>
-          <CvHeader>
-            <h4>최근 문서</h4>
-            <CvHeaderLeft>
-              <h5>인사 이력서 소개</h5>
-              <i className="xi-info-o" />
-            </CvHeaderLeft>
-          </CvHeader>
-          <CardListsWrap>
-            <NewCard />
-            <UploadCard />
-            {CvCardList.map((item) => (
-              <ResumeCard key={item.id} item={item} />
-            ))}
-          </CardListsWrap>
-        </CvListWrap>
-      </CvListBg>
-    </LayoutUser>
+    <>
+      <Head>
+        <title>원티드 - 지인 추천하고 보상금 받기</title>
+      </Head>
+      <LayoutUser footer={false}>
+        <CvListBg>
+          <CvListWrap>
+            <CvHeader>
+              <h4>최근 문서</h4>
+              <CvHeaderLeft>
+                <h5>인사 이력서 소개</h5>
+                <i className="xi-info-o" />
+              </CvHeaderLeft>
+            </CvHeader>
+            <CardListsWrap>
+              <NewCard />
+              <UploadCard />
+              {CvCardList.map((item) => (
+                <ResumeCard key={item.id} item={item} />
+              ))}
+            </CardListsWrap>
+          </CvListWrap>
+        </CvListBg>
+      </LayoutUser>
+    </>
   );
 };
 

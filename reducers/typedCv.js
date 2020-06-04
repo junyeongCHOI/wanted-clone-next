@@ -6,10 +6,7 @@ const initialState = {
   email: "",
   phone: "",
   about: "",
-  education: [],
-  awards_and_more: [],
-  f_lang: [],
-  link: [],
+  image: "",
 };
 
 const typedCv = (state = initialState, action) => {

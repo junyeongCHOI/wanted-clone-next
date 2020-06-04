@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { loginModalOff, registerModalOn } from "../../actions";
+import {
+  loginModalOff,
+  registerModalOn,
+  reduceLoginEmail,
+  passwordModalOn,
+} from "../../actions";
+import { ISREGI } from "../../config";
+import axios from "axios";
 
-const LoginModal = ({ loginModalOff, registerModalOn }) => {
+const LoginModal = ({
+  loginModalOff,
+  registerModalOn,
+  reduceLoginEmail,
+  passwordModalOn,
+}) => {
   const [value, setValue] = useState("");
   const [isValuable, setValuable] = useState(false);
 
@@ -22,14 +34,30 @@ const LoginModal = ({ loginModalOff, registerModalOn }) => {
     return regExp.test(currentVal);
   };
 
-  const submitEmail = (e) => {
+  const submitEmail = async (e) => {
     e.preventDefault();
     if (value === "") {
       return;
     } else if (isValuable) {
-      // Post 응답이 회원이 아닐 때, 회원가입으로 넘어가고 회원이면 로그인.
-      registerModalOn();
-      loginModalOff();
+      try {
+        reduceLoginEmail(value);
+        const res = await axios.post(ISREGI, {
+          email: value,
+        });
+        if (res.data.MESSAGE === "True") {
+          passwordModalOn();
+          loginModalOff();
+        } else if (res.data.MESSAGE === "False") {
+          registerModalOn();
+          loginModalOff();
+        } else {
+          return;
+        }
+      } catch (err) {
+        console.log(err);
+        registerModalOn();
+        loginModalOff();
+      }
     }
   };
 
@@ -96,6 +124,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loginModalOff: () => dispatch(loginModalOff()),
     registerModalOn: () => dispatch(registerModalOn()),
+    reduceLoginEmail: (val) => dispatch(reduceLoginEmail(val)),
+    passwordModalOn: () => dispatch(passwordModalOn()),
   };
 };
 
