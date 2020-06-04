@@ -1,0 +1,48 @@
+[
+  {
+    "id": 30,
+    "resume_id": 21,
+    "is_working": 0,
+    "start": ["", ""],
+    "end": ["", ""],
+    "company": "",
+    "position": "",
+    "result": [
+      {
+        "id": 18,
+        "career_id": 30,
+        "title": "",
+        "content": "",
+        "start": ["", ""],
+        "end": ["", ""]
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "resume_id": 21,
+    "is_working": 0,
+    "start": ["", ""],
+    "end": ["", ""],
+    "company": "",
+    "position": "",
+    "result": [
+      {
+        "id": 19,
+        "career_id": 31,
+        "title": "",
+        "content": "",
+        "start": ["", ""],
+        "end": ["", ""]
+      },
+      {
+        "id": 20,
+        "career_id": 31,
+        "title": "",
+        "content": "",
+        "start": ["", ""],
+        "end": ["", ""]
+      }
+    ]
+  }
+]

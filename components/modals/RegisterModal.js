@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import Router from "next/router";
 import styled from "styled-components";
-import { registerModalOff } from "../../actions";
+import axios from "axios";
+import { REGISTER } from "../../config";
+import { registerModalOff, loginModalOn } from "../../actions";
 
-const RegisterModal = ({ registerModalOff }) => {
+const RegisterModal = ({ registerModalOff, loginModalOn, email }) => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [checkPwd, setCheckPwd] = useState("");
@@ -40,7 +43,7 @@ const RegisterModal = ({ registerModalOff }) => {
     setCheckPwd(e.target.value);
   };
 
-  const submitRegister = (e) => {
+  const submitRegister = async (e) => {
     e.preventDefault();
     if (!acceptPrivacy) {
       return;
@@ -52,6 +55,19 @@ const RegisterModal = ({ registerModalOff }) => {
       return;
     } else if (password !== checkPwd) {
       setCheckPwdCheckFail(true);
+    } else {
+      try {
+        await axios.post(REGISTER, {
+          email,
+          name,
+          password,
+          agreement: acceptMerketing ? 1 : 0,
+        });
+        loginModalOn();
+        registerModalOff();
+      } catch (err) {
+        return;
+      }
     }
   };
 
@@ -153,13 +169,20 @@ const RegisterModal = ({ registerModalOff }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    registerModalOff: () => dispatch(registerModalOff()),
+    email: state.loginEmail,
   };
 };
 
-export default connect(null, mapDispatchToProps)(RegisterModal);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    registerModalOff: () => dispatch(registerModalOff()),
+    loginModalOn: () => dispatch(loginModalOn()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterModal);
 
 const RegisterModalWrap = styled.div`
   width: 400px;

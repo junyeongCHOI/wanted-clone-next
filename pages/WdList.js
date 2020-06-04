@@ -6,6 +6,7 @@ import LayoutUser from "../components/LayoutUser";
 import WdCards from "../components/WdList/WdCards";
 import WdPremiumCards from "../components/WdList/WdPremiumCards";
 import FilterBox from "../components/WdList/FilterBox";
+import { MYIP } from "../config";
 
 const WdList = ({ data, PData }) => {
   return (
@@ -29,8 +30,8 @@ const WdList = ({ data, PData }) => {
 
 WdList.getInitialProps = async () => {
   const [res, PRes] = await Promise.all([
-    axios("http://localhost:3000/static/data/wdlistitems.json"),
-    axios("http://localhost:3000/static/data/wdpremiumcards.json"),
+    axios(`${MYIP}/static/data/wdlistitems.json`),
+    axios(`${MYIP}/static/data/wdpremiumcards.json`),
   ]);
   return { data: res.data.items, PData: PRes.data.items };
 };

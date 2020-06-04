@@ -1,18 +1,54 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import Router, { withRouter } from "next/router";
+import { connect } from "react-redux";
+import { CvWriteBodyAPI, postCvM } from "../../config";
 
-const CvWriteBottom = () => {
+const CvWriteBottom = ({ data, router, careerData }) => {
+  const postResume = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      await Promise.all[
+        (axios.post(`${CvWriteBodyAPI}/${router.query.id}`, data, {
+          headers: {
+            Authorization: token,
+          },
+        }),
+        axios.post(
+          `${postCvM}/${router.query.id}?category=career`,
+          [...careerData],
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        ))
+      ];
+      Router.push("/CvList");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <CvWriteBottomWrap>
       <CvWriteBottomContainer>
         <TempSubmitBtn>임시 저장</TempSubmitBtn>
-        <CvSubmitBtn>작성 완료</CvSubmitBtn>
+        <CvSubmitBtn onClick={postResume}>작성 완료</CvSubmitBtn>
       </CvWriteBottomContainer>
     </CvWriteBottomWrap>
   );
 };
 
-export default CvWriteBottom;
+const mapStateToProps = (state) => {
+  return {
+    data: state.typedCv,
+    careerData: state.typedCvCareer,
+  };
+};
+
+export default connect(mapStateToProps, null)(withRouter(CvWriteBottom));
 
 const CvWriteBottomWrap = styled.div`
   position: fixed;
