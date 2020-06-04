@@ -5,6 +5,7 @@ import typedCv from "./typedCv";
 import typedCvCareer from "./typedCvCareer";
 import loginEmail from "./loginEmail";
 import isPasswordModalOn from "./isPasswordModalOn";
+import typedCvAward from "./typedCvAward";
 
 const reducers = combineReducers({
   isLoginModalOn,
@@ -13,6 +14,7 @@ const reducers = combineReducers({
   typedCv,
   typedCvCareer,
   loginEmail,
+  typedCvAward,
 });
 
 export default reducers;

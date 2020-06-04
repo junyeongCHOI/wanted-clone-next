@@ -71,6 +71,13 @@ export const typingCvAbout = (val) => {
   };
 };
 
+export const loadCareer = (val) => {
+  return {
+    type: types.LOADCAREER,
+    payload: val,
+  };
+};
+
 export const addNewCareer = (rId, id) => {
   return {
     type: types.ADDNEWCAREER,
@@ -198,5 +205,54 @@ export const reduceLoginEmail = (val) => {
   return {
     type: types.REDUCELOGINEMAIL,
     payload: val,
+  };
+};
+
+export const addNewAward = (rId, id) => {
+  return {
+    type: types.ADDNEWAWARD,
+    payload: {
+      rId,
+      id,
+    },
+  };
+};
+
+export const typingRYdate = (val, idx) => {
+  return {
+    type: types.TYPINGRYDATE,
+    payload: val.replace(/[^0-9]/g, ""),
+    idx,
+  };
+};
+
+export const typingAEndMdate = (val, idx) => {
+  return {
+    type: types.TYPINGRMDATE,
+    payload: val.replace(/[^0-9]/g, ""),
+    idx,
+  };
+};
+
+export const loadAward = (val) => {
+  return {
+    type: types.LOADAWARD,
+    payload: val,
+  };
+};
+
+export const typingAname = (val, idx) => {
+  return {
+    type: types.TYPINGANAME,
+    payload: val,
+    idx,
+  };
+};
+
+export const typingAcontent = (val, idx) => {
+  return {
+    type: types.TYPINGACONTENT,
+    payload: val,
+    idx,
   };
 };

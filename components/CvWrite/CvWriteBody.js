@@ -11,7 +11,7 @@ import {
   typingCvAbout,
 } from "../../actions";
 import CvWriteCareer from "./CvWriteCareer";
-import CvWriteReward from "./CvWriteReward";
+import CvWriteReward from "./CvWriteAward";
 import { CvWriteBodyAPI } from "../../config";
 
 const CvWriteBody = ({
@@ -87,7 +87,6 @@ const CvWriteBody = ({
       <CvWriteSubtitle>학력</CvWriteSubtitle>
       <CvWriteSubtitle>수상 및 기타</CvWriteSubtitle>
       <CvWriteReward />
-      <CvWriteSubtitle>외국어</CvWriteSubtitle>
       <CvWriteSubtitle>링크</CvWriteSubtitle>
     </CvWriteBodyWrap>
   );

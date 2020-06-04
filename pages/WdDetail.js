@@ -13,10 +13,14 @@ import { wdDetailSmall, WdDetailAPI } from "../config";
 import { loginModalOn } from "../actions";
 
 const WdDetail = ({ data, loginModalOn }) => {
+  const [showApply, setShowApply] = useState(false);
+
   const applyBtn = () => {
     const token = localStorage.getItem("token");
     if (!token) {
       loginModalOn();
+    } else {
+      setShowApply(!showApply);
     }
   };
 
@@ -47,7 +51,11 @@ const WdDetail = ({ data, loginModalOn }) => {
               />
               <WdDetailBottom data={data.info} />
             </Article>
-            <WdDetailRightSide reward={data.reward} applyBtn={applyBtn} />
+            <WdDetailRightSide
+              reward={data.reward}
+              applyBtn={applyBtn}
+              showApply={showApply}
+            />
           </BodyWrap>
           <WdDetailRecommend list={data.recommendation} />
         </WdDetailWrap>
@@ -58,7 +66,8 @@ const WdDetail = ({ data, loginModalOn }) => {
 };
 
 WdDetail.getInitialProps = async (ctx) => {
-  const res = await axios(`${WdDetailAPI}/${ctx.query.id}`);
+  // const res = await axios(`${WdDetailAPI}/${ctx.query.id}`);
+  const res = await axios("http://localhost:3000/static/data/wddetail.json");
   return {
     data: res.data.position[0],
   };

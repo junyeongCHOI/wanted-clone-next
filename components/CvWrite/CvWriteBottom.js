@@ -5,25 +5,30 @@ import Router, { withRouter } from "next/router";
 import { connect } from "react-redux";
 import { CvWriteBodyAPI, postCvM } from "../../config";
 
-const CvWriteBottom = ({ data, router, careerData }) => {
+const CvWriteBottom = ({ data, router, careerData, awardData }) => {
   const postResume = async () => {
     try {
       const token = localStorage.getItem("token");
       await Promise.all[
-        (axios.post(`${CvWriteBodyAPI}/${router.query.id}`, data, {
+        ((axios.post(`${CvWriteBodyAPI}/${router.query.id}`, data, {
           headers: {
             Authorization: token,
           },
         }),
         axios.post(
           `${postCvM}/${router.query.id}?category=career`,
-          [...careerData],
+          careerData,
           {
             headers: {
               Authorization: token,
             },
           }
-        ))
+        )),
+        axios.post(`${postCvM}/${router.query.id}?category=award`, awardData, {
+          headers: {
+            Authorization: token,
+          },
+        }))
       ];
       Router.push("/CvList");
     } catch (err) {
@@ -45,6 +50,7 @@ const mapStateToProps = (state) => {
   return {
     data: state.typedCv,
     careerData: state.typedCvCareer,
+    awardData: state.typedCvAward,
   };
 };
 

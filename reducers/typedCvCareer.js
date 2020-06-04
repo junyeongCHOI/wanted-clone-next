@@ -120,6 +120,8 @@ const typedCvCareer = (state = initialState, action) => {
         result: resultAry,
       };
       return ary;
+    case types.LOADCAREER:
+      return [...action.payload];
 
     default:
       return state;
