@@ -1,0 +1,164 @@
+{
+  "position_recommend": [
+    {
+      "image": "https://static.wanted.co.kr/images/company/1682/15971_2_0.__1080_790.jpg",
+      "name": "QA담당자",
+      "company": "카카오모빌리티(KakaoMobility)",
+      "city": "경기",
+      "country": "한국",
+      "reward": "1,000,000원"
+    },
+    {
+      "image": "https://static.wanted.co.kr/images/company/159/txp4xljepzbw6hnk__1080_790.jpg",
+      "name": "UI/UX 디자이너(신입가능)",
+      "company": "콘버스(CONBUS)",
+      "city": "서울",
+      "country": "한국",
+      "reward": "1,000,000원"
+    },
+    {
+      "image": "https://static.wanted.co.kr/images/company/7654/7cjx9qgxdqcprud9__1080_790.jpg",
+      "name": "체인지메이커 매니저",
+      "company": "링크(Liberty in North Korea)",
+      "city": "서울",
+      "country": "한국",
+      "reward": "1,000,000원"
+    },
+    {
+      "image": "https://static.wanted.co.kr/images/company/102/vajfz5ehm3np2dnc__1080_790.jpg",
+      "name": "[공통기술부문] 침해대응 및 보안위협 분석",
+      "company": "우아한형제들(배달의민족)",
+      "city": "서울",
+      "country": "한국",
+      "reward": "1,000,000원"
+    }
+  ],
+  "new_employment": [
+    {
+      "id": 1,
+      "image": "https://static.wanted.co.kr/images/company/29/17840_2_0.__1080_790.jpg",
+      "name": "프로덕트 디자이너(Junior Product Designer) 주니어",
+      "company": "왓챠",
+      "city": "서울",
+      "country": "한국",
+      "reward": "1,000,000원"
+    },
+    {
+      "id": 2,
+      "image": "https://static.wanted.co.kr/images/company/3545/vndzqxrszj9vdriq__1080_790.jpg",
+      "name": "UI/UX/웹 디자이너",
+      "company": "생각연구소",
+      "city": "서울",
+      "country": "한국",
+      "reward": "1,000,000원"
+    },
+    {
+      "id": 3,
+      "image": "https://static.wanted.co.kr/images/company/70/17258_2_0.__1080_790.jpg",
+      "name": "Java 웹 서비스, 플랫폼 개발자",
+      "company": "엔에이치엔(NHN)",
+      "city": "경기",
+      "country": "한국",
+      "reward": "1,000,000원"
+    },
+    {
+      "id": 4,
+      "image": "https://static.wanted.co.kr/images/company/3257/arga8orgrzn1zc1k__1080_790.jpg",
+      "name": "클래스MD",
+      "company": "클래스101(Class101)",
+      "city": "서울",
+      "country": "한국",
+      "reward": "1,000,000원"
+    }
+  ],
+  "theme_list": [
+    {
+      "image": "https://static.wanted.co.kr/images/banners/themes/204_4d5bddfa.jpg",
+      "title": "투자는 곧 채용",
+      "desc": "100억 이상 투자받은기업",
+      "logos": [
+        "https://static.wanted.co.kr/images/wdes/0_5.18dfe4ff.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.ce4fd8b1.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.59aa83d7.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.1c9e67bc.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.edea56e2.png",
+        "https://static.wanted.co.kr/images/wdes/0_5.239c7f9f.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.c3e70546.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.8e46863d.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.22b11689.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5_dfb146c9-64ed-4b4a-84be-7871ec6aacc2.jpg",
+        "https://static.wanted.co.kr/images/wdes/256_5_logo_coupang.png"
+      ]
+    },
+    {
+      "image": "https://static.wanted.co.kr/images/banners/themes/243_73e0b12e.jpg",
+      "title": "We are Delivery Hero!",
+      "desc": "글로벌 푸드테크 시장을 개척합니다!",
+      "logos": ["https://static.wanted.co.kr/images/wdes/0_5.203e397a.jpg"]
+    },
+    {
+      "image": "https://static.wanted.co.kr/images/banners/themes/232_d993bee4.jpg",
+      "title": "글로벌 커리어의 시작, 싱가폴",
+      "desc": "글로벌 커리어, 지금까지 꿈만 꾸셨나요?",
+      "logos": [
+        "https://static.wanted.co.kr/images/wdes/0_5.185da10c.png",
+        "https://static.wanted.co.kr/images/wdes/0_5.5d3a88ee.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.a04aea4b.png",
+        "https://static.wanted.co.kr/images/wdes/0_5.168685a9.png",
+        "https://static.wanted.co.kr/images/wdes/0_5.e1727d00.png",
+        "https://static.wanted.co.kr/images/wdes/0_5.8fde17d8.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.6da6dcbb.png",
+        "https://static.wanted.co.kr/images/wdes/0_5.5afbbc15.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.1299f982.png"
+      ]
+    },
+    {
+      "image": "https://static.wanted.co.kr/images/banners/themes/201_8324e26b.jpg",
+      "title": "주 35시간 이하 근무 기업",
+      "desc": "주 35시간 이하 근무하는 기업을 알아보세요!",
+      "logos": [
+        "https://static.wanted.co.kr/images/wdes/0_5.84e4208f.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.c01ea594.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.8f75d757.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.9b334f01.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.c341accc.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.e22ac8aa.jpg",
+        "https://static.wanted.co.kr/images/wdes/0_5.7b0037d9.jpg"
+      ]
+    }
+  ],
+  "Recommendation_week": [
+    {
+      "image": "https://static.wanted.co.kr/images/company/1682/15971_2_0.__1080_790.jpg",
+      "name": "QA담당자",
+      "company": "카카오모빌리티(KakaoMobility)",
+      "city": "경기",
+      "country": "한국",
+      "reward": "1,000,000원"
+    },
+    {
+      "image": "https://static.wanted.co.kr/images/company/159/txp4xljepzbw6hnk__1080_790.jpg",
+      "name": "UI/UX 디자이너(신입가능)",
+      "company": "콘버스(CONBUS)",
+      "city": "서울",
+      "country": "한국",
+      "reward": "1,000,000원"
+    },
+    {
+      "image": "https://static.wanted.co.kr/images/company/7654/7cjx9qgxdqcprud9__1080_790.jpg",
+      "name": "체인지메이커 매니저",
+      "company": "링크(Liberty in North Korea)",
+      "city": "서울",
+      "country": "한국",
+      "reward": "1,000,000원"
+    },
+    {
+      "image": "https://static.wanted.co.kr/images/company/102/vajfz5ehm3np2dnc__1080_790.jpg",
+      "name": "[공통기술부문] 침해대응 및 보안위협 분석",
+      "company": "우아한형제들(배달의민족)",
+      "city": "서울",
+      "country": "한국",
+      "reward": "1,000,000원"
+    }
+  ]
+}

@@ -1,20 +1,48 @@
 import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import Router from "next/router";
+import Head from "next/head";
+import styled from "styled-components";
+import { loginModalOn } from "../actions";
 import LayoutUser from "../components/LayoutUser";
+import IntroTop from "../components/Intro/IntroTop";
+import IntroBottom from "../components/Intro/IntroBottom";
+import IntroCards from "../components/Intro/IntroCards";
 
-const Index = () => {
+const Intro = ({ loginModalOn }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) {
-      Router.push("/Intro");
+    if (token) {
+      Router.push("/Main");
     }
   }, []);
 
   return (
-    <LayoutUser>
-      <div>Index Page</div>
-    </LayoutUser>
+    <>
+      <Head>
+        <title>원티드 - 지인 추천하고 보상금 받기</title>
+      </Head>
+      <LayoutUser>
+        <IntroWrap>
+          <IntroTop loginModalOn={loginModalOn} />
+          <IntroCards />
+          <IntroBottom loginModalOn={loginModalOn} />
+        </IntroWrap>
+      </LayoutUser>
+    </>
   );
 };
 
-export default Index;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginModalOn: () => dispatch(loginModalOn()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Intro);
+
+const IntroWrap = styled.div`
+  width: 100vw;
+  padding-top: 50px;
+  min-width: 450px;
+`;

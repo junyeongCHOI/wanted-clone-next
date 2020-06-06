@@ -47,7 +47,7 @@ const WdDetailRightSide = ({ reward, applyBtn, showApply }) => {
           <ButtonWrap>
             <SubmitBtn onClick={applyBtn}>지원하기</SubmitBtn>
             <BookmarkBtn>
-              <i className="xi-bookmark" />
+              <i className="xi-bookmark-o" />
             </BookmarkBtn>
           </ButtonWrap>
         </FrontWrap>
