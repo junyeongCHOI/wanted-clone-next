@@ -8,14 +8,19 @@ import Loading from "../components/Loading";
 import NewCard from "../components/CvList/NewCard";
 import UploadCard from "../components/CvList/UploadCard";
 import ResumeCard from "../components/CvList/ResumeCard";
-import { MYIP } from "../config";
+import { MYIP, CvMain } from "../config";
 
 const CvList = () => {
   const [CvCardList, setCvCardList] = useState(false);
 
-  const getData = async () => {
-    const res = await axios(`${MYIP}/static/data/cvlist.json`);
-    setCvCardList(res.data.cvlist);
+  const getData = async (token) => {
+    // const res = await axios(`${MYIP}/static/data/cvlist.json`);
+    const res = await axios.get(CvMain, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    setCvCardList(res.data.data);
   };
 
   useEffect(() => {
@@ -23,7 +28,7 @@ const CvList = () => {
     if (!token) {
       Router.push("/");
     } else {
-      getData();
+      getData(token);
     }
   }, []);
 
@@ -59,7 +64,7 @@ const CvList = () => {
               <NewCard />
               <UploadCard />
               {CvCardList.map((item) => (
-                <ResumeCard key={item.id} item={item} />
+                <ResumeCard key={item.id} item={item} getData={getData} />
               ))}
             </CardListsWrap>
           </CvListWrap>

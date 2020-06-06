@@ -34,7 +34,7 @@ const CvWrite = () => {
 export default CvWrite;
 
 const CvWriteWrap = styled.div`
-  padding: 80px 0;
+  padding: 80px 0 100px;
   width: 87.72%;
   max-width: 1060px;
   margin: 0 auto;

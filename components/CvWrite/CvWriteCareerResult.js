@@ -28,6 +28,9 @@ const CvWriteCareerResult = ({
 }) => {
   return (
     <CvWriteCareerResultWrap>
+      <DeleteRBtn>
+        <i className="xi-close-min" />
+      </DeleteRBtn>
       <CDot />
       <CWCRInputWrap>
         <CWCRCompanyInput
@@ -120,6 +123,7 @@ const CvWriteCareerResultWrap = styled.div`
   display: felx;
   padding: 20px;
   margin-left: -20px;
+  position: relative;
 `;
 
 const CDot = styled.div`
@@ -172,5 +176,18 @@ const DateTimeInput = styled.input`
   line-height: 1.42857143;
   &::placeholder {
     color: rgba(0, 0, 0, 0.4);
+  }
+`;
+
+const DeleteRBtn = styled.div`
+  position: absolute;
+  font-size: 16px;
+  color: #d1d1d1;
+  top: 10px;
+  right: 10px;
+  padding: 10px;
+  cursor: pointer;
+  &:hover {
+    color: #176fd8;
   }
 `;

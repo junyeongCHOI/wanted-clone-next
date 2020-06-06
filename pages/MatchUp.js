@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import Router from "next/router";
 import { loginModalOn } from "../actions";
 import Head from "next/head";
 import LayoutUser from "../components/LayoutUser";
@@ -11,12 +12,12 @@ import MatchUpBottom from "../components/Matchup/MatchUpBottom";
 
 const MatchUp = ({ loginModalOn }) => {
   const checkToken = () => {
-    const token = localStorage.getItem("loginToken");
+    const token = localStorage.getItem("token");
 
     if (!token) {
       loginModalOn();
     } else {
-      return true;
+      Router.push("/profile");
     }
   };
 

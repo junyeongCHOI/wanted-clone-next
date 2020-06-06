@@ -18,6 +18,9 @@ const CvWriteAwardInfo = ({
 }) => {
   return (
     <CvWriteAwardInfoWrap>
+      <DeleteABtn>
+        <i className="xi-close-min" />
+      </DeleteABtn>
       <CWRDateSide>
         <DateTimeInput
           placeholder="YYYY"
@@ -69,6 +72,7 @@ export default connect(null, mapDispatchToProps)(CvWriteAwardInfo);
 const CvWriteAwardInfoWrap = styled.div`
   display: flex;
   padding: 30px;
+  position: relative;
 `;
 
 const CWRDateSide = styled.div`
@@ -115,4 +119,17 @@ const CWRTitle = styled(CWRInput)`
 const CWRSubTitle = styled(CWRInput)`
   font-size: 16px;
   font-weight: 600;
+`;
+
+const DeleteABtn = styled.div`
+  position: absolute;
+  font-size: 24px;
+  color: #d1d1d1;
+  top: 10px;
+  right: 10px;
+  padding: 7px;
+  cursor: pointer;
+  &:hover {
+    color: #176fd8;
+  }
 `;

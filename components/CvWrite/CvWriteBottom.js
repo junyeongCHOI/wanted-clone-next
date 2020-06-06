@@ -6,15 +6,22 @@ import { connect } from "react-redux";
 import { CvWriteBodyAPI, postCvM } from "../../config";
 
 const CvWriteBottom = ({ data, router, careerData, awardData }) => {
-  const postResume = async () => {
+  const postResume = async (state) => {
     try {
       const token = localStorage.getItem("token");
       await Promise.all[
-        ((axios.post(`${CvWriteBodyAPI}/${router.query.id}`, data, {
-          headers: {
-            Authorization: token,
+        ((axios.post(
+          `${CvWriteBodyAPI}/${router.query.id}`,
+          {
+            status: state,
+            ...data,
           },
-        }),
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        ),
         axios.post(
           `${postCvM}/${router.query.id}?category=career`,
           careerData,
@@ -39,8 +46,10 @@ const CvWriteBottom = ({ data, router, careerData, awardData }) => {
   return (
     <CvWriteBottomWrap>
       <CvWriteBottomContainer>
-        <TempSubmitBtn>임시 저장</TempSubmitBtn>
-        <CvSubmitBtn onClick={postResume}>작성 완료</CvSubmitBtn>
+        <TempSubmitBtn onClick={() => postResume(true)}>
+          임시 저장
+        </TempSubmitBtn>
+        <CvSubmitBtn onClick={() => postResume(false)}>작성 완료</CvSubmitBtn>
       </CvWriteBottomContainer>
     </CvWriteBottomWrap>
   );

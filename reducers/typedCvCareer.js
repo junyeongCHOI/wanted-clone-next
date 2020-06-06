@@ -13,7 +13,7 @@ const typedCvCareer = (state = initialState, action) => {
         {
           id: action.payload.id,
           resume_id: action.payload.rId,
-          is_working: 0,
+          is_working: false,
           start: ["", ""],
           end: ["", ""],
           company: "",
@@ -27,36 +27,49 @@ const typedCvCareer = (state = initialState, action) => {
         start: [action.payload, ary[action.idx].start[1]],
       };
       return ary;
+
+    case types.PUSHISWORKINGBTN:
+      ary[action.idx] = {
+        ...ary[action.idx],
+        is_working: !ary[action.idx].is_working,
+      };
+      return ary;
+
     case types.TYPINGCSTARTMDATE:
       ary[action.idx] = {
         ...ary[action.idx],
         start: [ary[action.idx].start[0], action.payload],
       };
       return ary;
+
     case types.TYPINGENDYDATE:
       ary[action.idx] = {
         ...ary[action.idx],
         end: [action.payload, ary[action.idx].end[1]],
       };
       return ary;
+
     case types.TYPINGCENDMDATE:
       ary[action.idx] = {
         ...ary[action.idx],
         end: [ary[action.idx].end[0], action.payload],
       };
       return ary;
+
     case types.TYPINGCWCOMPANY:
       ary[action.idx] = {
         ...ary[action.idx],
         company: action.payload,
       };
       return ary;
+
     case types.TYPINGCWPOSITION:
       ary[action.idx] = {
         ...ary[action.idx],
         position: action.payload,
       };
       return ary;
+
     case types.ADDNEWPROJECT:
       resultAry = ary[action.idx].result;
       resultAry.push({
