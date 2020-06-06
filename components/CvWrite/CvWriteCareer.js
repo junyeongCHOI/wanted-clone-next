@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { addNewCareer } from "../../actions";
+import { addNewCareer, loadCareer } from "../../actions";
 import { withRouter } from "next/router";
 import axios from "axios";
 import { AddMore } from "./CvWriteBody";
 import CvWriteCareerInfo from "./CvWriteCareerInfo";
-import { createCvM } from "../../config";
+import { createCvM, postCvM } from "../../config";
 
-const CvWriteCareer = ({ careers, addNewCareer, router }) => {
+const CvWriteCareer = ({ careers, addNewCareer, router, loadCareer }) => {
   const pressAddNewCareerBtn = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -25,6 +25,25 @@ const CvWriteCareer = ({ careers, addNewCareer, router }) => {
       console.warn(err);
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    (async () => {
+      try {
+        const res = await axios.get(
+          `${postCvM}/${router.query.id}?category=career`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        loadCareer(res.data.data);
+      } catch (err) {
+        console.warn(err);
+      }
+    })();
+  }, []);
 
   return (
     <CvWriteCareerWrap>
@@ -45,6 +64,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addNewCareer: (rId, id) => dispatch(addNewCareer(rId, id)),
+    loadCareer: (val) => dispatch(loadCareer(val)),
   };
 };
 

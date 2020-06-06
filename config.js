@@ -11,7 +11,8 @@ export const wdDetailSmall = "995px";
 export const MYIP = "http://localhost:3000";
 // http://192.168.219.101:3000
 
-const TOMAPI = "http://192.168.219.106:8000";
+const TOMAPI = "http://10.58.4.147:8000";
+export const CvMain = `${TOMAPI}/user/resumeMain`;
 export const CvWriteBodyAPI = `${TOMAPI}/user/resume`;
 export const createCvM = `${TOMAPI}/user/resumeDetail`;
 export const postCvM = `${TOMAPI}/user/resumeDetailWrite`;

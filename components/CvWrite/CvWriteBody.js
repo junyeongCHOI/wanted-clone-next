@@ -11,7 +11,9 @@ import {
   typingCvAbout,
 } from "../../actions";
 import CvWriteCareer from "./CvWriteCareer";
-import CvWriteReward from "./CvWriteReward";
+import CvWriteReward from "./CvWriteAward";
+import CvWriteEducation from "./CvWriteEducation";
+import CvWriteLink from "./CvWriteLink";
 import { CvWriteBodyAPI } from "../../config";
 
 const CvWriteBody = ({
@@ -85,10 +87,11 @@ const CvWriteBody = ({
       <CvWriteSubtitle>경력</CvWriteSubtitle>
       <CvWriteCareer />
       <CvWriteSubtitle>학력</CvWriteSubtitle>
+      <CvWriteEducation />
       <CvWriteSubtitle>수상 및 기타</CvWriteSubtitle>
       <CvWriteReward />
-      <CvWriteSubtitle>외국어</CvWriteSubtitle>
       <CvWriteSubtitle>링크</CvWriteSubtitle>
+      <CvWriteLink />
     </CvWriteBodyWrap>
   );
 };

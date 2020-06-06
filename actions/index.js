@@ -71,6 +71,13 @@ export const typingCvAbout = (val) => {
   };
 };
 
+export const loadCareer = (val) => {
+  return {
+    type: types.LOADCAREER,
+    payload: val,
+  };
+};
+
 export const addNewCareer = (rId, id) => {
   return {
     type: types.ADDNEWCAREER,
@@ -78,6 +85,13 @@ export const addNewCareer = (rId, id) => {
       rId,
       id,
     },
+  };
+};
+
+export const pushIsWorkingBtn = (idx) => {
+  return {
+    type: types.PUSHISWORKINGBTN,
+    idx,
   };
 };
 
@@ -198,5 +212,155 @@ export const reduceLoginEmail = (val) => {
   return {
     type: types.REDUCELOGINEMAIL,
     payload: val,
+  };
+};
+
+export const addNewAward = (rId, id) => {
+  return {
+    type: types.ADDNEWAWARD,
+    payload: {
+      rId,
+      id,
+    },
+  };
+};
+
+export const typingRYdate = (val, idx) => {
+  return {
+    type: types.TYPINGRYDATE,
+    payload: val.replace(/[^0-9]/g, ""),
+    idx,
+  };
+};
+
+export const typingAEndMdate = (val, idx) => {
+  return {
+    type: types.TYPINGRMDATE,
+    payload: val.replace(/[^0-9]/g, ""),
+    idx,
+  };
+};
+
+export const loadAward = (val) => {
+  return {
+    type: types.LOADAWARD,
+    payload: val,
+  };
+};
+
+export const typingAname = (val, idx) => {
+  return {
+    type: types.TYPINGANAME,
+    payload: val,
+    idx,
+  };
+};
+
+export const typingAcontent = (val, idx) => {
+  return {
+    type: types.TYPINGACONTENT,
+    payload: val,
+    idx,
+  };
+};
+
+export const addNewLink = (rId, id) => {
+  return {
+    type: types.ADDNEWLINK,
+    payload: {
+      rId,
+      id,
+    },
+  };
+};
+
+export const loadLink = (val) => {
+  return {
+    type: types.LOADLINK,
+    payload: val,
+  };
+};
+
+export const typingLink = (val, idx) => {
+  return {
+    type: types.TYPINGLINK,
+    payload: val,
+    idx,
+  };
+};
+
+export const loadEducation = (val) => {
+  return {
+    type: types.LOADEDUCATION,
+    payload: val,
+  };
+};
+
+export const addNewEducation = () => {
+  return {
+    type: types.ADDNEWEDUCATION,
+  };
+};
+
+export const pushIsWorkingBtnE = (idx) => {
+  return {
+    type: types.PUSHISWORKINGBTNE,
+    idx,
+  };
+};
+
+export const typingEStartYdate = (val, idx) => {
+  return {
+    type: types.TYPINGESTARTYDATE,
+    payload: val.replace(/[^0-9]/g, ""),
+    idx,
+  };
+};
+
+export const typingEStartMdate = (val, idx) => {
+  return {
+    type: types.TYPINGESTARTMDATE,
+    payload: val.replace(/[^0-9]/g, ""),
+    idx,
+  };
+};
+
+export const typingEEndYDate = (val, idx) => {
+  return {
+    type: types.TYPINGEENDYDATE,
+    payload: val.replace(/[^0-9]/g, ""),
+    idx,
+  };
+};
+
+export const typingEEndMdate = (val, idx) => {
+  return {
+    type: types.TYPINGEENDMDATE,
+    payload: val.replace(/[^0-9]/g, ""),
+    idx,
+  };
+};
+
+export const typingEschoolName = (val, idx) => {
+  return {
+    type: types.TYPINGESCHOOLNAME,
+    payload: val,
+    idx,
+  };
+};
+
+export const typingEMajor = (val, idx) => {
+  return {
+    type: types.TYPINGEMAJOR,
+    payload: val,
+    idx,
+  };
+};
+
+export const typingEContent = (val, idx) => {
+  return {
+    type: types.TYPINGECONTETN,
+    payload: val,
+    idx,
   };
 };

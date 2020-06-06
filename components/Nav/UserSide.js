@@ -3,9 +3,11 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { loginModalOn } from "../../actions";
 import { navSmall } from "../../config";
+import LoginMenu from "./LoginMenu";
 
 const UserSide = ({ loginModalOn }) => {
   const [userImg, setuserImg] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -21,10 +23,17 @@ const UserSide = ({ loginModalOn }) => {
       <UserSideWrap>
         <Search>
           <i className="xi-search" />
+          <i className="xi-bell-o" />
         </Search>
-        <Line />
+        <Line style={{ display: userImg ? "none" : "" }} />
         {userImg ? (
-          <UserImg style={{ backgroundImage: `url(${userImg})` }} />
+          <>
+            <UserImg
+              style={{ backgroundImage: `url(${userImg})` }}
+              onClick={() => setShowMenu(!showMenu)}
+            />
+            {showMenu && <LoginMenu />}
+          </>
         ) : (
           <RegNLogin onClick={loginModalOn}>회원가입/로그인</RegNLogin>
         )}
@@ -52,6 +61,7 @@ const UserSideWrap = styled.div`
   color: rgb(51, 51, 51);
   display: flex;
   align-items: center;
+  position: relative;
 
   @media only screen and (max-width: ${navSmall}) {
     display: none;
@@ -59,8 +69,12 @@ const UserSideWrap = styled.div`
 `;
 
 const Search = styled.div`
+  font-size: 18px;
   padding: 0 10px;
   cursor: pointer;
+  i {
+    margin-right: 10px;
+  }
 `;
 
 const Line = styled.div`
@@ -111,4 +125,5 @@ const UserImg = styled.div`
   background-position: center;
   background-size: cover;
   margin-right: 10px;
+  cursor: pointer;
 `;

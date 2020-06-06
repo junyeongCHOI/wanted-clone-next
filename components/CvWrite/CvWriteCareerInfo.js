@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import axios from "axios";
 import {
+  pushIsWorkingBtn,
   typingCStartYdate,
   typingCStartMdate,
   typingCEndYdate,
@@ -17,6 +18,7 @@ import { creatCvResult } from "../../config";
 const CvWriteCareerInfo = ({
   UIdx,
   data,
+  pushIsWorkingBtn,
   typingCStartYdate,
   typingCStartMdate,
   typingCEndYdate,
@@ -25,8 +27,6 @@ const CvWriteCareerInfo = ({
   typingCWPosition,
   addNewProject,
 }) => {
-  const [isWorking, setIsWorking] = useState(false);
-
   const pushAddNewProjectBtn = async (e) => {
     const token = localStorage.getItem("token");
     try {
@@ -60,7 +60,7 @@ const CvWriteCareerInfo = ({
             maxLength="2"
             onChange={(e) => typingCStartMdate(e.target.value, UIdx)}
           />
-          <DateDisplayWrap style={{ display: isWorking && "none" }}>
+          <DateDisplayWrap style={{ display: data[UIdx].is_working && "none" }}>
             -
             <DateTimeInput
               placeholder="YYYY"
@@ -79,17 +79,24 @@ const CvWriteCareerInfo = ({
             />
           </DateDisplayWrap>
         </DateTime>
-        <CheckBoxWrap onClick={() => setIsWorking(!isWorking)}>
+        <CheckBoxWrap onClick={() => pushIsWorkingBtn(UIdx)}>
           <DateCheckBox>
             <i
-              className={isWorking ? "xi-check-square" : "xi-checkbox-blank"}
-              style={{ color: isWorking ? "#176fd8" : "rgba(0, 0, 0, 0.4)" }}
+              className={
+                data[UIdx].is_working ? "xi-check-square" : "xi-checkbox-blank"
+              }
+              style={{
+                color: data[UIdx].is_working ? "#176fd8" : "rgba(0, 0, 0, 0.4)",
+              }}
             />
           </DateCheckBox>
           현재 재직중
         </CheckBoxWrap>
       </CWCDateSide>
       <CWCInfoSide>
+        <DeleteCBtn>
+          <i className="xi-close-min" />
+        </DeleteCBtn>
         <CWCTitle
           placeholder="회사명"
           value={data[UIdx].company}
@@ -123,6 +130,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    pushIsWorkingBtn: (idx) => dispatch(pushIsWorkingBtn(idx)),
     typingCStartYdate: (e, idx) => dispatch(typingCStartYdate(e, idx)),
     typingCStartMdate: (e, idx) => dispatch(typingCStartMdate(e, idx)),
     typingCEndYdate: (e, idx) => dispatch(typingCEndYdate(e, idx)),
@@ -177,6 +185,7 @@ const DateCheckBox = styled.div`
 `;
 
 const CWCInfoSide = styled.div`
+  position: relative;
   width: 75%;
 `;
 
@@ -212,4 +221,17 @@ const AddMoreInfo = styled.div`
 
 const DateDisplayWrap = styled.div`
   display: flex;
+`;
+
+const DeleteCBtn = styled.div`
+  position: absolute;
+  font-size: 24px;
+  color: #d1d1d1;
+  top: 10px;
+  right: 10px;
+  padding: 7px;
+  cursor: pointer;
+  &:hover {
+    color: #176fd8;
+  }
 `;

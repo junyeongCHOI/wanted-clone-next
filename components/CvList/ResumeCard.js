@@ -1,23 +1,53 @@
 import React from "react";
 import styled from "styled-components";
+import Router from "next/router";
+import axios from "axios";
 import CvCard from "./CvCard";
+import { CvWriteBodyAPI } from "../../config";
 
-const ResumeCard = ({ item }) => {
+const ResumeCard = ({ item, getData }) => {
+  const goResumeWirte = (e) => {
+    e.stopPropagation();
+    Router.push(`/CvWrite?id=${item.id}`);
+  };
+
+  const deleteResume = async (e) => {
+    e.stopPropagation();
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        await axios.delete(`${CvWriteBodyAPI}/${item.id}`, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        getData(token);
+      } catch (err) {
+        console.warn(err);
+      }
+    } else {
+      return;
+    }
+  };
+
   return (
     <CvCard>
-      <ResumeCardInfo isActive={item.state !== "작성 중" ? true : false}>
+      <ResumeCardInfo
+        isActive={item.state !== "작성 중" ? true : false}
+        onClick={goResumeWirte}
+      >
         <h3>
           {item.title.length > 30
             ? item.title.slice(0, 30) + "..."
             : item.title}
         </h3>
-        <p>{item.date}</p>
+        <p>{item.created_at}</p>
       </ResumeCardInfo>
       <ResumeCardState>
-        <StateText isActive={item.state !== "작성 중" ? true : false}>
-          <Han>한</Han> <p>{item.state}</p>
+        <StateText isActive={item.status !== "작성 중" ? true : false}>
+          <Han>한</Han> <p>{item.status}</p>
         </StateText>
-        <i className="xi-ellipsis-v" />
+        <i className="xi-close-min" onClick={deleteResume} />
       </ResumeCardState>
     </CvCard>
   );
