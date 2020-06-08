@@ -8,8 +8,8 @@ const MainThemItem = ({ item }) => {
       <h2>{item.title}</h2>
       <h5>{item.desc}</h5>
       <MITBrandLogos>
-        {item.logos.map((url) => (
-          <MITLogo style={{ backgroundImage: `url(${url})` }} />
+        {item.logos.map((url, idx) => (
+          <MITLogo key={idx} style={{ backgroundImage: `url(${url})` }} />
         ))}
       </MITBrandLogos>
     </MainThemItemWrap>
@@ -22,8 +22,8 @@ const MainThemeList = ({ theme_list }) => {
       <MainThemeListContainer>
         <h2>테마별 채용</h2>
         <MainThemeItems>
-          {theme_list.map((item) => (
-            <MainThemItem item={item} />
+          {theme_list.map((item, idx) => (
+            <MainThemItem key={idx} item={item} />
           ))}
         </MainThemeItems>
       </MainThemeListContainer>

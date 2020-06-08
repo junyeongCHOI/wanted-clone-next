@@ -3,30 +3,30 @@ import styled from "styled-components";
 import Link from "next/link";
 import { withRouter } from "next/router";
 
-const ProfileNavMenu = ({ router }) => {
+const ApplicationsNav = ({ router }) => {
   return (
-    <ProfileNavMenuWrap>
-      <Link href="/profile?match=profile">
+    <ApplicationsNavWrap>
+      <Link href="/applications?match=apply">
         <a style={{ display: "block" }}>
-          <NavMenuItem isActive={router.pathname === "/profile"}>
-            프로필
+          <NavMenuItem isActive={router.query.match === "apply"}>
+            지원 현황
           </NavMenuItem>
         </a>
       </Link>
-      <Link href="/offer">
+      <Link href="/applications?match=bookmark">
         <a style={{ display: "block" }}>
-          <NavMenuItem isActive={router.pathname === "/offer"}>
-            제안받기 현황
+          <NavMenuItem isActive={router.query.match === "bookmark"}>
+            북마크
           </NavMenuItem>
         </a>
       </Link>
-    </ProfileNavMenuWrap>
+    </ApplicationsNavWrap>
   );
 };
 
-export default withRouter(ProfileNavMenu);
+export default withRouter(ApplicationsNav);
 
-const ProfileNavMenuWrap = styled.div`
+const ApplicationsNavWrap = styled.div`
   padding: 90px 0 40px;
   display: felx;
   justify-content: center;

@@ -7,8 +7,8 @@ const MainNewList = ({ new_employment }) => {
     <MainNewListWrap>
       <h2>신규 채용 회사</h2>
       <MainNewListContainer>
-        {new_employment.map((item) => (
-          <WdCard item={item} />
+        {new_employment.map((item, idx) => (
+          <WdCard key={idx} item={item} />
         ))}
       </MainNewListContainer>
     </MainNewListWrap>
