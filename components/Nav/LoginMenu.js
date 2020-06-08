@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Router from "next/router";
+import Link from "next/link";
 
 const LoginMenu = () => {
   const logout = () => {
@@ -10,11 +11,27 @@ const LoginMenu = () => {
 
   return (
     <LoginMenuWrap>
-      <LoGinMenuItem>프로필</LoGinMenuItem>
-      <LoGinMenuItem>제안받기 현황</LoGinMenuItem>
+      <Link prefetch href="/profile?match=profile">
+        <a>
+          <LoGinMenuItem>프로필</LoGinMenuItem>
+        </a>
+      </Link>
+      <Link prefetch href="/offer">
+        <a>
+          <LoGinMenuItem>제안받기 현황</LoGinMenuItem>
+        </a>
+      </Link>
       <Line />
-      <LoGinMenuItem>지원 현황</LoGinMenuItem>
-      <LoGinMenuItem>북마크</LoGinMenuItem>
+      <Link href="/applications?match=apply">
+        <a>
+          <LoGinMenuItem>지원 현황</LoGinMenuItem>
+        </a>
+      </Link>
+      <Link href="/applications?match=bookmark">
+        <a>
+          <LoGinMenuItem>북마크</LoGinMenuItem>
+        </a>
+      </Link>
       <Logout onClick={logout}>로그아웃</Logout>
     </LoginMenuWrap>
   );

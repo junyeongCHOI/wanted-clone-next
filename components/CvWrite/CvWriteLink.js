@@ -10,7 +10,7 @@ const CvWriteLink = ({ typedCvLink, addNewLink, laodLink }) => {
     <CvWriteLinkWrap>
       <AddMore onClick={() => addNewLink(1, 2)}>+ 추가</AddMore>
       {typedCvLink.map((data, idx) => (
-        <CvWriteLinkInfo data={data} idx={idx} />
+        <CvWriteLinkInfo key={idx} data={data} idx={idx} />
       ))}
     </CvWriteLinkWrap>
   );

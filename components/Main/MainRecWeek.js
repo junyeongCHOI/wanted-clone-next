@@ -7,8 +7,8 @@ const MainRecWeek = ({ Recommendation_week }) => {
     <MainRecWeekWrap>
       <h2>금주의 추천</h2>
       <MainRecWeekContainer>
-        {Recommendation_week.map((item) => (
-          <WdCard item={item} />
+        {Recommendation_week.map((item, idx) => (
+          <WdCard key={idx} item={item} />
         ))}
       </MainRecWeekContainer>
     </MainRecWeekWrap>

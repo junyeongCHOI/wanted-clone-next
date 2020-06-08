@@ -9,8 +9,8 @@ const MainFitList = ({ position_recommend }) => {
         나에게 딱 맞는 포지션 <i className="xi-cog" />
       </h2>
       <MainFitListContainer>
-        {position_recommend.map((item) => (
-          <WdCard item={item} />
+        {position_recommend.map((item, idx) => (
+          <WdCard key={idx} item={item} />
         ))}
       </MainFitListContainer>
     </MainFitListWrap>

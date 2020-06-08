@@ -1,0 +1,51 @@
+{
+  "speclist": [
+    {
+      "title": "f&b",
+      "lists": [
+        { "id": 12, "subtitle": "식품 MD" },
+        { "id": 15, "subtitle": "요리사" },
+        { "id": 22, "subtitle": "외식업 종사자" },
+        { "id": 82, "subtitle": "바텐더" }
+      ]
+    },
+    {
+      "title": "개발",
+      "lists": [
+        { "id": 52, "subtitle": "서버 개발자" },
+        { "id": 55, "subtitle": "웹 개발자" },
+        { "id": 99, "subtitle": "프론트엔드 개발자" },
+        { "id": 123, "subtitle": "자바 개발자" },
+        { "id": 3211, "subtitle": "안드로이드 개발자" },
+        { "id": 196, "subtitle": "DevOps" },
+        { "id": 749, "subtitle": "Node.js 개발자" },
+        { "id": 2232, "subtitle": "데이터 사이언티스트" }
+      ]
+    },
+    {
+      "title": "건설, 시설",
+      "lists": [
+        { "id": 193, "subtitle": "유지보수 관리자" },
+        { "id": 3911, "subtitle": "중장비 기술자" },
+        { "id": 1999, "subtitle": "정비공" },
+        { "id": 999, "subtitle": "용접기사" },
+        { "id": 29732, "subtitle": "인스톨러" }
+      ]
+    }
+  ],
+  "year": [
+    "신입",
+    "1년",
+    "2년",
+    "2년",
+    "3년",
+    "4년",
+    "5년",
+    "6년",
+    "7년",
+    "8년",
+    "9년",
+    "10년",
+    "10년 이상"
+  ]
+}

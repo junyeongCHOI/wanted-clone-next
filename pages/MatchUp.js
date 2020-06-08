@@ -17,7 +17,7 @@ const MatchUp = ({ loginModalOn }) => {
     if (!token) {
       loginModalOn();
     } else {
-      Router.push("/profile");
+      Router.push("/profile?match=profile");
     }
   };
 

@@ -14,7 +14,7 @@ const CvWriteEducation = ({
     <CvWriteEducationWrap>
       <AddMore onClick={() => addNewEducation(1, 2)}>+ 추가</AddMore>
       {typedEducation.map((data, idx) => (
-        <CvWriteEducationInfo data={data} idx={idx} />
+        <CvWriteEducationInfo key={idx} data={data} idx={idx} />
       ))}
     </CvWriteEducationWrap>
   );

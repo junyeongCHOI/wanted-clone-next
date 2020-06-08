@@ -57,4 +57,8 @@ textarea {
     all:unset;
     box-sizing: border-box;
 }
+select {
+    all: unset;
+    box-sizing: border-box;
+}
 `;
