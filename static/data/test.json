@@ -1,48 +1,54 @@
-[
-  {
-    "id": 30,
-    "resume_id": 21,
-    "is_working": 0,
-    "start": ["", ""],
-    "end": ["", ""],
-    "company": "",
-    "position": "",
-    "result": [
-      {
-        "id": 18,
-        "career_id": 30,
-        "title": "",
-        "content": "",
-        "start": ["", ""],
-        "end": ["", ""]
-      }
-    ]
-  },
-  {
-    "id": 31,
-    "resume_id": 21,
-    "is_working": 0,
-    "start": ["", ""],
-    "end": ["", ""],
-    "company": "",
-    "position": "",
-    "result": [
-      {
-        "id": 19,
-        "career_id": 31,
-        "title": "",
-        "content": "",
-        "start": ["", ""],
-        "end": ["", ""]
-      },
-      {
-        "id": 20,
-        "career_id": 31,
-        "title": "",
-        "content": "",
-        "start": ["", ""],
-        "end": ["", ""]
-      }
-    ]
-  }
-]
+{
+  "countries": [
+    {
+      "country": "대만",
+      "cities": [
+        "Taipei City",
+        "New Taipei City",
+        "Taoyuan City",
+        "Taichung City",
+        "Tainan City",
+        "Kaohsiung City",
+        "Keelung City",
+        "Hsin-chu City",
+        "Hsin-chu County",
+        "Miaoli County",
+        "Chaiyi City",
+        "Changhua County",
+        "Nantou County",
+        "Yunlin County",
+        "Chaiyi County",
+        "Pingtung County",
+        "Yalin County",
+        "Hualien County",
+        "Taitung County",
+        "Wuhu County",
+        "Jinmen County",
+        "Matsu"
+      ]
+    },
+    {
+      "country": "싱가폴",
+      "cities": []
+    },
+    {
+      "country": "일본",
+      "cities": [
+        "Tokyo",
+        "Kanagawa",
+        "Chiba",
+        "Aichi",
+        "Osaka",
+        "Hyogo",
+        "Kyoto",
+        "Hukuoka",
+        "Okinawa",
+        "Hokkaido",
+        "Saitama",
+        "Hioshima",
+        "Miyagi",
+        "Etc"
+      ]
+    }
+  ]
+}

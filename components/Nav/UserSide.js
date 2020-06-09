@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Link from "next/link";
 import { connect } from "react-redux";
 import { loginModalOn } from "../../actions";
 import { navSmall } from "../../config";
 import LoginMenu from "./LoginMenu";
 
-const UserSide = ({ loginModalOn }) => {
+const UserSide = ({ loginModalOn, setFilterOn }) => {
   const [userImg, setuserImg] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -22,7 +23,7 @@ const UserSide = ({ loginModalOn }) => {
     <>
       <UserSideWrap>
         <Search>
-          <i className="xi-search" />
+          <i className="xi-search" onClick={() => setFilterOn(true)} />
           <i className="xi-bell-o" />
         </Search>
         <Line style={{ display: userImg ? "none" : "" }} />
@@ -37,7 +38,11 @@ const UserSide = ({ loginModalOn }) => {
         ) : (
           <RegNLogin onClick={loginModalOn}>회원가입/로그인</RegNLogin>
         )}
-        <Service>기업 서비스</Service>
+        <Link href="/CompanyIntro">
+          <a>
+            <Service>기업 서비스</Service>
+          </a>
+        </Link>
       </UserSideWrap>
       <SmallUserSideWrap>
         <Register>회원가입</Register>
@@ -90,6 +95,7 @@ const RegNLogin = styled.div`
 `;
 
 const Service = styled.div`
+  color: #333;
   cursor: pointer;
 `;
 

@@ -12,7 +12,7 @@ const PasswordModal = ({ email, passwordModalOff }) => {
 
   const submitPassword = async (e) => {
     e.preventDefault();
-    if (passwordRegCheck) {
+    if (passwordRegCheck(password)) {
       try {
         const res = await axios.post(LOGIN, {
           email,

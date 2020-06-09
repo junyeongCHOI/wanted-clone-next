@@ -8,7 +8,7 @@ const WdCards = ({ data }) => {
   return (
     <WdCardsWrap>
       {data.map((item) => (
-        <WdCard key={item.item_id} item={item} />
+        <WdCard key={item.id} item={item} />
       ))}
       {nowLoading && <MockCards />}
     </WdCardsWrap>

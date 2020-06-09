@@ -26,6 +26,7 @@ const CvWriteCareerInfo = ({
   typingCWCompnay,
   typingCWPosition,
   addNewProject,
+  deleteCareer,
 }) => {
   const pushAddNewProjectBtn = async (e) => {
     const token = localStorage.getItem("token");
@@ -95,7 +96,10 @@ const CvWriteCareerInfo = ({
       </CWCDateSide>
       <CWCInfoSide>
         <DeleteCBtn>
-          <i className="xi-close-min" />
+          <i
+            className="xi-close-min"
+            onClick={() => deleteCareer(data[UIdx].id)}
+          />
         </DeleteCBtn>
         <CWCTitle
           placeholder="회사명"

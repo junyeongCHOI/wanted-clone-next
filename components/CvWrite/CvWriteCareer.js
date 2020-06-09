@@ -9,6 +9,42 @@ import CvWriteCareerInfo from "./CvWriteCareerInfo";
 import { createCvM, postCvM } from "../../config";
 
 const CvWriteCareer = ({ careers, addNewCareer, router, loadCareer }) => {
+  const getData = () => {
+    const token = localStorage.getItem("token");
+    (async () => {
+      try {
+        const res = await axios.get(
+          `${postCvM}/${router.query.id}?category=career`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        loadCareer(res.data.data);
+      } catch (err) {
+        console.warn(err);
+      }
+    })();
+  };
+
+  const deleteCareer = async (id) => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(`${createCvM}/${router.query.id}?category=career`, {
+        headers: {
+          Authorization: token,
+        },
+        data: {
+          id,
+        },
+      });
+      getData();
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   const pressAddNewCareerBtn = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -27,29 +63,14 @@ const CvWriteCareer = ({ careers, addNewCareer, router, loadCareer }) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    (async () => {
-      try {
-        const res = await axios.get(
-          `${postCvM}/${router.query.id}?category=career`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        loadCareer(res.data.data);
-      } catch (err) {
-        console.warn(err);
-      }
-    })();
+    getData();
   }, []);
 
   return (
     <CvWriteCareerWrap>
       <AddMore onClick={pressAddNewCareerBtn}> + 추가</AddMore>
       {careers.map((item, idx) => (
-        <CvWriteCareerInfo key={idx} UIdx={idx} />
+        <CvWriteCareerInfo key={idx} UIdx={idx} deleteCareer={deleteCareer} />
       ))}
     </CvWriteCareerWrap>
   );
