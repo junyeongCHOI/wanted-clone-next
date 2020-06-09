@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { withRouter } from "next/router";
+import Router, { withRouter } from "next/router";
 import Head from "next/head";
 import styled from "styled-components";
 import Link from "next/link";
+import axios from "axios";
+import { CvMain, CvWriteBodyAPI } from "../config";
 import LayoutUser from "../components/LayoutUser";
 import ProfileNavMenu from "../components/Profile/ProfileNavMenu";
 import ModifyUserInfo from "../components/Profile/ModifyUserInfo";
@@ -16,9 +18,33 @@ const matchedComponent = {
 };
 
 const Profile = ({ router }) => {
+  const [isEmpty, setIsEmpty] = useState(false);
   const [userImg, setUserImg] = useState("");
 
+  const makeNewResume = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.get(CvWriteBodyAPI, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      Router.push(`/CvWrite?id=${res.data.data.id}&l=profile`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    (async () => {
+      const res = await axios.get(CvMain, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setIsEmpty(res.data.data.length > 0 && true);
+    })();
     setUserImg(
       "https://lh3.googleusercontent.com/a-/AOh14GhSRRCqTFvxUCuImCg26qjZur0TW9YFY83Pi0PwVg=s96-c"
     );
@@ -63,7 +89,14 @@ const Profile = ({ router }) => {
               </UserSideBottomItem>
             </UserSide>
             <ProfileInfoSide>
-              {matchedComponent[router.query.match]}
+              {isEmpty ? (
+                matchedComponent[router.query.match]
+              ) : (
+                <GoResume>
+                  <h2>작성된 이력서가 없습니다! </h2>
+                  <h3 onClick={makeNewResume}>지금 작성하러 가기</h3>
+                </GoResume>
+              )}
             </ProfileInfoSide>
           </ProfileContainer>
         </ProfileWrap>
@@ -185,4 +218,22 @@ const UserSideBottomItem = styled.div`
 const ProfileInfoSide = styled.section`
   width: calc(100% - 250px);
   margin-left: 20px;
+`;
+
+const GoResume = styled.div`
+  text-align: center;
+  color: #999;
+  margin-top: 100px;
+
+  h2 {
+    margin-bottom: 50px;
+    font-size: 18px;
+  }
+
+  h3 {
+    padding: 10px;
+    font-size: 14px;
+    color: #258bf7;
+    cursor: pointer;
+  }
 `;

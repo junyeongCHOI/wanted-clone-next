@@ -5,12 +5,19 @@ import Router, { withRouter } from "next/router";
 import { connect } from "react-redux";
 import { CvWriteBodyAPI, postCvM } from "../../config";
 
-const CvWriteBottom = ({ data, router, careerData, awardData }) => {
+const CvWriteBottom = ({
+  data,
+  router,
+  careerData,
+  awardData,
+  eduData,
+  linkData,
+}) => {
   const postResume = async (state) => {
     try {
       const token = localStorage.getItem("token");
       await Promise.all[
-        ((axios.post(
+        (axios.post(
           `${CvWriteBodyAPI}/${router.query.id}`,
           {
             status: state,
@@ -30,14 +37,32 @@ const CvWriteBottom = ({ data, router, careerData, awardData }) => {
               Authorization: token,
             },
           }
-        )),
+        ),
         axios.post(`${postCvM}/${router.query.id}?category=award`, awardData, {
+          headers: {
+            Authorization: token,
+          },
+        }),
+        axios.post(
+          `${postCvM}/${router.query.id}?category=education`,
+          eduData,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        ),
+        axios.post(`${postCvM}/${router.query.id}?category=link`, linkData, {
           headers: {
             Authorization: token,
           },
         }))
       ];
-      Router.push("/CvList");
+      if (router.query.l === "profile") {
+        Router.push("/profile?match=profile");
+      } else {
+        Router.push("/CvList");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -60,6 +85,8 @@ const mapStateToProps = (state) => {
     data: state.typedCv,
     careerData: state.typedCvCareer,
     awardData: state.typedCvAward,
+    eduData: state.typedEducation,
+    linkData: state.typedCvLink,
   };
 };
 

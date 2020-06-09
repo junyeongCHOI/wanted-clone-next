@@ -36,6 +36,30 @@ export const registerModalOff = () => {
   };
 };
 
+export const companyLoginModalOn = () => {
+  return {
+    type: types.COMPANYLOGINMODALON,
+  };
+};
+
+export const companyLoginModalOff = () => {
+  return {
+    type: types.COMPANYLOGINMODALOFF,
+  };
+};
+
+export const companyRegisterModalOn = () => {
+  return {
+    type: types.COMPANYREGISTERMODALON,
+  };
+};
+
+export const companyRegisterModalOff = () => {
+  return {
+    type: types.COMPANYREGISTERMODALOFF,
+  };
+};
+
 export const typingCvTitle = (val) => {
   return {
     type: types.TYPINGCVTITLE,
@@ -296,9 +320,10 @@ export const loadEducation = (val) => {
   };
 };
 
-export const addNewEducation = () => {
+export const addNewEducation = (id) => {
   return {
     type: types.ADDNEWEDUCATION,
+    id,
   };
 };
 

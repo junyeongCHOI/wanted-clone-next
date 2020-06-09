@@ -6,10 +6,7 @@ import { seekSmall } from "../../config";
 const WdCard = ({ item }) => {
   return (
     <WdCardWrap>
-      <Link
-        as={`/WdDetail/${item.item_id}`}
-        href={`/WdDetail?id=${item.item_id}`}
-      >
+      <Link as={`/WdDetail/${item.id}`} href={`/WdDetail?id=${item.id}`}>
         <a>
           <HeaderImg url={item.image} />
           <BodyContent>
@@ -25,7 +22,7 @@ const WdCard = ({ item }) => {
               <Dot>.</Dot>
               {item.country}
             </BodyInfo>
-            <Reward>채용보상금 {item.reward}</Reward>
+            <Reward>채용보상금 {item.total_reward}</Reward>
           </BodyContent>
         </a>
       </Link>

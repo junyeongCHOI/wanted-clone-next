@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import {
-  loginModalOff,
-  registerModalOn,
-  reduceLoginEmail,
-  passwordModalOn,
-} from "../../actions";
-import { ISREGI } from "../../config";
+import { companyRegisterModalOff } from "../../actions";
 import axios from "axios";
 
-const LoginModal = ({
-  loginModalOff,
-  registerModalOn,
-  reduceLoginEmail,
-  passwordModalOn,
-}) => {
+const CompanyRegister = ({ companyRegisterModalOff }) => {
   const [value, setValue] = useState("");
   const [isValuable, setValuable] = useState(false);
+
+  const passwordRegCheck = (currentVal) => {
+    const regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
+    return regExp.test(currentVal);
+  };
 
   const changValue = (e) => {
     const val = e.target.value;
@@ -36,29 +30,6 @@ const LoginModal = ({
 
   const submitEmail = async (e) => {
     e.preventDefault();
-    if (value === "") {
-      return;
-    } else if (isValuable) {
-      try {
-        reduceLoginEmail(value);
-        const res = await axios.post(ISREGI, {
-          email: value,
-        });
-        if (res.data.MESSAGE === "True") {
-          passwordModalOn();
-          loginModalOff();
-        } else if (res.data.MESSAGE === "False") {
-          registerModalOn();
-          loginModalOff();
-        } else {
-          return;
-        }
-      } catch (err) {
-        console.log(err);
-        registerModalOn();
-        loginModalOff();
-      }
-    }
   };
 
   useEffect(() => {
@@ -68,26 +39,39 @@ const LoginModal = ({
 
   return (
     <>
-      <LoginModalWrap>
+      <CompanyRegisterWrap>
         <Title>
-          wanted
-          <i className="xi-close" onClick={loginModalOff} />
+          관리자 계정 만들기
+          <i className="xi-close" onClick={companyRegisterModalOff} />
         </Title>
         <LoginSide onSubmit={submitEmail}>
-          <h1>
-            친구에게 딱 맞는
-            <br />
-            회사를 추천해 주세요!
-          </h1>
-          <h2>
-            원티드는 친구에게 좋은 회사를 추천하고, <br />
-            채용 성공시 보상 받을 수 있는 서비스입니다.
-          </h2>
           <LoginForm>
+            <input
+              type="text"
+              placeholder="담당자 성함"
+              style={{
+                border: "1px solid #e1e2e3",
+              }}
+            />
+            <input
+              type="text"
+              placeholder="직책(or팀)"
+              style={{
+                border: "1px solid #e1e2e3",
+              }}
+            />
+            <input
+              type="text"
+              placeholder="연락처"
+              style={{
+                border: "1px solid #e1e2e3",
+              }}
+            />
             <label>이메일</label>
             <input
               type="email"
-              placeholder="이메일을 입력해 주세요."
+              autoComplete="user-name"
+              placeholder="회사 이메일 (로그인 아이디로 사용됩니다.)"
               value={value}
               onChange={changValue}
               style={{
@@ -102,36 +86,33 @@ const LoginModal = ({
             {value !== "" && !isValuable && (
               <Warn>올바른 이메일 형식을 입력해주세요.</Warn>
             )}
-            <SubmitInput>
-              <i className="far fa-envelope" />
-              이메일로 시작하기
-            </SubmitInput>
+            <input
+              type="password"
+              autoComplete="current-password"
+              placeholder="비밀번호"
+              style={{
+                border: "1px solid #e1e2e3",
+              }}
+            />
+            <SubmitInput>관리자 계정 생성</SubmitInput>
           </LoginForm>
-          <Info>
-            걱정마세요! 여러분의 지원 활동은 SNS에 노출되지 않습니다.
-            <br />
-            회원가입 시 <span>개인정보 처리방침</span>과 <span>이용약관</span>을
-            확인하였으며, 동의합니다.
-          </Info>
+          <Info>이미 가입되어있으신가요?</Info>
         </LoginSide>
-      </LoginModalWrap>
-      <LoginModalBg onClick={loginModalOff} />
+      </CompanyRegisterWrap>
+      <LoginModalBg onClick={companyRegisterModalOff} />
     </>
   );
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginModalOff: () => dispatch(loginModalOff()),
-    registerModalOn: () => dispatch(registerModalOn()),
-    reduceLoginEmail: (val) => dispatch(reduceLoginEmail(val)),
-    passwordModalOn: () => dispatch(passwordModalOn()),
+    companyRegisterModalOff: () => dispatch(companyRegisterModalOff()),
   };
 };
 
-export default connect(null, mapDispatchToProps)(LoginModal);
+export default connect(null, mapDispatchToProps)(CompanyRegister);
 
-const LoginModalWrap = styled.div`
+const CompanyRegisterWrap = styled.div`
   width: 400px;
   overflow-y: auto;
   top: 50%;
@@ -152,8 +133,8 @@ const Title = styled.div`
   position: relative;
   color: #333;
   text-align: center;
-  font-size: 21px;
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 600;
   i {
     font-size: 18px;
     padding: 18px;
@@ -233,6 +214,7 @@ const SubmitInput = styled.button`
   color: #fff;
   cursor: pointer;
   margin-top: 22px;
+  outline: none !important;
 
   i {
     font-size: 18px;

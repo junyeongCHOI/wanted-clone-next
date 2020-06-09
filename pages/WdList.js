@@ -1,14 +1,94 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import Router, { withRouter } from "next/router";
 import Head from "next/head";
 import LayoutUser from "../components/LayoutUser";
 import WdCards from "../components/WdList/WdCards";
 import WdPremiumCards from "../components/WdList/WdPremiumCards";
 import FilterBox from "../components/WdList/FilterBox";
-import { MYIP } from "../config";
+import { MYIP, WdListAPI } from "../config";
 
-const WdList = ({ data, PData }) => {
+const LIMIT = 20;
+const ItemHeight = 1800;
+
+const WdList = ({ data, PData, router }) => {
+  const [listData, setListData] = useState([...data]);
+  const [loadAble, setLoadAble] = useState(true);
+  const [loadTimes, setloadTimes] = useState(0);
+  let time = 0;
+
+  const scrollCheck = (e) => {
+    if (time === 0) {
+      if (e.target.scrollingElement.scrollTop > 1400) {
+        setloadTimes((prev) => prev + 1);
+        time++;
+      }
+    } else {
+      if (e.target.scrollingElement.scrollTop > 1400 + time * ItemHeight) {
+        setloadTimes((prev) => prev + 1);
+        time++;
+      }
+    }
+  };
+
+  const getData = async () => {
+    if (loadAble) {
+      const res = await axios.get(
+        `${WdListAPI}?sort_by=${router.query.sort_by}&year=${
+          router.query.year
+        }&country=${router.query.country}&city=${router.query.city}&keyword=${
+          router.query.keyword
+        }&offset=${loadTimes * 20}&limit=${LIMIT}`
+      );
+      setListData([...listData, ...res.data.position]);
+      if (res.data.position.length < 20 || !res.data.position.length) {
+        setLoadAble(false);
+      }
+    } else {
+      return;
+    }
+  };
+
+  useEffect(() => {
+    if (loadTimes === 0) {
+      return;
+    } else {
+      getData();
+    }
+  }, [loadTimes]);
+
+  useEffect(() => {
+    if (
+      !router.query.sort_by ||
+      !router.query.year ||
+      !router.query.country ||
+      !router.query.city
+    ) {
+      Router.push(
+        "/WdList?sort_by=latest&year=-1&country=all&city=all&keyword="
+      );
+      return;
+    }
+    (async () => {
+      const res = await axios.get(
+        `${WdListAPI}?sort_by=${router.query.sort_by}&year=${router.query.year}&country=${router.query.country}&city=${router.query.city}&keyword=${router.query.keyword}`
+      );
+      setListData(res.data.position);
+    })();
+  }, [
+    router.query.sort_by,
+    router.query.year,
+    router.query.country,
+    router.query.city,
+    router.query.keyword,
+  ]);
+
+  useEffect(() => {
+    document.addEventListener("scroll", scrollCheck);
+    return () => document.removeEventListener("scroll", scrollCheck);
+  }, []);
+
   return (
     <>
       <Head>
@@ -19,9 +99,9 @@ const WdList = ({ data, PData }) => {
           <WantedPosition>
             지금 이 시간, <span>꼭 봐야할 공고</span>에요!
             <WdPremiumCards items={PData} />
-            <FilterBox />
+            <FilterBox query={router.query} />
           </WantedPosition>
-          <WdCards data={data} />
+          <WdCards data={listData} />
         </WdListWrap>
       </LayoutUser>
     </>
@@ -30,13 +110,13 @@ const WdList = ({ data, PData }) => {
 
 WdList.getInitialProps = async () => {
   const [res, PRes] = await Promise.all([
-    axios(`${MYIP}/static/data/wdlistitems.json`),
+    axios.get(`${WdListAPI}`),
     axios(`${MYIP}/static/data/wdpremiumcards.json`),
   ]);
-  return { data: res.data.items, PData: PRes.data.items };
+  return { data: res.data.position, PData: PRes.data.items };
 };
 
-export default WdList;
+export default withRouter(WdList);
 
 const WdListWrap = styled.div`
   width: 90vw;

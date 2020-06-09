@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import Loading from "../Loading";
+import { spectList } from "../../config";
 
 const ProfileSpecialty = () => {
   const [listData, setListData] = useState(false);
@@ -19,10 +20,13 @@ const ProfileSpecialty = () => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     (async () => {
-      const res = await axios.get(
-        "http://localhost:3000/static/data/selectspec.json"
-      );
+      const res = await axios.get(spectList, {
+        headers: {
+          Authorization: token,
+        },
+      });
       setListData(res.data.speclist);
       setSpectList(res.data.speclist[0].lists);
       setYearList(res.data.year);
@@ -51,7 +55,7 @@ const ProfileSpecialty = () => {
         >
           {listData.map((item, idx) => (
             <option key={idx} value={idx}>
-              {item.title}
+              {item.title.name}
             </option>
           ))}
         </SpecSelectBox>
@@ -65,7 +69,7 @@ const ProfileSpecialty = () => {
               onClick={() => clickedOption(item.id)}
               isActive={selectedOPtion.includes(item.id)}
             >
-              {item.subtitle}
+              {item.name}
             </OptionItem>
           ))}
         </SelectOptionWrap>
@@ -79,12 +83,23 @@ const ProfileSpecialty = () => {
           }}
         >
           {yearList.map((item, idx) => (
-            <option key={idx} value={item}>
-              {item}
+            <option key={idx} value={idx}>
+              {item.year}
             </option>
           ))}
         </SpecSelectBox>
       </SpecInputWrap>
+      <ModifyInputWrap>
+        <InputWrap>
+          <InputSubTitle>만원</InputSubTitle>
+          <InputTitle>현재 연봉</InputTitle>
+          <ModifyInput />
+        </InputWrap>
+        <InputWrap>
+          <InputTitle>스킬</InputTitle>
+          <ModifyInput />
+        </InputWrap>
+      </ModifyInputWrap>
       <ModifyBtnWrap>
         <ModifyBtn>확인</ModifyBtn>
       </ModifyBtnWrap>
@@ -181,4 +196,43 @@ const ModifyBtn = styled.div`
   text-align: center;
   line-height: 50px;
   cursor: pointer;
+`;
+
+const ModifyInputWrap = styled.div`
+  padding: 80px 0 0;
+`;
+
+const InputWrap = styled.div`
+  position: relative;
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+`;
+
+const InputTitle = styled.div`
+  width: 150px;
+  color: #999;
+  font-size: 16px;
+  font-weight: 500;
+  padding-right: 40px;
+`;
+
+const InputSubTitle = styled.div`
+  position: absolute;
+  color: #999;
+  font-size: 16px;
+  font-weight: 500;
+  right: 0px;
+  top: 40px;
+`;
+
+const ModifyInput = styled.input`
+  width: calc(100% - 150px);
+  padding: 12px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 400;
+  border: 0;
+  border-bottom: 1px solid #e1e2e3;
 `;

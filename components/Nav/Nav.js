@@ -1,9 +1,11 @@
+import React, { useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { withRouter } from "next/router";
 import { navSmall } from "../../config";
 import NavMenu from "./NavMenu";
 import UserSide from "./UserSide";
+import Filter from "./Filter";
 
 const menuMock = [
   { title: "탐색", link: "/WdList" },
@@ -12,44 +14,69 @@ const menuMock = [
 ];
 
 const Nav = ({ router }) => {
+  const [isFilterOn, setFilterOn] = useState(false);
+
   return (
-    <NavWrap>
-      <NavContainer>
-        <Link href="/">
-          <a>
-            <Logo>wanted</Logo>
-          </a>
-        </Link>
-        <NavMenuWrap>
-          <HomeMenu>
-            <Link href="/">
-              <a>
-                <NavMenu title="홈" />
-              </a>
-            </Link>
-            <Link key={menuMock[0].title} href={menuMock[0].link}>
-              <a>
+    <>
+      <NavWrap>
+        <NavContainer>
+          <Link href="/">
+            <a>
+              <Logo>wanted</Logo>
+            </a>
+          </Link>
+          <NavMenuWrap>
+            <HomeMenu>
+              <Link href="/">
+                <a>
+                  <NavMenu title="홈" />
+                </a>
+              </Link>
+              <Link key={menuMock[0].title} href={menuMock[0].link}>
+                <a>
+                  <NavMenu
+                    title={menuMock[0].title}
+                    isOn={router.asPath === menuMock[0].link ? true : false}
+                  />
+                </a>
+              </Link>
+            </HomeMenu>
+            <Link href="/WdList">
+              <a onMouseOver={() => setFilterOn(true)}>
                 <NavMenu
-                  title={menuMock[0].title}
-                  isOn={router.asPath === menuMock[0].link ? true : false}
+                  title="탐색"
+                  isOn={router.asPath === "/WdList" ? true : false}
                 />
               </a>
             </Link>
-          </HomeMenu>
-          {menuMock.map((data) => (
-            <Link key={data.title} href={data.link}>
+            <Link href="/Resume">
               <a>
                 <NavMenu
-                  title={data.title}
-                  isOn={router.asPath === data.link ? true : false}
+                  title="이력서"
+                  isOn={
+                    router.asPath === "/Resume" ||
+                    router.asPath === "/CvList" ||
+                    router.asPath === "/CvWrite"
+                      ? true
+                      : false
+                  }
                 />
               </a>
             </Link>
-          ))}
-        </NavMenuWrap>
-        <UserSide />
-      </NavContainer>
-    </NavWrap>
+            <Link href="/MatchUp">
+              <a>
+                <NavMenu
+                  title="매치업"
+                  isOn={router.asPath === "/MatchUp" ? true : false}
+                />
+              </a>
+            </Link>
+          </NavMenuWrap>
+          <UserSide setFilterOn={setFilterOn} />
+        </NavContainer>
+      </NavWrap>
+      <Filter isFilterOn={isFilterOn} setFilterOn={setFilterOn} />
+    </>
   );
 };
 

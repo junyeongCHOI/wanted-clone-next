@@ -19,6 +19,14 @@
         { "id": 3211, "subtitle": "안드로이드 개발자" },
         { "id": 196, "subtitle": "DevOps" },
         { "id": 749, "subtitle": "Node.js 개발자" },
+        { "id": 2232, "subtitle": "데이터 사이언티스트" },
+        { "id": 52, "subtitle": "서버 개발자" },
+        { "id": 55, "subtitle": "웹 개발자" },
+        { "id": 99, "subtitle": "프론트엔드 개발자" },
+        { "id": 123, "subtitle": "자바 개발자" },
+        { "id": 3211, "subtitle": "안드로이드 개발자" },
+        { "id": 196, "subtitle": "DevOps" },
+        { "id": 749, "subtitle": "Node.js 개발자" },
         { "id": 2232, "subtitle": "데이터 사이언티스트" }
       ]
     },

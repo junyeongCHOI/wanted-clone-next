@@ -22,7 +22,6 @@ const typedEducation = (state = initailProps, action) => {
         ...state,
         {
           id: action.id,
-          resume_id: action.id,
           is_working: false,
           start: ["", ""],
           end: ["", ""],
