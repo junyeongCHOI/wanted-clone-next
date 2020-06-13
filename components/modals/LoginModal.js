@@ -19,6 +19,11 @@ const LoginModal = ({
   const [value, setValue] = useState("");
   const [isValuable, setValuable] = useState(false);
 
+  const checkEmail = (currentVal) => {
+    const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    return regExp.test(currentVal);
+  };
+
   const changValue = (e) => {
     const val = e.target.value;
     setValue(val);
@@ -27,11 +32,6 @@ const LoginModal = ({
     } else {
       setValuable(false);
     }
-  };
-
-  const checkEmail = (currentVal) => {
-    const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    return regExp.test(currentVal);
   };
 
   const submitEmail = async (e) => {

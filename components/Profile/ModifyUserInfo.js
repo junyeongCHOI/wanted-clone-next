@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { userinfo } from "../../config";
 
 const ModifyUserInfo = () => {
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    email: "",
+    contact: "",
+    country_id: null,
+  });
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    (async () => {
+      const res = await axios.get(`${userinfo}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setUserInfo(res.data.data);
+    })();
+  }, []);
+
   return (
     <ModifyUserInfoWrap>
       <header>기본정보 수정</header>

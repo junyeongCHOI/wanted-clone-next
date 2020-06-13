@@ -1,0 +1,31 @@
+{
+  "resume_list": [
+    {
+      "id": 1,
+      "name": "원티드",
+      "role": [
+        "프론트엔드 개발자",
+        "웹 개발자개발",
+        "매니저",
+        "Node.js 개발자",
+        "웹 퍼블리셔"
+      ],
+      "total_career": 10,
+      "career": [
+        {
+          "company": "대성산업",
+          "duration": 8
+        },
+        {
+          "company": "한성자동차",
+          "duration": 3
+        }
+      ],
+      "description": "안녕하세요. 10년차 프론트엔드 개발자 입니다.",
+      "skill": ["Python", "Data Analysys", "Machine Learning"],
+      "school": "한양대학교",
+      "specialism": "컴퓨터공학과",
+      "liked": true
+    }
+  ]
+}

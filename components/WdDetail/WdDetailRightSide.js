@@ -1,11 +1,30 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { wdDetailSmall } from "../../config";
+import { withRouter } from "next/router";
+import { wdDetailSmall, WdDetailAPI } from "../../config";
+import axios from "axios";
 import WdApply from "./WdApply";
 
-const WdDetailRightSide = ({ reward, applyBtn, showApply }) => {
+const WdDetailRightSide = ({
+  reward,
+  applyBtn,
+  showApply,
+  bookmark,
+  router,
+}) => {
   const [isStop, setStop] = useState(false);
   const height = useRef(null);
+  const [bm, setbm] = useState(bookmark);
+
+  const pushBm = async () => {
+    const token = localStorage.getItem("token");
+    const res = await axios.get(`${WdDetailAPI}/${router.query.id}/bookmark`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    setbm(res.data.message);
+  };
 
   const scrollCheck = (e) => {
     if (!height) {
@@ -14,7 +33,7 @@ const WdDetailRightSide = ({ reward, applyBtn, showApply }) => {
     if (
       e.target.scrollingElement.scrollTop >=
       document.scrollingElement.offsetHeight -
-        (height.current.offsetHeight + 1065)
+        (height.current.offsetHeight + 1003)
     ) {
       setStop(true);
     } else {
@@ -23,6 +42,15 @@ const WdDetailRightSide = ({ reward, applyBtn, showApply }) => {
   };
 
   useEffect(() => {
+    (async () => {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(`${WdDetailAPI}/${router.query.id}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setbm(res.data.position[0].bookmark);
+    })();
     document.addEventListener("scroll", scrollCheck);
     return () => document.removeEventListener("scroll", scrollCheck);
   }, []);
@@ -46,8 +74,8 @@ const WdDetailRightSide = ({ reward, applyBtn, showApply }) => {
           </RewardWrap>
           <ButtonWrap>
             <SubmitBtn onClick={applyBtn}>지원하기</SubmitBtn>
-            <BookmarkBtn>
-              <i className="xi-bookmark-o" />
+            <BookmarkBtn onClick={pushBm}>
+              <i className={`xi-bookmark${bm ? "" : "-o"}`} />
             </BookmarkBtn>
           </ButtonWrap>
         </FrontWrap>
@@ -57,7 +85,7 @@ const WdDetailRightSide = ({ reward, applyBtn, showApply }) => {
   );
 };
 
-export default WdDetailRightSide;
+export default withRouter(WdDetailRightSide);
 
 const WdDetailRightSideWrap = styled.div`
   width: 340px;

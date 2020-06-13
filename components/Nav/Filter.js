@@ -15,6 +15,7 @@ const Filter = ({ isFilterOn, setFilterOn }) => {
   const [inputVal, setInputVal] = useState("");
 
   const goFilterBtn = () => {
+    // location.href = ""
     Router.push(
       `/WdList?sort_by=${sort}&year=${year}&country=${country}&city=${city}&keyword=${inputVal}`
     );
@@ -39,7 +40,7 @@ const Filter = ({ isFilterOn, setFilterOn }) => {
             <FilterInput
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
-            />{" "}
+            />
             <i className="xi-search" />
           </FilterInputWrap>
           <h2>

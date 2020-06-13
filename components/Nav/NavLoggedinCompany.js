@@ -14,20 +14,37 @@ const NavLoggedinCompany = ({ router }) => {
             </MenuItem>
           </a>
         </Link>
-        <MenuItem isOn={router.pathname === "/dashboard/matchUp"}>
-          매치업
-          <Tag>N</Tag>
-        </MenuItem>
-        <MenuItem isOn={router.pathname === "/dashboard/position"}>
-          포지션
-        </MenuItem>
+        <Link href="/dashboard/matchup">
+          <a>
+            <MenuItem isOn={router.pathname === "/dashboard/matchup"}>
+              매치업
+              <Tag>N</Tag>
+            </MenuItem>
+          </a>
+        </Link>
+        <Link href="/dashboard/position">
+          <a>
+            <MenuItem
+              isOn={
+                router.pathname === "/dashboard/position" ||
+                router.pathname === "/dashboard/positionCreate"
+              }
+            >
+              포지션
+            </MenuItem>
+          </a>
+        </Link>
         <MenuItem isOn={router.pathname === "/dashboard/ad"}>
           채용 광고
           <Tag sale>SALE</Tag>
         </MenuItem>
-        <MenuItem isOn={router.pathname === "/dashboard/company"}>
-          회사정보
-        </MenuItem>
+        <Link href="/dashboard/modifycompany">
+          <a>
+            <MenuItem isOn={router.pathname === "/dashboard/modifycompany"}>
+              회사정보
+            </MenuItem>
+          </a>
+        </Link>
       </NavContainer>
     </NavLoggedinCompanyWrap>
   );
@@ -41,7 +58,7 @@ const NavLoggedinCompanyWrap = styled.div`
   position: fixed;
   top: 50px;
   background-color: #1c1c1c;
-  z-index: 1000;
+  z-index: 600;
 `;
 
 const NavContainer = styled.div`

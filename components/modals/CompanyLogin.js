@@ -2,24 +2,24 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { companyLoginModalOff } from "../../actions";
+import { LOGIN } from "../../config";
 import axios from "axios";
 
 const CompanyLogin = ({ companyLoginModalOff }) => {
   const [value, setValue] = useState("");
-  const [isValuable, setValuable] = useState(false);
+  const [password, setPassword] = useState("");
 
-  const passwordRegCheck = (currentVal) => {
-    const regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
-    return regExp.test(currentVal);
-  };
-
-  const changValue = (e) => {
-    const val = e.target.value;
-    setValue(val);
-    if (checkEmail(val)) {
-      setValuable(true);
-    } else {
-      setValuable(false);
+  const submit = async () => {
+    try {
+      const res = await axios.post(LOGIN, {
+        email: value,
+        password,
+      });
+      localStorage.setItem("token", res.data.token);
+      companyLoginModalOff();
+      location.href = "/dashboard";
+    } catch (err) {
+      alert("미안! 틀렸어.");
     }
   };
 
@@ -52,28 +52,31 @@ const CompanyLogin = ({ companyLoginModalOff }) => {
               autoComplete="user-name"
               placeholder="회사 이메일 (로그인 아이디로 사용됩니다.)"
               value={value}
-              onChange={changValue}
+              onChange={(e) => setValue(e.target.value)}
               style={{
                 border:
                   value === ""
                     ? "1px solid #e1e2e3"
-                    : isValuable
+                    : checkEmail(value)
                     ? "1px solid #36f"
                     : "1px solid #fe415c",
               }}
             />
-            {value !== "" && !isValuable && (
+            {value !== "" && !checkEmail(value) && (
               <Warn>올바른 이메일 형식을 입력해주세요.</Warn>
             )}
             <input
               type="password"
               autoComplete="current-password"
               placeholder="비밀번호"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               style={{
-                border: "1px solid #e1e2e3",
+                border:
+                  password === "" ? "1px solid #e1e2e3" : "1px solid #36f",
               }}
             />
-            <SubmitInput>로그인</SubmitInput>
+            <SubmitInput onClick={submit}>로그인</SubmitInput>
           </LoginForm>
           <Info>계정이 없으신가요?</Info>
         </LoginSide>

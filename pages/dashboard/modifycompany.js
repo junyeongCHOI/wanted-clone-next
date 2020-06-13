@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Head from "next/head";
-import LayoutCompany from "../components/LayoutCompany";
+import LayoutCompany from "../../components/LayoutCompany";
 
 const applyCompanyInfo = () => {
   const [companyName, setCompanyName] = useState("");
@@ -23,13 +23,10 @@ const applyCompanyInfo = () => {
       <Head>
         <title>Wanted from Employers</title>
       </Head>
-      <LayoutCompany footer={false}>
+      <LayoutCompany footer={false} loggedin>
         <ApplyCompanyInfoWrap>
-          <h2>회사 정보를 등록해주세요.</h2>
-          <h3>
-            원티드는 추천인/후보자들에게 좋은 일자리를 제공하기 위해, 다음
-            정보를 리뷰하여 회사등록을 승인하고 있습니다.
-          </h3>
+          <h2>회사 정보</h2>
+          <h3 />
           <InputWrap>
             <h3>회사이름</h3>
             <input
@@ -156,7 +153,7 @@ const applyCompanyInfo = () => {
         </ApplyCompanyInfoWrap>
         <SubmitWrap>
           <SubmitContainer>
-            <SubmitBtn>제출하기</SubmitBtn>
+            <SubmitBtn>수정 완료</SubmitBtn>
           </SubmitContainer>
         </SubmitWrap>
       </LayoutCompany>
@@ -170,7 +167,7 @@ const ApplyCompanyInfoWrap = styled.div`
   width: 87.73%;
   max-width: 1060px;
   margin: 0 auto;
-  padding: 90px 0;
+  padding: 150px 0 90px;
 
   h2 {
     font-size: 26px;
