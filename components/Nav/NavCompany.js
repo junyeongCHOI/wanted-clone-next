@@ -21,7 +21,7 @@ const NavCompany = ({ companyLoginModalOn, companyRegisterModalOn }) => {
 
   const logout = () => {
     localStorage.removeItem("token");
-    Router.push("/CompanyIntro");
+    location.href = "/CompanyIntro";
   };
 
   return (
@@ -34,7 +34,7 @@ const NavCompany = ({ companyLoginModalOn, companyRegisterModalOn }) => {
               <LoginedUser style={{ backgroundImage: `url(${userInfo.img})` }}>
                 {showMenu && (
                   <LoginMenuWrap>
-                    <Link prefetch href="/profile?match=profile">
+                    <Link href="/profile?match=profile">
                       <a>
                         <LoGinMenuItem>프로필</LoGinMenuItem>
                       </a>
@@ -146,6 +146,7 @@ const LoginedUser = styled.div`
 const LoginMenuWrap = styled.div`
   position: absolute;
   padding-top: 10px;
+  z-index: 2000 !important;
   top: 41px;
   min-width: 170px;
   border-radius: 0 0 3px 3px;

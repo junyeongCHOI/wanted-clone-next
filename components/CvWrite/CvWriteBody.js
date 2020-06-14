@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import axios from "axios";
 import styled from "styled-components";
+import TextareaAutosize from "react-textarea-autosize";
 import {
   typingCvTitle,
   typingCvName,
@@ -44,6 +45,7 @@ const CvWriteBody = ({
         res.data.resume.phone === null ? "" : res.data.resume.phone
       );
       typingCvAbout(res.data.resume.about);
+      console.log(res.data.resume);
     })();
   }, []);
 
@@ -81,6 +83,7 @@ const CvWriteBody = ({
       <CvWriteTextArea
         placeholder="간단한 자기소개를 통해 이력서를 돋보이게 만들어보세요. (3~5줄 권장)"
         maxLength="3000"
+        minRows={3}
         value={aboutVal}
         onChange={(e) => typingCvAbout(e.target.value)}
       />
@@ -168,13 +171,14 @@ const PhoneInput = styled(Input)`
   margin: 20px 0 30px;
 `;
 
-const CvWriteTextArea = styled.textarea`
+const CvWriteTextArea = styled(TextareaAutosize)`
   background-color: transparent;
   border: none;
   border-radius: 0;
   padding-top: 3px;
   height: 440px;
   width: 100%;
+  line-height: 1.4;
   white-space: pre-wrap;
   word-wrap: break-word;
   font-size: 16px;

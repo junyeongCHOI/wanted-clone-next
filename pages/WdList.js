@@ -11,12 +11,12 @@ import { MYIP, WdListAPI } from "../config";
 
 const LIMIT = 20;
 const ItemHeight = 1800;
+let time = 0;
 
 const WdList = ({ data, PData, router }) => {
   const [listData, setListData] = useState([...data]);
   const [loadAble, setLoadAble] = useState(true);
   const [loadTimes, setloadTimes] = useState(0);
-  let time = 0;
 
   const scrollCheck = (e) => {
     if (time === 0) {
@@ -71,6 +71,10 @@ const WdList = ({ data, PData, router }) => {
       return;
     }
     (async () => {
+      setloadTimes(0);
+      time = 0;
+      window.scrollTo(0, 0);
+      setListData([]);
       const res = await axios.get(
         `${WdListAPI}?sort_by=${router.query.sort_by}&year=${router.query.year}&country=${router.query.country}&city=${router.query.city}&keyword=${router.query.keyword}`
       );

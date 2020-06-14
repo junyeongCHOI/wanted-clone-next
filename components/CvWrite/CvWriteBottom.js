@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import Router, { withRouter } from "next/router";
@@ -13,11 +13,15 @@ const CvWriteBottom = ({
   eduData,
   linkData,
 }) => {
+  const [ableBtn, setAbleBtn] = useState(false);
   const postResume = async (state) => {
     try {
+      if (!ableBtn) {
+        return;
+      }
       const token = localStorage.getItem("token");
-      await Promise.all[
-        (axios.post(
+      await Promise.all([
+        axios.post(
           `${CvWriteBodyAPI}/${router.query.id}`,
           {
             status: state,
@@ -56,8 +60,9 @@ const CvWriteBottom = ({
           headers: {
             Authorization: token,
           },
-        }))
-      ];
+        }),
+      ]);
+
       if (router.query.l === "profile") {
         Router.push("/profile?match=profile");
       } else {
@@ -68,13 +73,23 @@ const CvWriteBottom = ({
     }
   };
 
+  useEffect(() => {
+    if (data.title !== "" && data.email !== "" && data.name !== "") {
+      setAbleBtn(true);
+    } else {
+      setAbleBtn(false);
+    }
+  }, [data]);
+
   return (
     <CvWriteBottomWrap>
       <CvWriteBottomContainer>
         <TempSubmitBtn onClick={() => postResume(true)}>
           임시 저장
         </TempSubmitBtn>
-        <CvSubmitBtn onClick={() => postResume(false)}>작성 완료</CvSubmitBtn>
+        <CvSubmitBtn isAble={ableBtn} onClick={() => postResume(false)}>
+          작성 완료
+        </CvSubmitBtn>
       </CvWriteBottomContainer>
     </CvWriteBottomWrap>
   );
@@ -126,7 +141,7 @@ const TempSubmitBtn = styled.div`
 `;
 
 const CvSubmitBtn = styled(TempSubmitBtn)`
-  border-color: #258bf7;
-  background-color: #258bf7;
-  color: #fff;
+  border-color: ${({ isAble }) => (isAble ? "#358f7" : "#fff")};
+  background-color: ${({ isAble }) => (isAble ? "#258bf7" : "#e0e0e0")};
+  color: ${({ isAble }) => (isAble ? "#fff" : "#a0a0a0")};
 `;

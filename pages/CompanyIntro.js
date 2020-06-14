@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import Head from "next/head";
 import LayoutCompany from "../components/LayoutCompany";
 import Link from "next/link";
 import { connect } from "react-redux";
@@ -9,12 +10,15 @@ const CompanyIntro = ({ loginModalOn }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      return;
+      location.href = "/dashboard";
     }
   }, []);
 
   return (
     <>
+      <Head>
+        <title>Wanted for Employers</title>
+      </Head>
       <LayoutCompany>
         <CompanyIntroWrap>
           <IntroItem>

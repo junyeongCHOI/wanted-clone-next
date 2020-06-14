@@ -4,7 +4,7 @@ import Head from "next/head";
 import styled from "styled-components";
 import Link from "next/link";
 import axios from "axios";
-import { CvMain, CvWriteBodyAPI } from "../config";
+import { CvMain, CvWriteBodyAPI, userinfo } from "../config";
 import LayoutUser from "../components/LayoutUser";
 import ProfileNavMenu from "../components/Profile/ProfileNavMenu";
 import ModifyUserInfo from "../components/Profile/ModifyUserInfo";
@@ -19,6 +19,12 @@ const matchedComponent = {
 
 const Profile = ({ router }) => {
   const [isEmpty, setIsEmpty] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    email: "",
+    contact: "",
+    country_id: null,
+  });
   const [userImg, setUserImg] = useState("");
 
   const makeNewResume = async () => {
@@ -43,6 +49,12 @@ const Profile = ({ router }) => {
           Authorization: token,
         },
       });
+      const infores = await axios.get(userinfo, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setUserInfo(infores.data.data);
       setIsEmpty(res.data.data.length > 0 && true);
     })();
     setUserImg(
@@ -66,9 +78,9 @@ const Profile = ({ router }) => {
                 </UserImageBtn>
               </UserImage>
               <AsideMe>
-                <h2>최준영</h2>
-                <p>asxd153@gmail.com</p>
-                <p>010-3434-0875</p>
+                <h2>{userInfo.name}</h2>
+                <p>{userInfo.email}</p>
+                <p>{userInfo.contact}</p>
               </AsideMe>
               <Link href="/profile?match=modify">
                 <a>

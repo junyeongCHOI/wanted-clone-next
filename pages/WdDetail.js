@@ -55,6 +55,7 @@ const WdDetail = ({ data, loginModalOn }) => {
               reward={data.reward}
               applyBtn={applyBtn}
               showApply={showApply}
+              bookmark={data.bookmark}
             />
           </BodyWrap>
           <WdDetailRecommend list={data.recommendation} />
@@ -66,7 +67,7 @@ const WdDetail = ({ data, loginModalOn }) => {
 };
 
 WdDetail.getInitialProps = async (ctx) => {
-  const res = await axios(`${WdDetailAPI}/${ctx.query.id}`);
+  const res = await axios(`${WdDetailAPI}/${ctx.query.id}?offset=0&limit=8`);
   // const res = await axios("http://localhost:3000/static/data/wddetail.json");
   return {
     data: res.data.position[0],

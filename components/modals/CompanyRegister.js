@@ -3,24 +3,22 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { companyRegisterModalOff } from "../../actions";
 import axios from "axios";
+import { ADMINREGISTER } from "../../config";
 
 const CompanyRegister = ({ companyRegisterModalOff }) => {
   const [value, setValue] = useState("");
-  const [isValuable, setValuable] = useState(false);
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [job, setJob] = useState("");
+  const [contact, setContact] = useState("");
 
   const passwordRegCheck = (currentVal) => {
     const regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/;
     return regExp.test(currentVal);
   };
 
-  const changValue = (e) => {
-    const val = e.target.value;
-    setValue(val);
-    if (checkEmail(val)) {
-      setValuable(true);
-    } else {
-      setValuable(false);
-    }
+  const checkContact = (e) => {
+    setContact(e.target.value.replace(/[^0-9]/g, ""));
   };
 
   const checkEmail = (currentVal) => {
@@ -30,6 +28,31 @@ const CompanyRegister = ({ companyRegisterModalOff }) => {
 
   const submitEmail = async (e) => {
     e.preventDefault();
+    if (
+      checkEmail(value) &&
+      passwordRegCheck(password) &&
+      name !== "" &&
+      job !== "" &&
+      contact !== ""
+    ) {
+      try {
+        const res = await axios.post(ADMINREGISTER, {
+          email: value,
+          job_position: job,
+          contact: contact,
+          name: name,
+          password: password,
+        });
+        localStorage.setItem("token", res.data.token);
+        location.href = "/dashboard";
+        companyRegisterModalOff();
+      } catch (err) {
+        console.error(err);
+        alert("이미 가입된 이메일 입니다.");
+      }
+    } else {
+      return;
+    }
   };
 
   useEffect(() => {
@@ -47,11 +70,14 @@ const CompanyRegister = ({ companyRegisterModalOff }) => {
         <LoginSide onSubmit={submitEmail}>
           <LoginForm>
             <input
+              autoFocus
               type="text"
               placeholder="담당자 성함"
               style={{
                 border: "1px solid #e1e2e3",
               }}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <input
               type="text"
@@ -59,6 +85,8 @@ const CompanyRegister = ({ companyRegisterModalOff }) => {
               style={{
                 border: "1px solid #e1e2e3",
               }}
+              value={job}
+              onChange={(e) => setJob(e.target.value)}
             />
             <input
               type="text"
@@ -66,6 +94,8 @@ const CompanyRegister = ({ companyRegisterModalOff }) => {
               style={{
                 border: "1px solid #e1e2e3",
               }}
+              value={contact}
+              onChange={checkContact}
             />
             <label>이메일</label>
             <input
@@ -73,27 +103,37 @@ const CompanyRegister = ({ companyRegisterModalOff }) => {
               autoComplete="user-name"
               placeholder="회사 이메일 (로그인 아이디로 사용됩니다.)"
               value={value}
-              onChange={changValue}
+              onChange={(e) => setValue(e.target.value)}
               style={{
                 border:
                   value === ""
                     ? "1px solid #e1e2e3"
-                    : isValuable
+                    : checkEmail(value)
                     ? "1px solid #36f"
                     : "1px solid #fe415c",
               }}
             />
-            {value !== "" && !isValuable && (
+            {value !== "" && !checkEmail(value) && (
               <Warn>올바른 이메일 형식을 입력해주세요.</Warn>
             )}
             <input
               type="password"
               autoComplete="current-password"
-              placeholder="비밀번호"
+              placeholder="비밀번호 (숫자, 영문, 특수문자 포함 6자리 이상)"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               style={{
-                border: "1px solid #e1e2e3",
+                border:
+                  password === ""
+                    ? "1px solid #e1e2e3"
+                    : passwordRegCheck(password)
+                    ? "1px solid #36f"
+                    : "1px solid #fe415c",
               }}
             />
+            {password !== "" && !passwordRegCheck(password) && (
+              <Warn>올바른 비밀번호 형식을 입력해주세요.</Warn>
+            )}
             <SubmitInput>관리자 계정 생성</SubmitInput>
           </LoginForm>
           <Info>이미 가입되어있으신가요?</Info>

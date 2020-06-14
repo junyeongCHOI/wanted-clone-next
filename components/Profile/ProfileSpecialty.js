@@ -1,15 +1,47 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import Router, { withRouter } from "next/router";
 import Loading from "../Loading";
-import { spectList } from "../../config";
+import { spectList, getprofileSpec } from "../../config";
 
-const ProfileSpecialty = () => {
+const ProfileSpecialty = ({ router }) => {
   const [listData, setListData] = useState(false);
   const [specList, setSpectList] = useState(false);
+  const [job, setJob] = useState(0);
   const [selectedOPtion, setSelectedOption] = useState([]);
   const [yearList, setYearList] = useState([]);
-  const [selectedYear, setSelectedYear] = useState("신입");
+  const [selectedYear, setSelectedYear] = useState(1);
+  const [money, setMomey] = useState(0);
+  const [skill, setSkill] = useState("");
+
+  const submit = async () => {
+    const token = localStorage.getItem("token");
+    await axios.post(
+      `${getprofileSpec}/${router.query.id}`,
+      {
+        job_category: job,
+        role: selectedOPtion,
+        matchup_career: selectedYear,
+        income: money,
+        skill:
+          skill.split(",").map((sk) => sk.trim()).length === 1 &&
+          skill.split(",").map((sk) => sk.trim())[0] === ""
+            ? []
+            : skill.split(",").map((sk) => sk.trim()),
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    Router.push("/profile?match=profile");
+  };
+
+  const checkNum = (e) => {
+    setMomey(e.target.value.replace(/[^0-9]/g, "").slice(0, 6));
+  };
 
   const clickedOption = (id) => {
     if (selectedOPtion.includes(id)) {
@@ -27,9 +59,30 @@ const ProfileSpecialty = () => {
           Authorization: token,
         },
       });
-      setListData(res.data.speclist);
-      setSpectList(res.data.speclist[0].lists);
-      setYearList(res.data.year);
+      const gres = await axios.get(`${getprofileSpec}/${router.query.id}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      if (gres.data.data) {
+        setListData(res.data.speclist);
+        setYearList(res.data.year);
+        setSpectList(
+          res.data.speclist.filter(
+            (item, idx) => item.title.id === gres.data.data.job_category
+          )[0].lists
+        );
+        setJob(gres.data.data.job_category);
+        setSelectedOption(gres.data.data.role);
+        setSelectedYear(gres.data.data.matchup_career);
+        setMomey(gres.data.data.income);
+        setSkill(gres.data.data.skill.join(","));
+      } else {
+        setJob(1);
+        setYearList(res.data.year);
+        setListData(res.data.speclist);
+        setSpectList(res.data.speclist[0].lists);
+      }
     })();
   }, []);
 
@@ -48,13 +101,15 @@ const ProfileSpecialty = () => {
         <h2>직군</h2>
         <SelectDownBtn />
         <SpecSelectBox
+          value={job}
           onChange={(e) => {
-            setSpectList(listData[e.target.value].lists);
+            setSpectList(listData[e.target.options.selectedIndex].lists);
+            setJob(e.target.value);
             setSelectedOption([]);
           }}
         >
           {listData.map((item, idx) => (
-            <option key={idx} value={idx}>
+            <option key={idx} value={item.title.id}>
               {item.title.name}
             </option>
           ))}
@@ -78,12 +133,13 @@ const ProfileSpecialty = () => {
         <h2>경력</h2>
         <SelectDownBtn />
         <SpecSelectBox
+          defaultValue={selectedYear}
           onChange={(e) => {
             setSelectedYear(e.target.value);
           }}
         >
           {yearList.map((item, idx) => (
-            <option key={idx} value={idx}>
+            <option key={idx} value={item.id}>
               {item.year}
             </option>
           ))}
@@ -93,21 +149,25 @@ const ProfileSpecialty = () => {
         <InputWrap>
           <InputSubTitle>만원</InputSubTitle>
           <InputTitle>현재 연봉</InputTitle>
-          <ModifyInput />
+          <ModifyInput value={money} onChange={checkNum} />
         </InputWrap>
         <InputWrap>
           <InputTitle>스킬</InputTitle>
-          <ModifyInput />
+          <ModifyInput
+            placeholder=", 으로 구분"
+            value={skill}
+            onChange={(e) => setSkill(e.target.value)}
+          />
         </InputWrap>
       </ModifyInputWrap>
       <ModifyBtnWrap>
-        <ModifyBtn>확인</ModifyBtn>
+        <ModifyBtn onClick={submit}>확인</ModifyBtn>
       </ModifyBtnWrap>
     </ProfileSpecialtyWrap>
   );
 };
 
-export default ProfileSpecialty;
+export default withRouter(ProfileSpecialty);
 
 const ProfileSpecialtyWrap = styled.div`
   padding: 30px;

@@ -6,6 +6,8 @@ import PasswordModal from "../components/modals/PasswordModal";
 import CompanyLogin from "../components/modals/CompanyLogin";
 import CompanyRegister from "../components/modals/CompanyRegister";
 import { connect } from "react-redux";
+import "rc-slider/assets/index.css";
+import "react-calendar/dist/Calendar.css";
 
 class WrappedApp extends App {
   render() {

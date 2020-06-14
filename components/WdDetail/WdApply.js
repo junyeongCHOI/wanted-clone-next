@@ -1,15 +1,34 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { MYIP } from "../../config";
+import Router from "next/router";
+import { withRouter } from "next/router";
+import {
+  MYIP,
+  userinfo,
+  CvMain,
+  CvWriteBodyAPI,
+  WdDetailAPI,
+} from "../../config";
 import Loading from "../../components/Loading";
 
-const ResumeList = ({ item }) => {
+const ResumeList = ({ item, setPickedResume, pickedResume }) => {
   return (
     <ResumeListWrap>
       <ResumeListCheckBox>
-        {item.state === "첨부 완료" || item.state === "작성 완료" ? (
-          <i className="xi-checkbox-blank" />
+        {item.status === "첨부 완료" || item.status === "작성 완료" ? (
+          pickedResume === item.id ? (
+            <i
+              style={{ color: "#36f" }}
+              className="xi-check-square"
+              onClick={() => setPickedResume(false)}
+            />
+          ) : (
+            <i
+              className="xi-checkbox-blank"
+              onClick={() => setPickedResume(item.id)}
+            />
+          )
         ) : (
           <i className="xi-layout-full" />
         )}
@@ -21,7 +40,7 @@ const ResumeList = ({ item }) => {
             : item.title}
         </ResumeTitle>
         <ResumeSubWrap>
-          {item.date} | {item.state}
+          {item.date} | {item.status}
         </ResumeSubWrap>
       </ResumeListInfoWrap>
       <GoResumeBtn>
@@ -31,8 +50,42 @@ const ResumeList = ({ item }) => {
   );
 };
 
-const WdApply = ({ applyBtn, hRef }) => {
+const WdApply = ({ applyBtn, hRef, router }) => {
   const [resumeList, setResumeList] = useState(false);
+  const [userInfo, setUserInfo] = useState(false);
+  const [pickedResume, setPickedResume] = useState(false);
+
+  const submit = async () => {
+    if (pickedResume) {
+      const token = localStorage.getItem("token");
+      await axios.post(
+        `${WdDetailAPI}/${router.query.id}/apply`,
+        {
+          resume_id: pickedResume,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      applyBtn();
+    }
+  };
+
+  const makeNewResume = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.get(CvWriteBodyAPI, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      Router.push(`/CvWrite?id=${res.data.data.id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -42,15 +95,21 @@ const WdApply = ({ applyBtn, hRef }) => {
     }
     try {
       (async () => {
-        const res = await axios.get(`${MYIP}/static/data/cvlist.json`);
-        setResumeList(res.data.cvlist);
+        const ires = await axios.get(userinfo, {
+          headers: { Authorization: token },
+        });
+        const res = await axios.get(CvMain, {
+          headers: { Authorization: token },
+        });
+        setUserInfo(ires.data.data);
+        setResumeList(res.data.data);
       })();
     } catch (err) {
       console.warn(err);
     }
   }, []);
 
-  if (!resumeList) {
+  if (!resumeList || !userInfo) {
     return (
       <WdApplyWrap ref={hRef}>
         <Loading />
@@ -70,15 +129,15 @@ const WdApply = ({ applyBtn, hRef }) => {
           <WDApplyInfo>
             <WDApplyInputWrap>
               <h4>이름</h4>
-              <input type="text" />
+              <input type="text" value={userInfo.name} />
             </WDApplyInputWrap>
             <WDApplyInputWrap>
               <h4>이메일</h4>
-              <input type="text" />
+              <input type="text" value={userInfo.email} />
             </WDApplyInputWrap>
             <WDApplyInputWrap>
               <h4>연락처</h4>
-              <input type="text" />
+              <input type="text" value={userInfo.contact} />
             </WDApplyInputWrap>
           </WDApplyInfo>
           <WDApplyAddResumeTitle>
@@ -86,20 +145,27 @@ const WdApply = ({ applyBtn, hRef }) => {
             <WDSubBtn style={{ color: "#258bf7" }}>+ 파일 업로드</WDSubBtn>
           </WDApplyAddResumeTitle>
           {resumeList.map((item) => (
-            <ResumeList key={item.id} item={item} />
+            <ResumeList
+              key={item.id}
+              item={item}
+              setPickedResume={setPickedResume}
+              pickedResume={pickedResume}
+            />
           ))}
-          <AddNewResume>새 이력서 작성</AddNewResume>
+          <AddNewResume onClick={makeNewResume}>새 이력서 작성</AddNewResume>
           <WDApplyText>
             원티드 이력서로 지원하면 최종 합격률이 40% 높아집니다.
           </WDApplyText>
         </WDApplyBodyContainer>
-        <WDApplySubmit>제출하기</WDApplySubmit>
+        <WDApplySubmit isOn={pickedResume} onClick={submit}>
+          제출하기
+        </WDApplySubmit>
       </WDApplyBody>
     </WdApplyWrap>
   );
 };
 
-export default WdApply;
+export default withRouter(WdApply);
 
 const WdApplyWrap = styled.div`
   border-radius: 3px 3px 0 0;
@@ -281,7 +347,7 @@ const WDApplyText = styled.div`
 const WDApplySubmit = styled.div`
   width: 100%;
   height: 50px;
-  background: #258bf7;
+  background: ${({ isOn }) => (isOn ? "#258bf7" : "#d2d2d2")};
   color: #fff;
   font-size: 16px;
   font-weight: 600;

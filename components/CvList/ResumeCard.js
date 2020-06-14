@@ -42,6 +42,7 @@ const ResumeCard = ({ item, getData }) => {
             : item.title}
         </h3>
         <p>{item.created_at}</p>
+        {item.is_matchup && <h4>매치업 이력서</h4>}
       </ResumeCardInfo>
       <ResumeCardState>
         <StateText isActive={item.status !== "작성 중" ? true : false}>
@@ -68,6 +69,11 @@ const ResumeCardInfo = styled.div`
 
   h3 {
     font-weight: 900;
+  }
+
+  h4 {
+    color: #36f;
+    margin-top: 5px;
   }
 
   p {

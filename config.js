@@ -8,29 +8,36 @@ export const seekSmall = "995px";
 export const wdDetailSmall = "995px";
 
 //API
-export const MYIP = "http://192.168.219.102:3000";
+export const MYIP = "http://10.58.2.121:3000";
 // http://192.168.219.101:3000
+const SYAPI = "http://10.58.2.112:8000";
 
-const TOMAPI = "http://192.168.219.108:8000";
-export const CvMain = `${TOMAPI}/user/resumeMain`;
-export const CvWriteBodyAPI = `${TOMAPI}/user/resume`;
-export const createCvM = `${TOMAPI}/user/resumeDetail`;
-export const postCvM = `${TOMAPI}/user/resumeDetailWrite`;
-export const creatCvResult = `${TOMAPI}/user/resumeResult`;
-export const spectList = `${TOMAPI}/user/specList`;
-export const userUserResume = `${TOMAPI}/user/
+const TOMAPI = "http://10.58.2.185:8000";
+export const CvMain = `${SYAPI}/user/resumeMain`;
+export const CvWriteBodyAPI = `${SYAPI}/user/resume`;
+export const createCvM = `${SYAPI}/user/resumeDetail`;
+export const postCvM = `${SYAPI}/user/resumeDetailWrite`;
+export const creatCvResult = `${SYAPI}/user/resumeResult`;
+export const spectList = `${SYAPI}/user/specList`;
+export const userUserResume = `${SYAPI}/user/
 userResume`;
-export const profileSpec = `${TOMAPI}/user/matchupDetail`;
+export const profileSpec = `${SYAPI}/user/matchupDetail`;
+export const getprofileSpec = `${SYAPI}/user/resumeRole`;
+export const userinfo = `${SYAPI}/user/userUpdate`;
 
-const SYAPI = "http://192.168.219.107:8000";
+//서율 에이피아이
+
 export const WdDetailAPI = `${SYAPI}/company/position`;
 export const WdListAPI = `${SYAPI}/company/position/main`;
 export const filterData = `${SYAPI}/company/position/main/filter`;
+export const getBList = `${SYAPI}/user/bookmark`;
+export const getDashboardMatchup = `${SYAPI}/company/matchup/search`;
 
 const PIEAPI = "http://192.168.219.103:8000";
-export const ISREGI = `${TOMAPI}/user/exists`;
-export const REGISTER = `${TOMAPI}/user/register`;
-export const LOGIN = `${TOMAPI}/user/login`;
+export const ISREGI = `${SYAPI}/user/exists`;
+export const REGISTER = `${SYAPI}/user/register`;
+export const ADMINREGISTER = `${SYAPI}/user/adminregister`;
+export const LOGIN = `${SYAPI}/user/login`;
 
 const JH = "http://192.168.219.104:8000";
-export const MainALData = `${JH}/company/home`;
+export const MainALData = `${SYAPI}/company/home`;

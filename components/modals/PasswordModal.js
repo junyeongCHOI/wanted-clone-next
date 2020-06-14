@@ -20,7 +20,7 @@ const PasswordModal = ({ email, passwordModalOff }) => {
         });
         localStorage.setItem("token", res.data.token);
         passwordModalOff();
-        Router.push("/");
+        location.href = "/";
       } catch (err) {
         console.log(err);
       }
@@ -177,4 +177,10 @@ const SubmitInput = styled.button`
     font-size: 18px;
     margin: -3px 0.7em 0 0;
   }
+`;
+
+const Warn = styled.div`
+  padding: 0px 15px;
+  font-size: 12px;
+  color: #fe415c;
 `;

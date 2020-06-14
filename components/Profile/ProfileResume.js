@@ -44,14 +44,17 @@ const ProfileResume = () => {
     const token = localStorage.getItem("token");
     if (pickedResume) {
       (async () => {
-        const sres = await axios.get(profileSpec, {
-          headers: {
-            Authorization: token,
-          },
-          data: {
+        const sres = await axios.post(
+          profileSpec,
+          {
             resume_id: pickedResume.id,
           },
-        });
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
         setSpecInfo(sres.data.data);
       })();
     }
@@ -113,7 +116,16 @@ const ProfileResume = () => {
   if (!resumeList || !pickedResume) {
     return <Loading />;
   }
-  console.log(specInfo);
+  const GoSpec = () => {
+    Router.push({
+      pathname: `/profile`,
+      query: {
+        match: "specialty",
+        id: pickedResume.id,
+      },
+    });
+  };
+
   return (
     <>
       <ProfileResumeWrap>
@@ -146,13 +158,31 @@ const ProfileResume = () => {
           </ResumePen>
           <PRTitle>학교</PRTitle>
           <PRSubtitle>
-            {infoData && infoData.user_school.school} |
-            {infoData && infoData.user_school.specialism}
+            {infoData && (
+              <SustitleItem isNone={infoData.user_school.school === "없음"}>
+                {infoData.user_school.school}
+              </SustitleItem>
+            )}
+            |
+            {infoData && (
+              <SustitleItem isNone={infoData.user_school.specialism === "없음"}>
+                {infoData.user_school.specialism}
+              </SustitleItem>
+            )}
           </PRSubtitle>
           <PRTitle>직장</PRTitle>
           <PRSubtitle>
-            {infoData && infoData.user_career.company} |
-            {infoData && infoData.user_career.position}
+            {infoData && (
+              <SustitleItem isNone={infoData.user_career.company === "없음"}>
+                {infoData.user_career.company}
+              </SustitleItem>
+            )}
+            |
+            {infoData && (
+              <SustitleItem isNone={infoData.user_career.position === "없음"}>
+                {infoData.user_career.position}
+              </SustitleItem>
+            )}
           </PRSubtitle>
           <PRAbout>{infoData && infoData.description}</PRAbout>
         </SubInfoWrap>
@@ -160,28 +190,26 @@ const ProfileResume = () => {
       <ProfileResumeWrap style={{ marginTop: 10 }}>
         <header>전문분야 설정</header>
         <SubInfoWrap>
-          <Link href={`/profile?match=specialty&id=${pickedResume.id}`}>
-            <a>
-              <ResumePen>
-                <i className="xi-pen-o" />
-              </ResumePen>
-            </a>
-          </Link>
+          <ResumePen onClick={GoSpec}>
+            <i className="xi-pen-o" />
+          </ResumePen>
           <SubInfoInnerWrap>
             <PRTitle>직군</PRTitle>
-            <PRSubtitle>개발</PRSubtitle>
+            <PRSubtitle>{specInfo && specInfo.job_category.name}</PRSubtitle>
           </SubInfoInnerWrap>
           <SubInfoInnerWrap>
             <PRTitle>직무</PRTitle>
-            <PRSubtitle>프론트엔드 개발자</PRSubtitle>
+            <PRSubtitle>
+              {specInfo && specInfo.role.map((item) => item.name).join(", ")}
+            </PRSubtitle>
           </SubInfoInnerWrap>
           <SubInfoInnerWrap>
             <PRTitle>경력</PRTitle>
-            <PRSubtitle>신입</PRSubtitle>
+            <PRSubtitle>{specInfo && specInfo.career.name}</PRSubtitle>
           </SubInfoInnerWrap>
           <SubInfoInnerWrap>
             <PRTitle>스킬</PRTitle>
-            <PRSubtitle>ReactJS, JavaScript, HTML5, CSS3</PRSubtitle>
+            <PRSubtitle>{specInfo && specInfo.skill.join(", ")}</PRSubtitle>
           </SubInfoInnerWrap>
         </SubInfoWrap>
       </ProfileResumeWrap>
@@ -280,6 +308,10 @@ const PRSubtitle = styled.h4`
   font-size: 16px;
   color: #333;
   padding: 15px 0;
+`;
+
+const SustitleItem = styled.div`
+  color: ${({ isNone }) => (isNone ? "#ff415c" : "#333")};
 `;
 
 const PRAbout = styled.h3`

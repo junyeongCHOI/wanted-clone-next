@@ -16,6 +16,8 @@ const menuMock = [
 const Nav = ({ router }) => {
   const [isFilterOn, setFilterOn] = useState(false);
 
+  console.log(router.asPath);
+
   return (
     <>
       <NavWrap>
@@ -43,10 +45,7 @@ const Nav = ({ router }) => {
             </HomeMenu>
             <Link href="/WdList">
               <a onMouseOver={() => setFilterOn(true)}>
-                <NavMenu
-                  title="탐색"
-                  isOn={router.asPath === "/WdList" ? true : false}
-                />
+                <NavMenu title="탐색" isOn={router.pathname === "/WdList"} />
               </a>
             </Link>
             <Link href="/Resume">
@@ -54,11 +53,9 @@ const Nav = ({ router }) => {
                 <NavMenu
                   title="이력서"
                   isOn={
-                    router.asPath === "/Resume" ||
-                    router.asPath === "/CvList" ||
-                    router.asPath === "/CvWrite"
-                      ? true
-                      : false
+                    router.pathname === "/Resume" ||
+                    router.pathname === "/CvList" ||
+                    router.pathname === "/CvWrite"
                   }
                 />
               </a>
