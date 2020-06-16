@@ -18,11 +18,15 @@ const WdDetailRightSide = ({
 
   const pushBm = async () => {
     const token = localStorage.getItem("token");
-    const res = await axios.get(`${WdDetailAPI}/${router.query.id}/bookmark`, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    const res = await axios.post(
+      `${WdDetailAPI}/${router.query.id}/bookmark`,
+      {},
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
     setbm(res.data.message);
   };
 

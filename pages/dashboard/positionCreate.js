@@ -6,14 +6,20 @@ import Loading from "../../components/Loading";
 import LayoutCompany from "../../components/LayoutCompany";
 import TextareaAutosize from "react-textarea-autosize";
 import Calendar from "react-calendar";
-
-const nowDate = new Date(Date.now());
-nowDate.setDate(nowDate.getDate() + 3);
+import {
+  spectList,
+  companyregister,
+  createPosition,
+  createpositionLocation,
+} from "../../config";
 
 const ph =
   "예) '에이시지알'은 기업용 채용도구(인/적성검사, 구조화면접, 시뮬레이션면접, 흥미검사, 상황판단검사 등)를 개발하고 공급하는 컨설팅펌입니다. ACG(Assessment Consulting Group)는 기업의 미래를 이끌어 갈 인재를 선발, 평가, 육성하는데 필요한 정보를 제공하며, 고객에게 최상의 서비스를 제공하기 위해 항상 과학적이고 창의적인 솔루션을 연구하는 국내 최고의 컨설팅 전문가 그룹입니다.";
 
 const positionCreate = () => {
+  const nowDate = new Date(Date.now());
+  nowDate.setDate(nowDate.getDate() + 3);
+
   const [specList, setSpectList] = useState(false);
   const [optionList, setOptionList] = useState(false);
   const [email, setEmail] = useState("");
@@ -24,7 +30,7 @@ const positionCreate = () => {
   const [money, setMoney] = useState([0, 0]);
   const [isCalendarOpen, setCalendarOpen] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [location, setLocation] = useState("");
+  const [locationa, setLocationa] = useState("");
   const [positionName, setPositionName] = useState("");
   const [positionDesc, setPositionDesc] = useState("");
   const [doing, setDoing] = useState(`• \n• `);
@@ -32,6 +38,7 @@ const positionCreate = () => {
   const [pt, setPt] = useState("• \n• ");
   const [welfare, setWelfare] = useState("• \n• ");
   const [isActive, setActive] = useState(false);
+  const [postLocation, setPostLocation] = useState({});
 
   const checkEmail = (currentVal) => {
     const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -46,6 +53,49 @@ const positionCreate = () => {
     } else {
       setValuable(false);
     }
+  };
+
+  const postPosition = async () => {
+    const token = localStorage.getItem("token");
+    await axios.post(
+      createpositionLocation,
+      { city: "", country: "", address: postLocation },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    await axios.post(
+      createPosition,
+      {
+        role: selectedOPtion,
+        min_level: year[0],
+        max_level: year[1],
+        entry: year[0] === "0" && year[1] === "1" ? true : false,
+        mim_wage: money[0],
+        max_wage: money[1],
+        expiry_date: `${date.getFullYear()}-${
+          date.getMonth() + 1
+        }-${date.getDate()}`,
+        always: false,
+        name: positionName,
+        description: positionDesc,
+        responsibility: doing,
+        qualification: req,
+        preferred: pt,
+        benefit: welfare,
+        referrer: 500000,
+        volunteer: 500000,
+        total: 1000000,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    location.href = "/dashboard/position";
   };
 
   const inputMoney = (val, i) => {
@@ -72,7 +122,7 @@ const positionCreate = () => {
     if (selectedOPtion.includes(id)) {
       setSelectedOption(selectedOPtion.filter((cId) => cId !== id));
     } else {
-      if (selectedOPtion.length >= 3) {
+      if (selectedOPtion.length >= 1) {
         return;
       }
       setSelectedOption([...selectedOPtion, id]);
@@ -81,11 +131,24 @@ const positionCreate = () => {
 
   useEffect(() => {
     (async () => {
-      const resSpectList = await axios(
-        "http://localhost:3000/static/data/selectspec.json"
-      );
+      const resSpectList = await axios.get(spectList);
       setSpectList(resSpectList.data.speclist);
       setOptionList(resSpectList.data.speclist[0].lists);
+      const token = localStorage.getItem("token");
+      const res = await axios.get(companyregister, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      const reslocation = await axios.get(createpositionLocation, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setPostLocation(
+        reslocation.data.company.filter((item) => item.represent)
+      );
+      setLocationa(res.data.company[0].workplace);
     })();
   }, []);
 
@@ -147,7 +210,7 @@ const positionCreate = () => {
                 Andorid 개발자 2개의 포지션을 채용 해야 하는 경우, 2번 따로
                 작성)
                 <br />
-                <br /> 직무를 잘 나타내는 태그를 선택해주세요. (최대 3개)
+                <br /> 직무를 잘 나타내는 태그를 선택해주세요. (1개)
               </h4>
               <h3 style={{ marginTop: "40px" }}>경력</h3>
               <h4>
@@ -217,9 +280,8 @@ const positionCreate = () => {
               </CalendarPosition>
               <h3>근무지</h3>
               <CareerInput
-                style={{ width: "100%" }}
-                onChange={(e) => setLocation(e.target.value)}
-                value={location}
+                style={{ width: "100%", backgroundColor: "#e1e2e3" }}
+                value={locationa}
               />
               <PositionInfoWrap>
                 <h3>포지션명</h3>
@@ -289,7 +351,9 @@ const positionCreate = () => {
               <span>합격자 연봉의 7% 수수료</span>가 발생함을 인지하고 이에
               동의합니다.
             </FooterText>
-            <SubmitBtn isActive={isActive}>작성완료</SubmitBtn>
+            <SubmitBtn isActive={isActive} onClick={postPosition}>
+              작성완료
+            </SubmitBtn>
           </FooterContainer>
         </Footer>
       </LayoutCompany>
@@ -303,7 +367,7 @@ const CreateWrap = styled.div`
   width: 87.72%;
   max-width: 1060px;
   margin: 0 auto;
-  padding-top: 150px;
+  padding: 150px 0 100px;
 
   h2 {
     line-height: 1.4;

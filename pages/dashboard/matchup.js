@@ -30,6 +30,7 @@ const matchup = ({ router }) => {
   const [keyword, setKeyword] = useState("");
   const [listData, setListData] = useState(false);
   const [pageNum, setPageNum] = useState(1);
+  const [total_amount, settotal_amount] = useState(0);
 
   const itemRender = useCallback(
     (current, type, element) => {
@@ -120,30 +121,28 @@ const matchup = ({ router }) => {
       // getDashboardMatchup
       (async () => {
         setListData(false);
-        const res = await axios.get(
-          "http://localhost:3000/static/data/dashboardmatchuplist.json",
-          {
-            params: {
-              ...router.query,
-              offset: (pageNum - 1) * LIMIT,
-              limit: LIMIT,
-            },
-            headers: {
-              Authorization: token,
-            },
-            paramsSerializer: (params) => {
-              return qs.stringify(params, { arrayFormat: "repeat" });
-            },
-          }
-        );
-        setListData(res.data.resume_list);
+        const res = await axios.get(getDashboardMatchup, {
+          params: {
+            ...router.query,
+            offset: (pageNum - 1) * LIMIT,
+            limit: LIMIT,
+          },
+          headers: {
+            Authorization: token,
+          },
+          paramsSerializer: (params) => {
+            return qs.stringify(params, { arrayFormat: "repeat" });
+          },
+        });
+        setListData(res.data.resume_search);
+        settotal_amount(res.data.total_amount);
       })();
     }
   }, [router.query, pageNum]);
 
   useEffect(() => {
     (async () => {
-      const [res, listRes] = await Promise.all([axios.get(filterData)]);
+      const [res] = await Promise.all([axios.get(filterData)]);
       setCountryList(res.data.country_city);
     })();
   }, []);
@@ -261,11 +260,11 @@ const matchup = ({ router }) => {
             <ContextSide>
               {listData ? (
                 <>
-                  {listData.map((data) => (
-                    <MatchupItem data={data} />
+                  {listData.map((data, idx) => (
+                    <MatchupItem key={idx} data={data} />
                   ))}
                   <PaginationWrap
-                    total={100}
+                    total={total_amount}
                     itemRender={itemRender}
                     showTitle={false}
                     current={pageNum}
@@ -293,7 +292,7 @@ const MatchupWrap = styled.div`
 `;
 
 const ContextSide = styled.div`
-  width: calc(100% - 260px);
+  width: calc(100% - 270px);
   margin-left: 20px;
 `;
 

@@ -57,19 +57,25 @@ const WdApply = ({ applyBtn, hRef, router }) => {
 
   const submit = async () => {
     if (pickedResume) {
-      const token = localStorage.getItem("token");
-      await axios.post(
-        `${WdDetailAPI}/${router.query.id}/apply`,
-        {
-          resume_id: pickedResume,
-        },
-        {
-          headers: {
-            Authorization: token,
+      try {
+        const token = localStorage.getItem("token");
+        await axios.post(
+          `${WdDetailAPI}/${router.query.id}/apply`,
+          {
+            resume: pickedResume,
           },
-        }
-      );
-      applyBtn();
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        applyBtn();
+        alert("제출 완료!");
+      } catch (err) {
+        console.error(err);
+        alert("실패!");
+      }
     }
   };
 

@@ -34,10 +34,14 @@ const NavLoggedinCompany = ({ router }) => {
             </MenuItem>
           </a>
         </Link>
-        <MenuItem isOn={router.pathname === "/dashboard/ad"}>
-          채용 광고
-          <Tag sale>SALE</Tag>
-        </MenuItem>
+        <Link href="/dashboard/ad?match=home">
+          <a>
+            <MenuItem isOn={router.pathname === "/dashboard/ad?match=home"}>
+              채용 광고
+              <Tag sale>SALE</Tag>
+            </MenuItem>
+          </a>
+        </Link>
         <Link href="/dashboard/modifycompany">
           <a>
             <MenuItem isOn={router.pathname === "/dashboard/modifycompany"}>

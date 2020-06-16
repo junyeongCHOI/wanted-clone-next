@@ -5,10 +5,34 @@ const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+var multer = require("multer");
+const path = require("path");
+
+let storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, "static/");
+  },
+  filename: function (req, file, callback) {
+    let extension = path.extname(file.originalname);
+    let basename = path.basename(file.originalname, extension);
+    callback(null, basename + "-" + Date.now() + extension);
+  },
+});
+
+let upload = multer({
+  storage: storage,
+});
+
 app
   .prepare()
   .then(() => {
     const server = express();
+
+    server.post("/upload", upload.single("img"), function (req, res, next) {
+      res.send({
+        img_name: req.file.filename,
+      });
+    });
 
     server.get("/WdDetail/:id", (req, res) => {
       const actualPage = "/WdDetail";

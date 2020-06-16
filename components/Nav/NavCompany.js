@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import axios from "axios";
 import { connect } from "react-redux";
 import { companyLoginModalOn, companyRegisterModalOn } from "../../actions";
+import { userImage } from "../../config";
 
 const NavCompany = ({ companyLoginModalOn, companyRegisterModalOn }) => {
   const [userInfo, setUSerInfo] = useState(false);
@@ -10,13 +12,16 @@ const NavCompany = ({ companyLoginModalOn, companyRegisterModalOn }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      setUSerInfo({
-        name: "최준영",
-        img:
-          "https://lh3.googleusercontent.com/a-/AOh14GhSRRCqTFvxUCuImCg26qjZur0TW9YFY83Pi0PwVg=s96-c",
-      });
-    }
+    (async () => {
+      if (token) {
+        const imgdata = await axios.get(userImage, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        setUSerInfo({ img: imgdata.data.data, name: imgdata.data.name });
+      }
+    })();
   }, []);
 
   const logout = () => {

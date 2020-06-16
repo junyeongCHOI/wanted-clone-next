@@ -29,6 +29,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
     line-height: 1;
+    font-family: '애플 SD 산돌고딕 Neo','Apple SD Gothic Neo','Helvetica Neue','Helvetica','나눔바른고딕','NanumBarunGothic','나눔바른고딕OTF','NanumBarunGothicOTF','Noto Sans','Noto+Sans','notokr-demilight','나눔고딕','NanumGothic','맑은 고딕','Malgun Gothic','sans-serif';
 }
 ol, ul {
     list-style: none;

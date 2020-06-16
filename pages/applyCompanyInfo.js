@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Head from "next/head";
 import LayoutCompany from "../components/LayoutCompany";
+import axios from "axios";
+import { companyregister } from "../config";
 
 const applyCompanyInfo = () => {
   const [companyName, setCompanyName] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
-  const [location, setLocation] = useState("");
+  const [locationa, setLocation] = useState("");
   const [regNum, setRegNum] = useState("");
   const [income, setIncome] = useState("");
   const [business, setBusiness] = useState("");
@@ -17,6 +19,46 @@ const applyCompanyInfo = () => {
   const [url, setUrl] = useState("");
   const [keyword, setkeyword] = useState("");
   const [rec, setRec] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+
+  const submit = () => {
+    try {
+      (async () => {
+        const token = localStorage.getItem("token");
+        await axios.post(
+          companyregister,
+          {
+            name: companyName,
+            registration_number: regNum,
+            revenue: income,
+            country: country,
+            industry: business,
+            employee: eeNum,
+            description: desc,
+            foundation_year: year,
+            email: email,
+            contact_number: phone,
+            website: url,
+            keyword: keyword,
+            recommender: rec,
+            city: city,
+            address: locationa,
+            represent: 1,
+          },
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        location.href = "/dashboard";
+      })();
+    } catch (err) {
+      console.error(err);
+      location.href = "/dashboard";
+    }
+  };
 
   return (
     <>
@@ -60,7 +102,7 @@ const applyCompanyInfo = () => {
             <h3>대표 주소</h3>
             <input
               placeholder="대표주소 입력"
-              value={location}
+              value={locationa}
               onChange={(e) => setLocation(e.target.value)}
             />
           </InputWrap>
@@ -70,7 +112,9 @@ const applyCompanyInfo = () => {
               <input
                 placeholder="-제외 10자리"
                 value={regNum}
-                onChange={(e) => setRegNum(e.target.value)}
+                onChange={(e) =>
+                  setRegNum(e.target.value.replace(/[^0-9]/g, ""))
+                }
               />
             </InputWrap>
             <InputWrap isHarf>
@@ -81,7 +125,9 @@ const applyCompanyInfo = () => {
               <input
                 placeholder="매출액/투자금액 (단위: 억원)"
                 value={income}
-                onChange={(e) => setIncome(e.target.value)}
+                onChange={(e) =>
+                  setIncome(e.target.value.replace(/[^0-9]/g, ""))
+                }
               />
             </InputWrap>
           </InputHarfWrap>
@@ -89,7 +135,7 @@ const applyCompanyInfo = () => {
             <InputWrap isHarf>
               <h3>산업군</h3>
               <input
-                placeholder="산업군"
+                placeholder="ex) IT, 컨텐츠"
                 value={business}
                 onChange={(e) => setBusiness(e.target.value)}
               />
@@ -99,7 +145,7 @@ const applyCompanyInfo = () => {
                 직원수<span>(승인기준: 팀원 10명 이상)</span>
               </h3>
               <input
-                placeholder="회사규모"
+                placeholder="ex) 1~4명"
                 value={eeNum}
                 onChange={(e) => setEeNum(e.target.value)}
               />
@@ -131,6 +177,24 @@ const applyCompanyInfo = () => {
               />
             </InputWrap>
           </InputHarfWrap>
+          <InputHarfWrap>
+            <InputWrap isHarf>
+              <h3>담당자 연락처</h3>
+              <input
+                placeholder="-제외"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </InputWrap>
+            <InputWrap isHarf>
+              <h3>정보수신 이메일</h3>
+              <input
+                placeholder="정보수신 이메일"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </InputWrap>
+          </InputHarfWrap>
           <InputWrap>
             <h3>
               뉴스 검색 키워드
@@ -156,7 +220,7 @@ const applyCompanyInfo = () => {
         </ApplyCompanyInfoWrap>
         <SubmitWrap>
           <SubmitContainer>
-            <SubmitBtn>제출하기</SubmitBtn>
+            <SubmitBtn onClick={submit}>제출하기</SubmitBtn>
           </SubmitContainer>
         </SubmitWrap>
       </LayoutCompany>

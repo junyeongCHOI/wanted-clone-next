@@ -1,0 +1,52 @@
+{
+  "data": {
+    "name": "서",
+    "email": "sksk@naver.com",
+    "contact": "01034340953",
+    "career": [
+      {
+        "id": 7,
+        "company": "인사",
+        "position": "핵인싸",
+        "start_year": "2012",
+        "start_month": "10",
+        "end_year": "2019",
+        "end_month": "01",
+        "is_working": false,
+        "result": [
+          {
+            "id": 5,
+            "career_id": 7,
+            "start_year": "2012",
+            "start_month": "11",
+            "end_year": "2019",
+            "end_month": "01",
+            "title": "원티드 클론",
+            "content": "아..."
+          }
+        ]
+      }
+    ],
+    "education": [
+      {
+        "id": 5,
+        "resume_id": 137,
+        "start_year": "2012",
+        "start_month": "12",
+        "end_year": "",
+        "end_month": "",
+        "school": "아직도 다닌대",
+        "is_working": true,
+        "specialism": "컴공",
+        "subject": "미친놈"
+      }
+    ],
+    "link": [
+      {
+        "id": 4,
+        "resume_id": 137,
+        "url": null
+      }
+    ]
+  }
+}

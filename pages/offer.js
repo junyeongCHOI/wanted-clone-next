@@ -1,13 +1,59 @@
 import React, { useState, useEffect } from "react";
-import { withRouter } from "next/router";
 import Head from "next/head";
 import styled from "styled-components";
 import Link from "next/link";
+import axios from "axios";
 import LayoutUser from "../components/LayoutUser";
 import ProfileNavMenu from "../components/Profile/ProfileNavMenu";
 import ProfileNoResult from "../components/Profile/ProfileNoResult";
+import { profilegetReq, profilegetLike, profilegetPro } from "../config";
+import moment from "moment";
 
 const offer = () => {
+  const [listNum, setListNum] = useState(0);
+  const [reqList, setReqList] = useState([]);
+  const [likeList, setLikeList] = useState([]);
+  const [proList, setProList] = useState([]);
+  const [showList, setShowList] = useState([]);
+
+  useEffect(() => {
+    if (listNum === 0) {
+      setShowList([...reqList, ...likeList, ...proList]);
+    } else if (listNum === 1) {
+      setShowList([...likeList]);
+    } else if (listNum === 2) {
+      setShowList([...reqList]);
+    } else if (listNum === 3) {
+      setShowList([...proList]);
+    } else {
+      return;
+    }
+  }, [listNum]);
+
+  useEffect(() => {
+    (async () => {
+      const token = localStorage.getItem("token");
+      const res1 = await axios.get(profilegetReq, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      const res2 = await axios.get(profilegetLike, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      const res3 = await axios.get(profilegetPro, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setReqList(res1.data.is_resume_request);
+      setLikeList(res2.data.companies);
+      setProList(res3.data.companies);
+    })();
+  }, []);
+
   return (
     <>
       <Head>
@@ -20,26 +66,57 @@ const offer = () => {
             <OfferInfo>
               <h2>제안받기 현황</h2>
               <h3>나를 원하는 회사</h3>
-              <OfferInfoItemWrap>
-                전체<OfferInfoNumBox>0</OfferInfoNumBox>
+              <OfferInfoItemWrap
+                isOn={listNum === 0}
+                onClick={() => setListNum(0)}
+              >
+                전체
+                <OfferInfoNumBox>
+                  {[...reqList, ...likeList, ...proList].length}
+                </OfferInfoNumBox>
               </OfferInfoItemWrap>
-              <OfferInfoItemWrap>
-                원해요<OfferInfoNumBox>0</OfferInfoNumBox>
+              <OfferInfoItemWrap
+                isOn={listNum === 1}
+                onClick={() => setListNum(1)}
+              >
+                원해요<OfferInfoNumBox>{likeList.length}</OfferInfoNumBox>
               </OfferInfoItemWrap>
-              <OfferInfoItemWrap>
-                프로필 열람 요청<OfferInfoNumBox>0</OfferInfoNumBox>
+              <OfferInfoItemWrap
+                isOn={listNum === 2}
+                onClick={() => setListNum(2)}
+              >
+                프로필 열람 요청
+                <OfferInfoNumBox>{reqList.length}</OfferInfoNumBox>
               </OfferInfoItemWrap>
-              <OfferInfoItemWrap>
-                받은 제안<OfferInfoNumBox>0</OfferInfoNumBox>
+              <OfferInfoItemWrap
+                isOn={listNum === 3}
+                onClick={() => setListNum(3)}
+              >
+                받은 제안<OfferInfoNumBox>{proList.length}</OfferInfoNumBox>
               </OfferInfoItemWrap>
             </OfferInfo>
             <OfferDetailSide>
               <OfferHeader>
                 <h2>회사명</h2>
                 <h3>일자</h3>
-                <h4>상태</h4>
               </OfferHeader>
-              <ProfileNoResult />
+              {showList.length === 0 ? (
+                <ProfileNoResult />
+              ) : (
+                showList.map((item) => (
+                  <ItemWrap>
+                    <CompanyWrap>
+                      <CompanyLogo
+                        style={{ backgroundImage: `url(${item.image})` }}
+                      />
+                      {item.name}
+                    </CompanyWrap>
+                    <DateWrap>
+                      {moment(item.date).format("YYYY-MM-DD HH:MM")}
+                    </DateWrap>
+                  </ItemWrap>
+                ))
+              )}
             </OfferDetailSide>
           </OfferContainer>
         </OfferWrap>
@@ -85,7 +162,7 @@ const OfferInfo = styled.aside`
 `;
 
 const OfferInfoItemWrap = styled.div`
-  color: #333;
+  color: ${({ isOn }) => (isOn ? "#36f" : "#333")};
   font-size: 16px;
   font-weight: 600;
   line-height: 1.42857143;
@@ -93,6 +170,8 @@ const OfferInfoItemWrap = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  cursor: pointer;
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -119,13 +198,42 @@ const OfferHeader = styled.header`
   font-size: 14px;
   display: felx;
   h2 {
-    width: 57%;
+    width: 65%;
     padding-left: 20px;
   }
   h3 {
-    width: 22%;
+    width: 35%;
   }
-  h4 {
-    padding-right: 20px;
+`;
+
+const ItemWrap = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: #999;
+  font-size: 14px;
+  border-bottom: 1px solid #999;
+  padding: 10px;
+
+  &::last-child {
+    border-bottom: 0ch;
   }
+`;
+
+const CompanyWrap = styled.div`
+  width: 65%;
+  display: flex;
+  align-items: center;
+`;
+
+const CompanyLogo = styled.div`
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+  background-size: cover;
+  background-position: center;
+`;
+
+const DateWrap = styled.div`
+  width: 35%;
 `;

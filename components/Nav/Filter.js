@@ -15,7 +15,6 @@ const Filter = ({ isFilterOn, setFilterOn }) => {
   const [inputVal, setInputVal] = useState("");
 
   const goFilterBtn = () => {
-    // location.href = ""
     Router.push(
       `/WdList?sort_by=${sort}&year=${year}&country=${country}&city=${city}&keyword=${inputVal}`
     );
@@ -43,7 +42,7 @@ const Filter = ({ isFilterOn, setFilterOn }) => {
             />
             <i className="xi-search" />
           </FilterInputWrap>
-          <h2>
+          <h2 onClick={() => Router.push("/tags")}>
             태그로 검색하기 <i className="xi-angle-right-min" />
           </h2>
           <SelectBoxWrap>
@@ -152,6 +151,7 @@ const FilterContainer = styled.div`
     margin: 20px 0;
     line-height: 1;
     color: #268bf7;
+    cursor: pointer;
   }
 
   h3 {

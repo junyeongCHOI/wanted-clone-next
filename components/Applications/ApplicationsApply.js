@@ -2,8 +2,25 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import ProfileNoResult from "../Profile/ProfileNoResult";
+import moment from "moment";
+import axios from "axios";
+import { applyMonitor } from "../../config";
 
 const ApplicationsApply = () => {
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    (async () => {
+      const res = await axios.get(applyMonitor, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setList(res.data.applied_position);
+    })();
+  }, []);
+
   return (
     <ApplicationsApplyWrap>
       <ApplyInfo>
@@ -11,14 +28,14 @@ const ApplicationsApply = () => {
         <h3>추천한 후보자</h3>
         <h5>지원</h5>
         <ApplyInfoItemWrap>
-          작성중<ApplyInfoNumBox>0</ApplyInfoNumBox>
+          작성<ApplyInfoNumBox>{list.length}</ApplyInfoNumBox>
         </ApplyInfoItemWrap>
         <h4>지원한 포지션</h4>
       </ApplyInfo>
       <ApplyDetailSide>
         <ADNumBoxWrap>
           <ADNumBox>
-            <h1>0</h1>
+            <h1>{list.length}</h1>
             <h2>전체</h2>
           </ADNumBox>
           <ADNumBox>
@@ -39,7 +56,7 @@ const ApplicationsApply = () => {
           </ADNumBox>
         </ADNumBoxWrap>
         <ADNav>
-          <h4>총 0건</h4>
+          <h4>총 {list.length}건</h4>
           <ADNavItemWrap>
             <i className="xi-search" />
             <ADNavIteminput placeholder="회사 / 지원자명 검색" />
@@ -49,11 +66,18 @@ const ApplicationsApply = () => {
           <h1>지원 회사</h1>
           <h2>지원 포지션</h2>
           <h3>작성시간</h3>
-          <h4>진행상태</h4>
-          <h5>추천 현황</h5>
-          <h6>보상금 신청</h6>
         </ResultHeader>
-        <ProfileNoResult />
+        {list.length === 0 ? (
+          <ProfileNoResult />
+        ) : (
+          list.map((item) => (
+            <ResultWrap>
+              <h1>{item.company}</h1>
+              <h2>{item.position}</h2>
+              <h3>{moment(item.applied_at).format("YYYY-MM-DD HH:MM")}</h3>
+            </ResultWrap>
+          ))
+        )}
       </ApplyDetailSide>
     </ApplicationsApplyWrap>
   );
@@ -199,27 +223,40 @@ const ResultHeader = styled.div`
   font-size: 12px;
 
   h1 {
-    width: 23%;
+    width: 25%;
     padding: 10px;
   }
   h2 {
-    width: 20%;
+    width: 40%;
     padding: 10px;
   }
   h3 {
-    width: 15%;
+    width: 35%;
     padding: 10px;
   }
-  h4 {
-    width: 13%;
-    padding: 10px;
+`;
+
+const ResultWrap = styled.div`
+  width: 100%;
+  display: felx;
+  border-bottom: 1px solid #e1e2e3;
+  color: #333;
+  font-size: 12px;
+
+  h1 {
+    width: 25%;
+    padding: 20px 10px;
   }
-  h5 {
-    width: 13%;
-    padding: 10px;
+  h2 {
+    width: 40%;
+    padding: 20px 10px;
   }
-  h6 {
-    width: 16%;
-    padding: 10px;
+  h3 {
+    width: 35%;
+    padding: 20px 10px;
+  }
+
+  &:last-child {
+    border-bottom: 0;
   }
 `;

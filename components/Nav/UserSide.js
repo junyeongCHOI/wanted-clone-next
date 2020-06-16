@@ -3,8 +3,9 @@ import styled from "styled-components";
 import Link from "next/link";
 import { connect } from "react-redux";
 import { loginModalOn } from "../../actions";
-import { navSmall } from "../../config";
+import { navSmall, userImage } from "../../config";
 import LoginMenu from "./LoginMenu";
+import axios from "axios";
 
 const UserSide = ({ loginModalOn, setFilterOn }) => {
   const [userImg, setuserImg] = useState(false);
@@ -12,11 +13,16 @@ const UserSide = ({ loginModalOn, setFilterOn }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      setuserImg(
-        "https://lh3.googleusercontent.com/a-/AOh14GhSRRCqTFvxUCuImCg26qjZur0TW9YFY83Pi0PwVg=s96-c"
-      );
-    }
+    (async () => {
+      if (token) {
+        const imgdata = await axios.get(userImage, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        setuserImg(imgdata.data.data);
+      }
+    })();
   }, []);
 
   return (

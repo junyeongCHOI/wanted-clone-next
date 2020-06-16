@@ -4,7 +4,12 @@ import Router from "next/router";
 import Link from "next/link";
 import axios from "axios";
 import Loading from "../Loading";
-import { CvMain, userUserResume, profileSpec } from "../../config";
+import {
+  CvMain,
+  userUserResume,
+  profileSpec,
+  makeMatchResume,
+} from "../../config";
 
 const ResumeItem = ({ item, setOn, setPickedResume, setInfoData }) => {
   const pickedResume = async (e) => {
@@ -60,20 +65,39 @@ const ProfileResume = () => {
     }
   }, [pickedResume]);
 
+  const goAway = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      (async () => {
+        await axios.post(
+          makeMatchResume,
+          {
+            resume_id: pickedResume.id,
+          },
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+      })();
+      alert("완료");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     (async () => {
-      const rlist = await axios(CvMain, {
+      const rlist = await axios.get(CvMain, {
         headers: {
           Authorization: token,
         },
       });
 
       setResumeList(rlist.data.data);
-      if (
-        rlist.data.data.map((resume) => resume.is_matchup && resume)[0] ===
-        false
-      ) {
+      if (!rlist.data.data.filter((resume) => resume.is_matchup)[0]) {
         const ires = await axios.get(
           `${userUserResume}/${rlist.data.data[0].id}`,
           {
@@ -92,7 +116,7 @@ const ProfileResume = () => {
       } else {
         const ires = await axios.get(
           `${userUserResume}/${
-            rlist.data.data.map((resume) => resume.is_matchup && resume).id
+            rlist.data.data.filter((resume) => resume.is_matchup)[0].id
           }`,
           {
             headers: {
@@ -101,7 +125,7 @@ const ProfileResume = () => {
           }
         );
         setPickedResume(
-          rlist.data.data.map((resume) => resume.is_matchup && resume)
+          rlist.data.data.filter((resume) => resume.is_matchup)[0]
         );
         setInfoData({
           resume_id: ires.data.data[0].resume_id,
@@ -153,19 +177,25 @@ const ProfileResume = () => {
           <ResumePen>
             <i
               className="xi-pen-o"
-              onClick={() => Router.push(`/CvWrite?id=${pickedResume.id}`)}
+              onClick={() =>
+                Router.push(`/CvWrite?id=${pickedResume.id}&l=profile`)
+              }
             />
           </ResumePen>
           <PRTitle>학교</PRTitle>
           <PRSubtitle>
             {infoData && (
-              <SustitleItem isNone={infoData.user_school.school === "없음"}>
+              <SustitleItem
+                isNone={infoData.user_school.school === "학교 미입력"}
+              >
                 {infoData.user_school.school}
               </SustitleItem>
             )}
             |
             {infoData && (
-              <SustitleItem isNone={infoData.user_school.specialism === "없음"}>
+              <SustitleItem
+                isNone={infoData.user_school.specialism === "전공 미입력"}
+              >
                 {infoData.user_school.specialism}
               </SustitleItem>
             )}
@@ -173,13 +203,17 @@ const ProfileResume = () => {
           <PRTitle>직장</PRTitle>
           <PRSubtitle>
             {infoData && (
-              <SustitleItem isNone={infoData.user_career.company === "없음"}>
+              <SustitleItem
+                isNone={infoData.user_career.company === "직장 미입력"}
+              >
                 {infoData.user_career.company}
               </SustitleItem>
             )}
             |
             {infoData && (
-              <SustitleItem isNone={infoData.user_career.position === "없음"}>
+              <SustitleItem
+                isNone={infoData.user_career.position === "직책 미입력"}
+              >
                 {infoData.user_career.position}
               </SustitleItem>
             )}
@@ -213,6 +247,7 @@ const ProfileResume = () => {
           </SubInfoInnerWrap>
         </SubInfoWrap>
       </ProfileResumeWrap>
+      <MakematchBtn onClick={goAway}>매치업 이력서 지정</MakematchBtn>
     </>
   );
 };
@@ -308,6 +343,7 @@ const PRSubtitle = styled.h4`
   font-size: 16px;
   color: #333;
   padding: 15px 0;
+  display: flex;
 `;
 
 const SustitleItem = styled.div`
@@ -364,4 +400,19 @@ const ResumeItemWrap = styled.div`
     color: #7d7d7d;
     font-weight: 300;
   }
+`;
+
+const MakematchBtn = styled.div`
+  float: right;
+  margin-top: 20px;
+  width: 190px;
+  height: 50px;
+  border-radius: 3px;
+  background-color: #258bf7;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
 `;

@@ -40,14 +40,14 @@ const CvWriteAwardInfo = ({
       </CWRDateSide>
       <CWCInfoSide>
         <CWRTitle
-          placeholder="회사명"
+          placeholder="수상 및 기타"
           type="text"
           maxLength="100"
           value={data.name}
           onChange={(e) => typingAname(e.target.value, UIdx)}
         />
         <CWRSubTitle
-          placeholder="부서명/직책"
+          placeholder="수상 이력"
           type="text"
           maxLength="80"
           value={data.content}
