@@ -1,256 +1,67 @@
 {
-  "items": [
+  "position": [
     {
-      "item_id": 1,
+      "id": 1,
       "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
       "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
       "company": "비바리퍼블리카(Toss)",
       "city": "서울",
       "country": "한국",
-      "reward": "1,000,000원"
+      "total_reward": "1,000,000원"
     },
     {
-      "item_id": 2,
+      "id": 2,
       "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
       "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
       "company": "비바리퍼블리카(Toss)",
       "city": "서울",
       "country": "한국",
-      "reward": "1,000,000원"
+      "total_reward": "1,000,000원"
     },
     {
-      "item_id": 3,
+      "id": 3,
       "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
       "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
       "company": "비바리퍼블리카(Toss)",
       "city": "서울",
       "country": "한국",
-      "reward": "1,000,000원"
+      "total_reward": "1,000,000원"
     },
     {
-      "item_id": 4,
+      "id": 4,
       "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
       "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
       "company": "비바리퍼블리카(Toss)",
       "city": "서울",
       "country": "한국",
-      "reward": "1,000,000원"
+      "total_reward": "1,000,000원"
     },
     {
-      "item_id": 5,
+      "id": 5,
       "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
       "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
       "company": "비바리퍼블리카(Toss)",
       "city": "서울",
       "country": "한국",
-      "reward": "1,000,000원"
+      "total_reward": "1,000,000원"
     },
     {
-      "item_id": 6,
+      "id": 6,
       "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
       "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
       "company": "비바리퍼블리카(Toss)",
       "city": "서울",
       "country": "한국",
-      "reward": "1,000,000원"
+      "total_reward": "1,000,000원"
     },
     {
-      "item_id": 7,
+      "id": 7,
       "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
       "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
       "company": "비바리퍼블리카(Toss)",
       "city": "서울",
       "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 8,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 26,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 17,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 55,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 96,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 77,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 8885,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 1116,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 2227,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 3335,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 4446,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 5557,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 6665,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 7776,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 8887,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 9995,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 12126,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 23237,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 34345,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 45456,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
-    },
-    {
-      "item_id": 56567,
-      "image": "https://static.wanted.co.kr/images/company/113/cyvmx05qih1vrozl__400_400.jpg",
-      "name": "[토스페이먼츠팀] Security Engineer(보안관제/네트워크 보안)",
-      "company": "비바리퍼블리카(Toss)",
-      "city": "서울",
-      "country": "한국",
-      "reward": "1,000,000원"
+      "total_reward": "1,000,000원"
     }
   ]
 }

@@ -4,7 +4,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { typingLink } from "../../actions";
 
-const CvWriteLinkInfo = ({ data, typingLink }) => {
+const CvWriteLinkInfo = ({ data, typingLink, delLink }) => {
   return (
     <CvWriteLinkInfoWrap>
       <LinkInputWrap>
@@ -14,7 +14,7 @@ const CvWriteLinkInfo = ({ data, typingLink }) => {
           onChange={(e) => typingLink(e.target.value)}
         />
         <DeleteABtn>
-          <i className="xi-close-min" />
+          <i className="xi-close-min" onClick={() => delLink(data.id)} />
         </DeleteABtn>
       </LinkInputWrap>
     </CvWriteLinkInfoWrap>

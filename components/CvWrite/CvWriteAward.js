@@ -9,6 +9,27 @@ import { addNewAward, loadAward } from "../../actions";
 import { createCvM, postCvM } from "../../config";
 
 const CvWriteAward = ({ awards, addNewAward, router, loadAward }) => {
+  const delAward = async (id) => {
+    const token = localStorage.getItem("token");
+    await axios.del(`${createCvM}/${router.query.id}?category=award`, {
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        id,
+      },
+    });
+    const res = await axios.get(
+      `${postCvM}/${router.query.id}?category=award`,
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    loadAward(res.data.data);
+  };
+
   const pressAddNewAwardBtn = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -45,7 +66,12 @@ const CvWriteAward = ({ awards, addNewAward, router, loadAward }) => {
     <CvWriteAwardWrap>
       <AddMore onClick={pressAddNewAwardBtn}> + 추가</AddMore>
       {awards.map((data, idx) => (
-        <CvWriteAwardInfo key={idx} UIdx={idx} data={data} />
+        <CvWriteAwardInfo
+          key={idx}
+          UIdx={idx}
+          data={data}
+          delAward={delAward}
+        />
       ))}
     </CvWriteAwardWrap>
   );

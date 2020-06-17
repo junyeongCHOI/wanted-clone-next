@@ -14,6 +14,27 @@ const CvWriteEducation = ({
   loadEducation,
   router,
 }) => {
+  const delEducation = async (id) => {
+    const token = localStorage.getItem("token");
+    await axios.delete(`${createCvM}/${router.query.id}?category=education`, {
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        id,
+      },
+    });
+    const res = await axios.get(
+      `${postCvM}/${router.query.id}?category=education`,
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    loadEducation(res.data.data);
+  };
+
   const pressAddNewCEducationBtn = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -55,7 +76,12 @@ const CvWriteEducation = ({
     <CvWriteEducationWrap>
       <AddMore onClick={pressAddNewCEducationBtn}>+ 추가</AddMore>
       {typedEducation.map((data, idx) => (
-        <CvWriteEducationInfo key={idx} data={data} idx={idx} />
+        <CvWriteEducationInfo
+          key={idx}
+          data={data}
+          idx={idx}
+          delEducation={delEducation}
+        />
       ))}
     </CvWriteEducationWrap>
   );

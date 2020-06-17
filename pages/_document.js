@@ -69,6 +69,15 @@ export default class MyDocument extends Document {
             src="https://kit.fontawesome.com/64e36ccb37.js"
             crossOrigin="anonymous"
           />
+          <script
+            type="text/javascript"
+            src="https://code.jquery.com/jquery-1.12.4.min.js"
+          ></script>
+          <script
+            type="text/javascript"
+            src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"
+          ></script>
+          <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         </Head>
         <body>
           <Main />

@@ -16,8 +16,6 @@ const menuMock = [
 const Nav = ({ router }) => {
   const [isFilterOn, setFilterOn] = useState(false);
 
-  console.log(router.asPath);
-
   return (
     <>
       <NavWrap>

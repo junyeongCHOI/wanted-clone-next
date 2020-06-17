@@ -4,10 +4,25 @@ import Loading from "../../components/Loading";
 import Router, { withRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
+import axios from "axios";
 import LayoutCompany from "../../components/LayoutCompany";
+import WdCards from "../../components/WdList/WdCards";
+import { getDashboardPosition } from "../../config";
 
 const Position = ({ router }) => {
   const [list, setList] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    (async () => {
+      const res = await axios.get(getDashboardPosition, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setList(res.data.company);
+    })();
+  }, []);
 
   return (
     <>
@@ -28,7 +43,7 @@ const Position = ({ router }) => {
             {list.length === 0 ? (
               <NoResult>등록된 포지션이 없습니다.</NoResult>
             ) : (
-              ""
+              <WdCards data={list} />
             )}
           </PositionContainer>
         </PositionWrap>

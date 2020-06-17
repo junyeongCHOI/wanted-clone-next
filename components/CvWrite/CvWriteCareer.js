@@ -70,7 +70,12 @@ const CvWriteCareer = ({ careers, addNewCareer, router, loadCareer }) => {
     <CvWriteCareerWrap>
       <AddMore onClick={pressAddNewCareerBtn}> + 추가</AddMore>
       {careers.map((item, idx) => (
-        <CvWriteCareerInfo key={idx} UIdx={idx} deleteCareer={deleteCareer} />
+        <CvWriteCareerInfo
+          key={idx}
+          UIdx={idx}
+          deleteCareer={deleteCareer}
+          getData={getData}
+        />
       ))}
     </CvWriteCareerWrap>
   );

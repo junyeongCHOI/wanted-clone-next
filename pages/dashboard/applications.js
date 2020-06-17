@@ -39,10 +39,18 @@ const applications = ({ router }) => {
       <LayoutCompany loggedin>
         <ApplicationsWrap>
           <ApplicationsContainer>
-            <LeftSide>
+            <LeftSide isOn={router.query.category === "matchup"}>
               <h2>채용 중 포지션</h2>
-              <h3>포지션 전체</h3>
-              <h3>매치업</h3>
+              <Link href="/dashboard/applications?match=new">
+                <a>
+                  <h4>포지션 전체</h4>
+                </a>
+              </Link>
+              <Link href="/dashboard/applications?match=new&category=matchup">
+                <a>
+                  <h3>매치업</h3>
+                </a>
+              </Link>
               <h2 style={{ marginTop: "30px" }}>마감된 포지션</h2>
               <BannerWrap>
                 <Slider {...slideSettings}>
@@ -88,7 +96,7 @@ const ApplicationsWrap = styled.div`
 `;
 
 const ApplicationsContainer = styled.div`
-  padding-top: 150px;
+  padding: 150px 0 50px;
   width: 87.73%;
   max-width: 1060px;
   margin: 0 auto;
@@ -115,8 +123,19 @@ const LeftSide = styled.div`
     font-size: 16px;
     word-break: keep-all;
     font-weight: 600;
-    color: rgb(17, 17, 17);
+    color: ${({ isOn }) => (isOn ? "#36f" : "rgb(17, 17, 17)")};
     padding: 20px 0px 0px;
+    cursor: pointer;
+  }
+
+  h4 {
+    overflow-wrap: break-word;
+    font-size: 16px;
+    word-break: keep-all;
+    font-weight: 600;
+    color: ${({ isOn }) => (isOn ? "rgb(17, 17, 17)" : "#36f")};
+    padding: 20px 0px 0px;
+    cursor: pointer;
   }
 `;
 
@@ -143,7 +162,9 @@ const BannerItemWrap = styled.div`
     height: 40px;
     text-align: center;
     line-height: 40px;
+    min-height: 40px;
     color: rgb(51, 102, 255);
+    padding: 0;
   }
 `;
 

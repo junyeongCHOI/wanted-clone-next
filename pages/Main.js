@@ -18,6 +18,11 @@ const Main = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if (!token) {
+      location.href = "/";
+      return;
+    }
+
     (async () => {
       const res = await axios.get(MainALData, {
         headers: {

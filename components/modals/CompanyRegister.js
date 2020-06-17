@@ -43,7 +43,6 @@ const CompanyRegister = ({ companyRegisterModalOff }) => {
           name: name,
           password: password,
         });
-        localStorage.setItem("token", res.data.token);
         location.href = "/dashboard";
         companyRegisterModalOff();
       } catch (err) {

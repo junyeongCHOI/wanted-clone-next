@@ -8,36 +8,59 @@ export const seekSmall = "995px";
 export const wdDetailSmall = "995px";
 
 //API
-export const MYIP = "http://10.58.2.121:3000";
-// http://192.168.219.101:3000
-const SYAPI = "http://10.58.2.112:8000";
+export const MYIP = "http://192.168.219.108:3000";
+const APIURL = "http://192.168.219.107:8000";
 
-const TOMAPI = "http://10.58.2.185:8000";
-export const CvMain = `${SYAPI}/user/resumeMain`;
-export const CvWriteBodyAPI = `${SYAPI}/user/resume`;
-export const createCvM = `${SYAPI}/user/resumeDetail`;
-export const postCvM = `${SYAPI}/user/resumeDetailWrite`;
-export const creatCvResult = `${SYAPI}/user/resumeResult`;
-export const spectList = `${SYAPI}/user/specList`;
-export const userUserResume = `${SYAPI}/user/
-userResume`;
-export const profileSpec = `${SYAPI}/user/matchupDetail`;
-export const getprofileSpec = `${SYAPI}/user/resumeRole`;
-export const userinfo = `${SYAPI}/user/userUpdate`;
-
-//서율 에이피아이
-
-export const WdDetailAPI = `${SYAPI}/company/position`;
-export const WdListAPI = `${SYAPI}/company/position/main`;
-export const filterData = `${SYAPI}/company/position/main/filter`;
-export const getBList = `${SYAPI}/user/bookmark`;
-export const getDashboardMatchup = `${SYAPI}/company/matchup/search`;
-
-const PIEAPI = "http://192.168.219.103:8000";
-export const ISREGI = `${SYAPI}/user/exists`;
-export const REGISTER = `${SYAPI}/user/register`;
-export const ADMINREGISTER = `${SYAPI}/user/adminregister`;
-export const LOGIN = `${SYAPI}/user/login`;
-
-const JH = "http://192.168.219.104:8000";
-export const MainALData = `${SYAPI}/company/home`;
+export const CvMain = `${APIURL}/user/resumeMain`;
+export const CvWriteBodyAPI = `${APIURL}/user/resume`;
+export const createCvM = `${APIURL}/user/resumeDetail`;
+export const postCvM = `${APIURL}/user/resumeDetailWrite`;
+export const creatCvResult = `${APIURL}/user/resumeResult`;
+export const spectList = `${APIURL}/user/specList`;
+export const userUserResume = `${APIURL}/user/userResume`;
+export const profileSpec = `${APIURL}/user/matchupDetail`;
+export const userImage = `${APIURL}/user/userImage`;
+export const getprofileSpec = `${APIURL}/user/resumeRole`;
+export const userinfo = `${APIURL}/user/userUpdate`;
+export const WdDetailAPI = `${APIURL}/company/position`;
+export const WdListAPI = `${APIURL}/company/position/main`;
+export const filterData = `${APIURL}/company/position/main/filter`;
+export const getBList = `${APIURL}/user/bookmark`;
+export const getDashboardMatchup = `${APIURL}/company/matchup/search`;
+export const ISREGI = `${APIURL}/user/exists`;
+export const REGISTER = `${APIURL}/user/register`;
+export const ADMINREGISTER = `${APIURL}/user/adminregister`;
+export const ISCOMPANY = `${APIURL}/user/is/admin`;
+export const LOGIN = `${APIURL}/user/login`;
+export const MainALData = `${APIURL}/company/home`;
+export const Pay = `${APIURL}/company/job-ad/purchase`;
+export const Purchased = `${APIURL}/company/job-ad/purchased`;
+export const companyregister = `${APIURL}/company/register`;
+export const getDashboardPosition = `${APIURL}/company/positions`;
+export const companyinfomodify = `${APIURL}/company/modify`;
+export const getDashboardVol = `${APIURL}/company/applicant`;
+export const createPosition = `${APIURL}/company/positions/create`;
+export const getCompanyImg = `${APIURL}/company/images`;
+export const companyImgDel = `${APIURL}/company/delete/image`;
+export const globalPhoneNum = `${APIURL}/user/global`;
+export const makeMatchResume = `${APIURL}/user/matchupRegistration`;
+export const applyMonitor = `${APIURL}/user/apply`;
+export const dashboardzzim = `${APIURL}/company/like/resume `;
+export const dashboardrequest = `${APIURL}/company/request/matchup`;
+export const dashboardproposal = `${APIURL}/company/proposals/matchup`;
+export const profilegetReq = `${APIURL}/user/requests`;
+export const profilegetLike = `${APIURL}/user/likes`;
+export const profilegetPro = `${APIURL}/user/proposals`;
+export const createpositionLocation = `${APIURL}/company/address`;
+export const getSearchTags = `${APIURL}/company/position/tag`;
+export const getTagWdlist = `${APIURL}/company/position/tag/search`;
+export const dashBoardResumeDetail = `${APIURL}/user/applicantResume`;
+export const positionadlist = `${APIURL}/company/position/advertisement`;
+export const inicischeck = `http://192.168.219.104:8000/company/matchup/purchase`;
+export const inipre = `http://192.168.219.104:8000/company/matchup/prepare`;
+export const dashboardadr = `http://192.168.219.104:8000/company/job-ad/home`;
+export const createcompanyyear = `${APIURL}/company/year`;
+export const createcompanyindustry = `${APIURL}/company/industry`;
+export const createcompanyemployee = `${APIURL}/company/employee`;
+export const themedata = `http://localhost:3000/static/data/themedata.json`;
+// export const themedata = `${APIURL}/company/themelist/`;

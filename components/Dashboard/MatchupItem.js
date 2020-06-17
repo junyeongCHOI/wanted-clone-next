@@ -1,7 +1,54 @@
-import React from "react";
+import React, { useState, Fragment } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { dashboardzzim, dashboardrequest } from "../../config";
 
 const MatchupItem = ({ data }) => {
+  const [l, setL] = useState(data.liked);
+  const [r, setR] = useState(data.requested);
+
+  const req = async () => {
+    if (r) {
+      return;
+    }
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.post(
+        dashboardrequest,
+        { resume_id: data.id },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setR(true);
+    } catch (err) {
+      alert("요청하기 실패");
+    }
+  };
+
+  const zzim = async () => {
+    if (l) {
+      return;
+    }
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.post(
+        dashboardzzim,
+        { resume_id: data.id },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setL(true);
+    } catch (err) {
+      alert("찜하기 실패");
+    }
+  };
+
   return (
     <MatchupItemWrap>
       <LeftSideWrap>
@@ -37,10 +84,11 @@ const MatchupItem = ({ data }) => {
                 <Line />
                 <h2>
                   {data.career
-                    .map((data) => (
-                      <>
-                        {data.company} <span>({data.duration}개월)</span>
-                      </>
+                    .map((data, idx) => (
+                      <Fragment key={idx}>
+                        {data.company}
+                        <span>({data.duration}개월)</span>
+                      </Fragment>
                     ))
                     .reduce((prev, curr) => [prev, " / ", curr])}
                 </h2>
@@ -51,8 +99,8 @@ const MatchupItem = ({ data }) => {
             <Des>
               {data.description}
               <SkillWrap>
-                {data.skill.map((data) => (
-                  <Skill>{data}</Skill>
+                {data.skill.map((data, idx) => (
+                  <Skill key={idx}>{data}</Skill>
                 ))}
               </SkillWrap>
             </Des>
@@ -64,10 +112,12 @@ const MatchupItem = ({ data }) => {
           <h3>{data.specialism}</h3>
         </RoleWrap>
         <BtnWrap>
-          <AddBtn>
-            <i className="xi-star-o" /> 찜하기
+          <AddBtn onClick={zzim} l={l}>
+            <i className="xi-star-o" /> {l ? "찜됨" : "찜하기"}
           </AddBtn>
-          <ShowResume>이력서 요청하기</ShowResume>
+          <ShowResume r={r} onClick={req}>
+            {r ? "요청됨" : "이력서 요청하기"}
+          </ShowResume>
         </BtnWrap>
       </InfoWrap>
     </MatchupItemWrap>
@@ -142,7 +192,7 @@ const RoleWrap = styled.div`
   line-height: 1.4;
   align-items: stretch;
   margin-bottom: 10px;
-  x h2 {
+  h2 {
     color: rgb(28, 28, 28);
     span {
       font-size: 12px;
@@ -155,22 +205,23 @@ const RoleWrap = styled.div`
 `;
 
 const DesWRap = styled.div`
+  width: 100%;
   display: felx;
   align-items: stretch;
 `;
 
-const DesContainer = styled.div``;
+const DesContainer = styled.div`
+  width: calc(100% - 60px);
+`;
 
 const Des = styled.div`
   padding: 0 0 50px 17px;
-  text-overflow: ellipsis;
   font-size: 12px;
   line-height: 1.4;
   color: rgb(153, 153, 153);
-  white-space: pre-line;
-  max-height: 36px;
-  box-sizing: content-box;
   overflow: hidden;
+  word-break: keep-all;
+  word-wrap: break-word;
 `;
 
 const SkillWrap = styled.div`
@@ -203,7 +254,7 @@ const AddBtn = styled.div`
   font-size: 16px;
   font-weight: 600;
   color: rgb(28, 28, 28);
-  background-color: rgb(244, 244, 244);
+  background-color: ${({ l }) => (l ? "#e1e2e3" : "rgb(244, 244, 244)")};
   border-radius: 3px;
   padding: 14px 20px;
   margin: 0 5px;
@@ -212,7 +263,7 @@ const AddBtn = styled.div`
 const ShowResume = styled.div`
   cursor: pointer;
   color: rgb(255, 255, 255);
-  background-color: rgb(51, 51, 51);
+  background-color: ${({ r }) => (r ? "#e1e2e3" : "rgb(51, 51, 51)")};
   font-size: 16px;
   font-weight: 600;
   border-radius: 3px;

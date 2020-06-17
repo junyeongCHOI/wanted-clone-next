@@ -4,12 +4,13 @@ import Head from "next/head";
 import styled from "styled-components";
 import Link from "next/link";
 import axios from "axios";
-import { CvMain, CvWriteBodyAPI, userinfo } from "../config";
+import { CvMain, CvWriteBodyAPI, userinfo, userImage } from "../config";
 import LayoutUser from "../components/LayoutUser";
 import ProfileNavMenu from "../components/Profile/ProfileNavMenu";
 import ModifyUserInfo from "../components/Profile/ModifyUserInfo";
 import ProfileResume from "../components/Profile/ProfileResume";
 import ProfileSpecialty from "../components/Profile/ProfileSpecialty";
+import InputFiles from "react-input-files";
 
 const matchedComponent = {
   profile: <ProfileResume />,
@@ -26,6 +27,32 @@ const Profile = ({ router }) => {
     country_id: null,
   });
   const [userImg, setUserImg] = useState("");
+
+  const submitUserImage = async (e) => {
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("img", e[0]);
+
+    try {
+      const res = await axios.post("/upload", formData);
+      const imgdata = await axios.post(
+        userImage,
+        {
+          img_name: res.data.img_name,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setUserImg(imgdata.data.data);
+      location.href = "/profile?match=profile";
+    } catch (err) {
+      console.error(err);
+      alert("업로드에 실패했습니다.");
+    }
+  };
 
   const makeNewResume = async () => {
     const token = localStorage.getItem("token");
@@ -56,10 +83,13 @@ const Profile = ({ router }) => {
       });
       setUserInfo(infores.data.data);
       setIsEmpty(res.data.data.length > 0 && true);
+      const imgdata = await axios.get(userImage, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setUserImg(imgdata.data.data);
     })();
-    setUserImg(
-      "https://lh3.googleusercontent.com/a-/AOh14GhSRRCqTFvxUCuImCg26qjZur0TW9YFY83Pi0PwVg=s96-c"
-    );
   }, []);
 
   return (
@@ -73,8 +103,13 @@ const Profile = ({ router }) => {
           <ProfileContainer>
             <UserSide>
               <UserImage style={{ backgroundImage: `url(${userImg})` }}>
-                <UserImageBtn>
-                  <i className="xi-camera" />
+                <UserImageBtn encType="multipart/form-data">
+                  <InputFiles
+                    onChange={(e) => submitUserImage(e)}
+                    accept="image/png, image/jpg"
+                  >
+                    <i className="xi-camera" />
+                  </InputFiles>
                 </UserImageBtn>
               </UserImage>
               <AsideMe>
@@ -150,9 +185,10 @@ const UserImage = styled.div`
   width: 77px;
   height: 77px;
   border-radius: 50%;
+  background-size: cover;
 `;
 
-const UserImageBtn = styled.div`
+const UserImageBtn = styled.form`
   position: absolute;
   right: -5px;
   bottom: -5px;

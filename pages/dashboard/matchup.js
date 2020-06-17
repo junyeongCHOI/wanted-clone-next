@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import Router, { withRouter } from "next/router";
+import { connect } from "react-redux";
 import qs from "qs";
 import Pagination from "rc-pagination";
 import Head from "next/head";
 import LayoutCompany from "../../components/LayoutCompany";
 import Slider, { Range } from "rc-slider";
+import { buyPlanOn } from "../../actions";
 import axios from "axios";
-import { filterData, getDashboardMatchup } from "../../config";
+import { filterData, getDashboardMatchup, userinfo } from "../../config";
 import Loading from "../../components/Loading";
 import MatchupItem from "../../components/Dashboard/MatchupItem";
 
@@ -22,7 +24,7 @@ const rangeSettings = {
 
 const LIMIT = 10;
 
-const matchup = ({ router }) => {
+const matchup = ({ router, buyPlanOn }) => {
   const [filterDropdonw, setFilterDropDown] = useState([false, false]);
   const [sliderVal, setSliderVal] = useState([0, 20]);
   const [countryList, setCountryList] = useState([]);
@@ -30,6 +32,13 @@ const matchup = ({ router }) => {
   const [keyword, setKeyword] = useState("");
   const [listData, setListData] = useState(false);
   const [pageNum, setPageNum] = useState(1);
+  const [total_amount, settotal_amount] = useState(0);
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    email: "",
+    contact: "",
+    country_id: null,
+  });
 
   const itemRender = useCallback(
     (current, type, element) => {
@@ -68,7 +77,6 @@ const matchup = ({ router }) => {
       query: {
         ...router.query,
         country: country,
-        limit: LIMIT,
         year_from: sliderVal[0],
         year_to: sliderVal[1],
         keyword: keyword,
@@ -113,37 +121,41 @@ const matchup = ({ router }) => {
     const { country, year_from, year_to, resume_list } = router.query;
     if (!country || !year_from || !year_to || !resume_list) {
       Router.push(
-        "/dashboard/matchup?country=한국&year_from=0&year_to=20&keyword=&resume_list=-1"
+        "/dashboard/matchup?country=all&year_from=0&year_to=20&keyword=&resume_list=-1"
       );
     } else {
       const token = localStorage.getItem("token");
       // getDashboardMatchup
       (async () => {
         setListData(false);
-        const res = await axios.get(
-          "http://localhost:3000/static/data/dashboardmatchuplist.json",
-          {
-            params: {
-              ...router.query,
-              offset: (pageNum - 1) * LIMIT,
-              limit: LIMIT,
-            },
-            headers: {
-              Authorization: token,
-            },
-            paramsSerializer: (params) => {
-              return qs.stringify(params, { arrayFormat: "repeat" });
-            },
-          }
-        );
-        setListData(res.data.resume_list);
+        const res = await axios.get(getDashboardMatchup, {
+          params: {
+            ...router.query,
+            offset: (pageNum - 1) * LIMIT,
+            limit: LIMIT,
+          },
+          headers: {
+            Authorization: token,
+          },
+          paramsSerializer: (params) => {
+            return qs.stringify(params, { arrayFormat: "repeat" });
+          },
+        });
+        setListData(res.data.resume_search);
+        settotal_amount(res.data.total_amount);
+        const infores = await axios.get(userinfo, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        setUserInfo(infores.data.data);
       })();
     }
   }, [router.query, pageNum]);
 
   useEffect(() => {
     (async () => {
-      const [res, listRes] = await Promise.all([axios.get(filterData)]);
+      const [res] = await Promise.all([axios.get(filterData)]);
       setCountryList(res.data.country_city);
     })();
   }, []);
@@ -235,7 +247,7 @@ const matchup = ({ router }) => {
           <MatchupContainer>
             <MenuSide>
               <h2>매치업 소개</h2>
-              <GoService>서비스 결제하기</GoService>
+              <GoService onClick={buyPlanOn}>서비스 결제하기</GoService>
               <MenuItem
                 onClick={() => clickedMenu(-1)}
                 isOn={resume_list == -1}
@@ -261,11 +273,11 @@ const matchup = ({ router }) => {
             <ContextSide>
               {listData ? (
                 <>
-                  {listData.map((data) => (
-                    <MatchupItem data={data} />
+                  {listData.map((data, idx) => (
+                    <MatchupItem key={idx} data={data} />
                   ))}
                   <PaginationWrap
-                    total={100}
+                    total={total_amount}
                     itemRender={itemRender}
                     showTitle={false}
                     current={pageNum}
@@ -283,7 +295,13 @@ const matchup = ({ router }) => {
   );
 };
 
-export default withRouter(matchup);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    buyPlanOn: () => dispatch(buyPlanOn()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(withRouter(matchup));
 
 const MatchupWrap = styled.div`
   width: 100vw;
@@ -293,12 +311,12 @@ const MatchupWrap = styled.div`
 `;
 
 const ContextSide = styled.div`
-  width: calc(100% - 260px);
+  width: calc(100% - 270px);
   margin-left: 20px;
 `;
 
 const MatchupContainer = styled.div`
-  padding-top: 50px;
+  padding: 100px 0 50px;
   width: 87.73%;
   max-width: 1060px;
   min-width: 800px;

@@ -10,6 +10,7 @@ import isPasswordModalOn from "./isPasswordModalOn";
 import typedCvAward from "./typedCvAward";
 import typedEducation from "./typedEducation";
 import typedCvLink from "./typedCvLink";
+import isBuyPlanOn from "./isBuyPlanOn";
 
 const reducers = combineReducers({
   isLoginModalOn,
@@ -23,6 +24,7 @@ const reducers = combineReducers({
   typedCvAward,
   typedEducation,
   typedCvLink,
+  isBuyPlanOn,
 });
 
 export default reducers;

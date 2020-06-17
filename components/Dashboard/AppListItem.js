@@ -1,17 +1,37 @@
 import React from "react";
 import styled from "styled-components";
+import Router from "next/router";
+import { getDashboardVol } from "../../config";
+import axios from "axios";
 
-const AppListItem = () => {
+const AppListItem = ({ data, getData }) => {
+  const delVol = async (e) => {
+    e.stopPropagation();
+    const token = localStorage.getItem("token");
+    await axios.delete(`${getDashboardVol}/${data.id}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    getData();
+  };
+
+  const go = () => {
+    Router.push(
+      `/dashboard/applications?match=detail&id=${data.id}&rId=${data.resume__id}`
+    );
+  };
+
   return (
-    <ListItemWrap>
+    <ListItemWrap onClick={go}>
       <ListItem>
-        <ItemUser>김</ItemUser>
+        <ItemUser>{data.user__name}</ItemUser>
         <InfoWrap>
-          <h3>No.1</h3>
-          <h2>김OO</h2>
+          <h3>{data.resume__id}</h3>
+          <h2>{data.user__name}OO</h2>
         </InfoWrap>
-        <MatchUp>매치업</MatchUp>
-        <DelBtn>삭제</DelBtn>
+        {data.resume__is_matchup && <MatchUp>매치업</MatchUp>}
+        <DelBtn onClick={delVol}>삭제</DelBtn>
       </ListItem>
     </ListItemWrap>
   );
@@ -57,7 +77,7 @@ const InfoWrap = styled.div`
 
   h3 {
     color: rgb(181, 181, 181);
-    font-size: 16px;
+    font-size: 14px;
   }
 `;
 
@@ -86,4 +106,5 @@ const DelBtn = styled.div`
   border-radius: 3px;
   padding: 8px 15px 4px;
   transform: translate(-50%, -50%);
+  z-index: 30;
 `;

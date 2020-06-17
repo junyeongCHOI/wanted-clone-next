@@ -3,14 +3,25 @@ import styled from "styled-components";
 import Head from "next/head";
 import LayoutCompany from "../components/LayoutCompany";
 import Link from "next/link";
+import Router from "next/router";
 import { connect } from "react-redux";
 import { loginModalOn } from "../actions";
+import axios from "axios";
+import { ISCOMPANY } from "../config";
 
 const CompanyIntro = ({ loginModalOn }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      location.href = "/dashboard";
+      (async () => {
+        const res = await axios.post(ISCOMPANY, { token: token });
+        console.log(res.data);
+        if (res.data.MESSAGE) {
+          Router.push("/dashboard/applications");
+        } else {
+          Router.push("/applyCompanyInfo");
+        }
+      })();
     }
   }, []);
 

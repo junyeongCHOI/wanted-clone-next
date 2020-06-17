@@ -68,7 +68,6 @@ const WdDetail = ({ data, loginModalOn }) => {
 
 WdDetail.getInitialProps = async (ctx) => {
   const res = await axios(`${WdDetailAPI}/${ctx.query.id}?offset=0&limit=8`);
-  // const res = await axios("http://localhost:3000/static/data/wddetail.json");
   return {
     data: res.data.position[0],
   };

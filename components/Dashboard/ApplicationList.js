@@ -1,8 +1,10 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import Router, { withRouter } from "next/router";
 import Pagination from "rc-pagination";
 import AppListItem from "../../components/Dashboard/AppListItem";
+import axios from "axios";
+import { getDashboardVol } from "../../config";
 
 const itemRender = (current, type, element) => {
   if (type === "page") {
@@ -17,8 +19,12 @@ const itemRender = (current, type, element) => {
   return <PageBtn>...</PageBtn>;
 };
 
+const LIMIT = 10;
+
 const ApplicationList = ({ router }) => {
   const [pageNum, setPageNum] = useState(1);
+  const [max_length, setMax_length] = useState(0);
+  const [list, setList] = useState([]);
 
   const itemRender = useCallback(
     (current, type, element) => {
@@ -40,6 +46,41 @@ const ApplicationList = ({ router }) => {
     setPageNum(page);
   };
 
+  const getData = () => {
+    (async () => {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(getDashboardVol, {
+        params: {
+          offset: (pageNum - 1) * LIMIT,
+          limit: LIMIT,
+        },
+        headers: {
+          Authorization: token,
+        },
+      });
+      setMax_length(res.data.max_length);
+      setList(res.data.volunteer);
+    })();
+  };
+
+  useEffect(() => {
+    (async () => {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(getDashboardVol, {
+        params: {
+          category: router.query.category,
+          offset: (pageNum - 1) * LIMIT,
+          limit: LIMIT,
+        },
+        headers: {
+          Authorization: token,
+        },
+      });
+      setMax_length(res.data.max_length);
+      setList(res.data.volunteer);
+    })();
+  }, [pageNum, router]);
+
   return (
     <ListWrap>
       <NavWrap>
@@ -49,9 +90,11 @@ const ApplicationList = ({ router }) => {
         <NavItem>불합격 (0)</NavItem>
         <NavItem>기간만료 (0)</NavItem>
       </NavWrap>
-      <AppListItem />
+      {list.map((data) => (
+        <AppListItem data={data} getData={getData} key={data.id} />
+      ))}
       <PaginationWrap
-        total={100}
+        total={max_length}
         itemRender={itemRender}
         showTitle={false}
         current={pageNum}

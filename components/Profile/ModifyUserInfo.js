@@ -1,15 +1,39 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { userinfo } from "../../config";
+import { userinfo, globalPhoneNum } from "../../config";
 
 const ModifyUserInfo = () => {
-  const [userInfo, setUserInfo] = useState({
-    name: "",
-    email: "",
-    contact: "",
-    country_id: null,
-  });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [contact, setContact] = useState("");
+  const [country_id, setCountry_id] = useState("");
+  const [globalList, setGlobalList] = useState([]);
+
+  const push = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.post(
+        `${userinfo}`,
+        {
+          name: name,
+          email: email,
+          contact: contact,
+          country_id: country_id,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      location.href = "/profile?match=modify";
+    } catch (err) {
+      console.error(err);
+      alert("수정 실패");
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     (async () => {
@@ -18,7 +42,16 @@ const ModifyUserInfo = () => {
           Authorization: token,
         },
       });
-      setUserInfo(res.data.data);
+      const resglobal = await axios.get(globalPhoneNum);
+      setName(res.data.data.name);
+      setEmail(res.data.data.email);
+      setContact(res.data.data.contact);
+      if (res.data.data.country_id === null) {
+        setCountry_id(4);
+      } else {
+        setCountry_id(res.data.data.country_id);
+      }
+      setGlobalList(resglobal.data.data);
     })();
   }, []);
 
@@ -32,20 +65,38 @@ const ModifyUserInfo = () => {
       <ModifyInputWrap>
         <InputWrap>
           <InputTitle>이름</InputTitle>
-          <ModifyInput />
+          <ModifyInput value={name} onChange={(e) => setName(e.target.value)} />
         </InputWrap>
         <InputWrap>
           <InputTitle>이메일</InputTitle>
-          <ModifyInput />
+          <ModifyInput
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </InputWrap>
         <InputWrap>
           <InputTitle>연락처</InputTitle>
-          <PhoneNumBox>+82 South Korea</PhoneNumBox>
-          <ModifyInput style={{ width: "calc(100% - 370px)" }} />
+          <PhoneNumBox
+            value={country_id}
+            onChange={(e) => {
+              setCountry_id(e.target.value);
+            }}
+          >
+            {globalList.map((item, idx) => (
+              <option key={item.id} value={item.id}>
+                {`${item.number} ${item.name}`}
+              </option>
+            ))}
+          </PhoneNumBox>
+          <ModifyInput
+            style={{ width: "calc(100% - 370px)" }}
+            value={contact}
+            onChange={(e) => setContact(e.target.value)}
+          />
         </InputWrap>
       </ModifyInputWrap>
       <ModifyBtnWrap>
-        <ModifyBtn>확인</ModifyBtn>
+        <ModifyBtn onClick={push}>확인</ModifyBtn>
       </ModifyBtnWrap>
     </ModifyUserInfoWrap>
   );
@@ -74,7 +125,7 @@ const PMTitle = styled.h3`
   padding: 10px 0;
 `;
 
-const ModifyInputWrap = styled.div`
+const ModifyInputWrap = styled.form`
   padding: 40px 0;
 `;
 
@@ -102,7 +153,7 @@ const ModifyInput = styled.input`
   border-bottom: 1px solid #e1e2e3;
 `;
 
-const PhoneNumBox = styled.div`
+const PhoneNumBox = styled.select`
   width: 200px;
   padding: 14px 20px;
   font-size: 18px;

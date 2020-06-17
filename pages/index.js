@@ -8,6 +8,8 @@ import LayoutUser from "../components/LayoutUser";
 import IntroTop from "../components/Intro/IntroTop";
 import IntroBottom from "../components/Intro/IntroBottom";
 import IntroCards from "../components/Intro/IntroCards";
+import { ISCOMPANY } from "../config";
+import axios from "axios";
 
 const Intro = ({ loginModalOn }) => {
   useEffect(() => {
