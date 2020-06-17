@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import Router from "next/router";
 
 const MainThemItem = ({ item }) => {
   return (
-    <MainThemItemWrap>
+    <MainThemItemWrap onClick={() => Router.push(`/theme?id=${item.id}`)}>
       <MTIImg url={item.image} />
       <h2>{item.title}</h2>
       <h5>{item.desc}</h5>

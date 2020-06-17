@@ -9,6 +9,24 @@ import { loadLink, addNewLink } from "../../actions";
 import { createCvM, postCvM } from "../../config";
 
 const CvWriteLink = ({ typedCvLink, addNewLink, laodLink, router }) => {
+  const delLink = async (id) => {
+    const token = localStorage.getItem("token");
+    await axios.delete(`${createCvM}/${router.query.id}?category=link`, {
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        id,
+      },
+    });
+    const res = await axios.get(`${postCvM}/${router.query.id}?category=link`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    laodLink(res.data.data);
+  };
+
   const pressAddNewLinkBtn = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -49,7 +67,7 @@ const CvWriteLink = ({ typedCvLink, addNewLink, laodLink, router }) => {
     <CvWriteLinkWrap>
       <AddMore onClick={pressAddNewLinkBtn}>+ 추가</AddMore>
       {typedCvLink.map((data, idx) => (
-        <CvWriteLinkInfo key={idx} data={data} idx={idx} />
+        <CvWriteLinkInfo key={idx} data={data} idx={idx} delLink={delLink} />
       ))}
     </CvWriteLinkWrap>
   );

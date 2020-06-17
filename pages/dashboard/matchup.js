@@ -1,19 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import Router, { withRouter } from "next/router";
+import { connect } from "react-redux";
 import qs from "qs";
 import Pagination from "rc-pagination";
 import Head from "next/head";
 import LayoutCompany from "../../components/LayoutCompany";
 import Slider, { Range } from "rc-slider";
+import { buyPlanOn } from "../../actions";
 import axios from "axios";
-import {
-  filterData,
-  getDashboardMatchup,
-  userinfo,
-  inicischeck,
-  inipre,
-} from "../../config";
+import { filterData, getDashboardMatchup, userinfo } from "../../config";
 import Loading from "../../components/Loading";
 import MatchupItem from "../../components/Dashboard/MatchupItem";
 
@@ -28,7 +24,7 @@ const rangeSettings = {
 
 const LIMIT = 10;
 
-const matchup = ({ router }) => {
+const matchup = ({ router, buyPlanOn }) => {
   const [filterDropdonw, setFilterDropDown] = useState([false, false]);
   const [sliderVal, setSliderVal] = useState([0, 20]);
   const [countryList, setCountryList] = useState([]);
@@ -43,66 +39,6 @@ const matchup = ({ router }) => {
     contact: "",
     country_id: null,
   });
-
-  const payment = async () => {
-    const token = localStorage.getItem("token");
-    const IMP = window.IMP;
-    IMP.init("imp84455120");
-    const MUID = "cha" + new Date().getTime();
-
-    await axios.post(
-      inipre,
-      {
-        merchant_uid: MUID,
-        amount: 1100,
-      },
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
-    IMP.request_pay(
-      {
-        pg: "inicis",
-        pay_method: "card",
-        merchant_uid: MUID,
-        name: "베이직",
-        amount: 1100,
-        buyer_email: userInfo.email,
-        buyer_name: userInfo.name,
-        buyer_tel: userInfo.contact,
-      },
-      function (rsp) {
-        if (rsp.success) {
-          jQuery
-            .ajax({
-              url: inicischeck,
-              type: "POST",
-              dataType: "json",
-              headers: {
-                Authorization: token,
-              },
-              data: {
-                imp_uid: rsp.imp_uid,
-                merchant_uid: rsp.merchant_uid,
-                status: rsp.status,
-              },
-            })
-            .done(function (data) {
-              if (true) {
-                console.log(data);
-                alert("결제 완료");
-              } else {
-                // 서버 res에 따라 결과 표출
-              }
-            });
-        } else {
-          alert("결제 실패");
-        }
-      }
-    );
-  };
 
   const itemRender = useCallback(
     (current, type, element) => {
@@ -311,7 +247,7 @@ const matchup = ({ router }) => {
           <MatchupContainer>
             <MenuSide>
               <h2>매치업 소개</h2>
-              <GoService onClick={payment}>서비스 결제하기</GoService>
+              <GoService onClick={buyPlanOn}>서비스 결제하기</GoService>
               <MenuItem
                 onClick={() => clickedMenu(-1)}
                 isOn={resume_list == -1}
@@ -359,7 +295,13 @@ const matchup = ({ router }) => {
   );
 };
 
-export default withRouter(matchup);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    buyPlanOn: () => dispatch(buyPlanOn()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(withRouter(matchup));
 
 const MatchupWrap = styled.div`
   width: 100vw;

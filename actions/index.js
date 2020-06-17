@@ -389,3 +389,15 @@ export const typingEContent = (val, idx) => {
     idx,
   };
 };
+
+export const buyPlanOn = () => {
+  return {
+    type: types.BUYPLANON,
+  };
+};
+
+export const buyPlanOff = () => {
+  return {
+    type: types.BUYPLANOFF,
+  };
+};

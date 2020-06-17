@@ -15,11 +15,12 @@ const CvWriteAwardInfo = ({
   typingAEndMdate,
   typingAname,
   typingAcontent,
+  delAward,
 }) => {
   return (
     <CvWriteAwardInfoWrap>
       <DeleteABtn>
-        <i className="xi-close-min" />
+        <i className="xi-close-min" onClick={() => delAward(data.id)} />
       </DeleteABtn>
       <CWRDateSide>
         <DateTimeInput

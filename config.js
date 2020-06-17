@@ -62,3 +62,5 @@ export const dashboardadr = `http://192.168.219.104:8000/company/job-ad/home`;
 export const createcompanyyear = `${APIURL}/company/year`;
 export const createcompanyindustry = `${APIURL}/company/industry`;
 export const createcompanyemployee = `${APIURL}/company/employee`;
+export const themedata = `http://localhost:3000/static/data/themedata.json`;
+// export const themedata = `${APIURL}/company/themelist/`;

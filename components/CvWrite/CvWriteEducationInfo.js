@@ -23,6 +23,7 @@ const CvWriteEducationInfo = ({
   typingEschoolName,
   typingEMajor,
   typingEContent,
+  delEducation,
 }) => {
   return (
     <CvWriteEducationInfoWrap>
@@ -78,7 +79,7 @@ const CvWriteEducationInfo = ({
       </CWEDateSide>
       <CWEInfoSide>
         <DeleteCBtn>
-          <i className="xi-close-min" />
+          <i className="xi-close-min" onClick={() => delEducation(data.id)} />
         </DeleteCBtn>
         <CWETitle
           placeholder="학교명"

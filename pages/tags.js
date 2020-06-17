@@ -32,8 +32,6 @@ const Tags = () => {
     );
   }
 
-  console.log(tagList);
-
   return (
     <>
       <Head>

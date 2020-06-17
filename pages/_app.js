@@ -5,6 +5,7 @@ import RegisterModal from "../components/modals/RegisterModal";
 import PasswordModal from "../components/modals/PasswordModal";
 import CompanyLogin from "../components/modals/CompanyLogin";
 import CompanyRegister from "../components/modals/CompanyRegister";
+import BuyPlan from "../components/modals/BuyPlan";
 import { connect } from "react-redux";
 import "rc-slider/assets/index.css";
 import "react-calendar/dist/Calendar.css";
@@ -19,6 +20,7 @@ class WrappedApp extends App {
       isPasswordModalOn,
       isCompanyLoginModalOn,
       isCompanyRegisterOn,
+      isBuyPlanOn,
     } = this.props;
     return (
       <>
@@ -27,6 +29,7 @@ class WrappedApp extends App {
         {isPasswordModalOn && <PasswordModal />}
         {isCompanyLoginModalOn && <CompanyLogin />}
         {isCompanyRegisterOn && <CompanyRegister />}
+        {isBuyPlanOn && <BuyPlan />}
         <Component {...pageProps} />
       </>
     );
@@ -40,6 +43,7 @@ const mapStateToProps = (state) => {
     isPasswordModalOn: state.isPasswordModalOn,
     isCompanyLoginModalOn: state.isCompanyLoginModalOn,
     isCompanyRegisterOn: state.isCompanyRegisterOn,
+    isBuyPlanOn: state.isBuyPlanOn,
   };
 };
 
