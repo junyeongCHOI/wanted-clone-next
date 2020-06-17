@@ -1,51 +1,152 @@
 {
   "data": {
-    "name": "서",
-    "email": "sksk@naver.com",
-    "contact": "01034340953",
+    "name": "최준영",
+    "email": "asd@asd.asd",
+    "contact": "010-1234-1234",
+    "description": "수정이안돼",
     "career": [
       {
-        "id": 7,
-        "company": "인사",
-        "position": "핵인싸",
-        "start_year": "2012",
+        "id": 4,
+        "company": "위코드",
+        "position": "멘토",
+        "start_year": "2011",
         "start_month": "10",
-        "end_year": "2019",
-        "end_month": "01",
+        "end_year": "2020",
+        "end_month": "11",
         "is_working": false,
         "result": [
           {
             "id": 5,
-            "career_id": 7,
+            "career_id": 4,
             "start_year": "2012",
             "start_month": "11",
-            "end_year": "2019",
+            "end_year": "2012",
+            "end_month": "12",
+            "title": "1차프로젝트",
+            "content": "1차프로젝트했다"
+          },
+          {
+            "id": 6,
+            "career_id": 4,
+            "start_year": "2013",
+            "start_month": "11",
+            "end_year": "2013",
+            "end_month": "12",
+            "title": "2차프로젝트",
+            "content": "2차프로젝트했다"
+          },
+          {
+            "id": 8,
+            "career_id": 4,
+            "start_year": "2014",
+            "start_month": "11",
+            "end_year": "2014",
+            "end_month": "12",
+            "title": "3차프로젝트",
+            "content": "3차프로젝트했다"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "company": "인사",
+        "position": "일개미",
+        "start_year": "2010",
+        "start_month": "11",
+        "end_year": "2020",
+        "end_month": "12",
+        "is_working": false,
+        "result": [
+          {
+            "id": 7,
+            "career_id": 5,
+            "start_year": "2011",
+            "start_month": "12",
+            "end_year": "2012",
             "end_month": "01",
-            "title": "원티드 클론",
-            "content": "아..."
+            "title": "원티드",
+            "content": "원티드만들었다"
           }
         ]
       }
     ],
-    "education": [
+    "award": [
+      {
+        "id": 3,
+        "resume_id": 170,
+        "date_year": "2012",
+        "date_month": "03",
+        "name": "최고코딩상",
+        "content": "슈퍼코딩상을받았다.1"
+      },
+      {
+        "id": 4,
+        "resume_id": 170,
+        "date_year": "2012",
+        "date_month": "04",
+        "name": "최고코딩상",
+        "content": "슈퍼코딩상을받았다.2"
+      },
       {
         "id": 5,
-        "resume_id": 137,
-        "start_year": "2012",
-        "start_month": "12",
+        "resume_id": 170,
+        "date_year": "2012",
+        "date_month": "05",
+        "name": "최고코딩상",
+        "content": "슈퍼코딩상을받았다.3"
+      }
+    ],
+    "education": [
+      {
+        "id": 4,
+        "resume_id": 170,
+        "start_year": "2010",
+        "start_month": "01",
+        "end_year": "2011",
+        "end_month": "02",
+        "school": "서울대",
+        "is_working": false,
+        "specialism": "위코드과",
+        "subject": "코딩공부"
+      },
+      {
+        "id": 5,
+        "resume_id": 170,
+        "start_year": "2013",
+        "start_month": "03",
         "end_year": "",
         "end_month": "",
-        "school": "아직도 다닌대",
+        "school": "위코드대",
         "is_working": true,
-        "specialism": "컴공",
-        "subject": "미친놈"
+        "specialism": "원티드과",
+        "subject": "슈퍼코딩"
       }
     ],
     "link": [
       {
+        "id": 3,
+        "resume_id": 170,
+        "url": "www.naver.com"
+      },
+      {
         "id": 4,
-        "resume_id": 137,
-        "url": null
+        "resume_id": 170,
+        "url": "www.wanted.com"
+      },
+      {
+        "id": 5,
+        "resume_id": 170,
+        "url": "www.yahoo.com"
+      },
+      {
+        "id": 6,
+        "resume_id": 170,
+        "url": "www.seokho.com"
+      },
+      {
+        "id": 7,
+        "resume_id": 170,
+        "url": "www.google.com"
       }
     ]
   }

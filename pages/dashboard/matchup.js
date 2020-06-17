@@ -7,7 +7,13 @@ import Head from "next/head";
 import LayoutCompany from "../../components/LayoutCompany";
 import Slider, { Range } from "rc-slider";
 import axios from "axios";
-import { filterData, getDashboardMatchup } from "../../config";
+import {
+  filterData,
+  getDashboardMatchup,
+  userinfo,
+  inicischeck,
+  inipre,
+} from "../../config";
 import Loading from "../../components/Loading";
 import MatchupItem from "../../components/Dashboard/MatchupItem";
 
@@ -31,6 +37,72 @@ const matchup = ({ router }) => {
   const [listData, setListData] = useState(false);
   const [pageNum, setPageNum] = useState(1);
   const [total_amount, settotal_amount] = useState(0);
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    email: "",
+    contact: "",
+    country_id: null,
+  });
+
+  const payment = async () => {
+    const token = localStorage.getItem("token");
+    const IMP = window.IMP;
+    IMP.init("imp84455120");
+    const MUID = "cha" + new Date().getTime();
+
+    await axios.post(
+      inipre,
+      {
+        merchant_uid: MUID,
+        amount: 1100,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    IMP.request_pay(
+      {
+        pg: "inicis",
+        pay_method: "card",
+        merchant_uid: MUID,
+        name: "베이직",
+        amount: 1100,
+        buyer_email: userInfo.email,
+        buyer_name: userInfo.name,
+        buyer_tel: userInfo.contact,
+      },
+      function (rsp) {
+        if (rsp.success) {
+          jQuery
+            .ajax({
+              url: inicischeck,
+              type: "POST",
+              dataType: "json",
+              headers: {
+                Authorization: token,
+              },
+              data: {
+                imp_uid: rsp.imp_uid,
+                merchant_uid: rsp.merchant_uid,
+                status: rsp.status,
+              },
+            })
+            .done(function (data) {
+              if (true) {
+                console.log(data);
+                alert("결제 완료");
+              } else {
+                // 서버 res에 따라 결과 표출
+              }
+            });
+        } else {
+          alert("결제 실패");
+        }
+      }
+    );
+  };
 
   const itemRender = useCallback(
     (current, type, element) => {
@@ -69,7 +141,6 @@ const matchup = ({ router }) => {
       query: {
         ...router.query,
         country: country,
-        limit: LIMIT,
         year_from: sliderVal[0],
         year_to: sliderVal[1],
         keyword: keyword,
@@ -114,7 +185,7 @@ const matchup = ({ router }) => {
     const { country, year_from, year_to, resume_list } = router.query;
     if (!country || !year_from || !year_to || !resume_list) {
       Router.push(
-        "/dashboard/matchup?country=한국&year_from=0&year_to=20&keyword=&resume_list=-1"
+        "/dashboard/matchup?country=all&year_from=0&year_to=20&keyword=&resume_list=-1"
       );
     } else {
       const token = localStorage.getItem("token");
@@ -136,6 +207,12 @@ const matchup = ({ router }) => {
         });
         setListData(res.data.resume_search);
         settotal_amount(res.data.total_amount);
+        const infores = await axios.get(userinfo, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        setUserInfo(infores.data.data);
       })();
     }
   }, [router.query, pageNum]);
@@ -234,7 +311,7 @@ const matchup = ({ router }) => {
           <MatchupContainer>
             <MenuSide>
               <h2>매치업 소개</h2>
-              <GoService>서비스 결제하기</GoService>
+              <GoService onClick={payment}>서비스 결제하기</GoService>
               <MenuItem
                 onClick={() => clickedMenu(-1)}
                 isOn={resume_list == -1}
@@ -297,7 +374,7 @@ const ContextSide = styled.div`
 `;
 
 const MatchupContainer = styled.div`
-  padding-top: 50px;
+  padding: 100px 0 50px;
   width: 87.73%;
   max-width: 1060px;
   min-width: 800px;

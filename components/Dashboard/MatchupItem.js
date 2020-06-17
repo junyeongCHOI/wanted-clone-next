@@ -84,8 +84,8 @@ const MatchupItem = ({ data }) => {
                 <Line />
                 <h2>
                   {data.career
-                    .map((data) => (
-                      <Fragment key={data.company}>
+                    .map((data, idx) => (
+                      <Fragment key={idx}>
                         {data.company}
                         <span>({data.duration}개월)</span>
                       </Fragment>
@@ -99,8 +99,8 @@ const MatchupItem = ({ data }) => {
             <Des>
               {data.description}
               <SkillWrap>
-                {data.skill.map((data) => (
-                  <Skill key={data}>{data}</Skill>
+                {data.skill.map((data, idx) => (
+                  <Skill key={idx}>{data}</Skill>
                 ))}
               </SkillWrap>
             </Des>
@@ -116,7 +116,7 @@ const MatchupItem = ({ data }) => {
             <i className="xi-star-o" /> {l ? "찜됨" : "찜하기"}
           </AddBtn>
           <ShowResume r={r} onClick={req}>
-            {l ? "요청됨" : "이력서 요청하기"}
+            {r ? "요청됨" : "이력서 요청하기"}
           </ShowResume>
         </BtnWrap>
       </InfoWrap>
@@ -192,7 +192,7 @@ const RoleWrap = styled.div`
   line-height: 1.4;
   align-items: stretch;
   margin-bottom: 10px;
-  x h2 {
+  h2 {
     color: rgb(28, 28, 28);
     span {
       font-size: 12px;
@@ -205,22 +205,23 @@ const RoleWrap = styled.div`
 `;
 
 const DesWRap = styled.div`
+  width: 100%;
   display: felx;
   align-items: stretch;
 `;
 
-const DesContainer = styled.div``;
+const DesContainer = styled.div`
+  width: calc(100% - 60px);
+`;
 
 const Des = styled.div`
   padding: 0 0 50px 17px;
-  text-overflow: ellipsis;
   font-size: 12px;
   line-height: 1.4;
   color: rgb(153, 153, 153);
-  white-space: pre-line;
-  max-height: 36px;
-  box-sizing: content-box;
   overflow: hidden;
+  word-break: keep-all;
+  word-wrap: break-word;
 `;
 
 const SkillWrap = styled.div`

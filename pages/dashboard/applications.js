@@ -96,7 +96,7 @@ const ApplicationsWrap = styled.div`
 `;
 
 const ApplicationsContainer = styled.div`
-  padding-top: 150px;
+  padding: 150px 0 50px;
   width: 87.73%;
   max-width: 1060px;
   margin: 0 auto;
@@ -162,7 +162,9 @@ const BannerItemWrap = styled.div`
     height: 40px;
     text-align: center;
     line-height: 40px;
+    min-height: 40px;
     color: rgb(51, 102, 255);
+    padding: 0;
   }
 `;
 

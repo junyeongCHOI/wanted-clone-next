@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import Link from "next/link";
+import { dashboardadr } from "../../config";
+import moment from "moment";
 
 const Adhome = () => {
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    (async () => {
+      const res = await axios.get(dashboardadr, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setList(res.data.response);
+    })();
+  }, []);
+
   return (
     <AdhomeWrap>
       <AdItemWrap>
@@ -38,6 +55,23 @@ const Adhome = () => {
       <AdNav>
         <p>직무 상단 광고 성과</p>
       </AdNav>
+      <AdNavWrap>
+        <h3>포지션명</h3>
+        <h4>적용 기간</h4>
+        <h5>클릭 수</h5>
+        <h5>상태</h5>
+      </AdNavWrap>
+      {list.map((data, idx) => (
+        <AdNaItemWrap key={idx}>
+          <h3>{data.position_name}</h3>
+          <h4>
+            {moment(data.start_date).format("YYYY-MM-DD")} ~{" "}
+            {moment(data.end_date).format("YYYY-MM-DD")}
+          </h4>
+          <h5>{data.click}</h5>
+          <h5>{data.exp}</h5>
+        </AdNaItemWrap>
+      ))}
     </AdhomeWrap>
   );
 };
@@ -108,5 +142,49 @@ const AdNav = styled.div`
     color: rgb(17, 17, 17);
     padding: 10px 15px;
     border-bottom: 2px solid rgb(51, 51, 51);
+  }
+`;
+
+const AdNavWrap = styled.div`
+  display: flex;
+  font-size: 12px;
+  color: #999;
+  padding: 10px 0;
+
+  h3 {
+    width: 40%;
+  }
+
+  h4 {
+    width: 30%;
+  }
+
+  h5 {
+    width: 15%;
+  }
+`;
+
+const AdNaItemWrap = styled.div`
+  display: flex;
+  font-size: 12px;
+  color: #333;
+  padding: 20px 0;
+  border-bottom: 1px solid #999;
+
+  h3 {
+    width: 40%;
+  }
+
+  h4 {
+    width: 30%;
+  }
+
+  h5 {
+    width: 15%;
+  }
+
+  &:last-child {
+    border: 0;
+    margin-bottom: 50px;
   }
 `;

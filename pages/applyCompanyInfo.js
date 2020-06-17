@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Head from "next/head";
 import LayoutCompany from "../components/LayoutCompany";
 import axios from "axios";
-import { companyregister } from "../config";
+import {
+  companyregister,
+  createcompanyyear,
+  createcompanyindustry,
+  createcompanyemployee,
+  filterData,
+} from "../config";
 
 const applyCompanyInfo = () => {
   const [companyName, setCompanyName] = useState("");
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState("한국");
   const [city, setCity] = useState("");
   const [locationa, setLocation] = useState("");
   const [regNum, setRegNum] = useState("");
@@ -21,6 +27,20 @@ const applyCompanyInfo = () => {
   const [rec, setRec] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+
+  const [yearlist, setYearList] = useState([]);
+  const [indList, setIndList] = useState([]);
+  const [eeList, setEeList] = useState([]);
+  const [CCList, setCCList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+
+  const goMap = () => {
+    new daum.Postcode({
+      oncomplete: function (data) {
+        setLocation(data.address);
+      },
+    }).open();
+  };
 
   const submit = () => {
     try {
@@ -60,6 +80,39 @@ const applyCompanyInfo = () => {
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get(filterData);
+      setCCList(res.data.country_city);
+      setCityList(res.data.country_city[3].city);
+      const YRes = await axios(createcompanyyear);
+      const IRes = await axios(createcompanyindustry);
+      const ERes = await axios(createcompanyemployee);
+      setYearList(YRes.data.years);
+      setIndList(IRes.data.industries);
+      setEeList(ERes.data.employees);
+    })();
+  }, []);
+
+  console.log({
+    name: companyName,
+    registration_number: regNum,
+    revenue: income,
+    country: country,
+    industry: business,
+    employee: eeNum,
+    description: desc,
+    foundation_year: year,
+    email: email,
+    contact_number: phone,
+    website: url,
+    keyword: keyword,
+    recommender: rec,
+    city: city,
+    address: locationa,
+    represent: 1,
+  });
+
   return (
     <>
       <Head>
@@ -83,27 +136,49 @@ const applyCompanyInfo = () => {
           <InputHarfWrap>
             <InputWrap isHarf>
               <h3>국가</h3>
-              <input
-                placeholder="한국"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-              />
+              <SelectInputWrap>
+                <DownBtn />
+                <SelectBox
+                  value={country}
+                  onChange={(e) => {
+                    setCountry(e.target.value);
+                    setCityList(CCList[e.target.selectedIndex].city);
+                  }}
+                >
+                  {CCList.map((item, idx) => (
+                    <option key={idx} value={item.country}>
+                      {item.country}
+                    </option>
+                  ))}
+                </SelectBox>
+              </SelectInputWrap>
             </InputWrap>
             <InputWrap isHarf>
               <h3>지역</h3>
-              <input
-                placeholder="서울"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
+              <SelectInputWrap>
+                <DownBtn />
+                <SelectBox
+                  value={locationa}
+                  onChange={(e) => {
+                    setCity(e.target.value);
+                  }}
+                >
+                  {cityList.map((item, idx) => (
+                    <option key={idx} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </SelectBox>
+              </SelectInputWrap>
             </InputWrap>
           </InputHarfWrap>
           <InputWrap>
             <h3>대표 주소</h3>
             <input
+              sytle={{ cursor: "pointer" }}
               placeholder="대표주소 입력"
               value={locationa}
-              onChange={(e) => setLocation(e.target.value)}
+              onClick={goMap}
             />
           </InputWrap>
           <InputHarfWrap>
@@ -134,21 +209,41 @@ const applyCompanyInfo = () => {
           <InputHarfWrap>
             <InputWrap isHarf>
               <h3>산업군</h3>
-              <input
-                placeholder="ex) IT, 컨텐츠"
-                value={business}
-                onChange={(e) => setBusiness(e.target.value)}
-              />
+              <SelectInputWrap>
+                <DownBtn />
+                <SelectBox
+                  value={business}
+                  onChange={(e) => {
+                    setBusiness(e.target.value);
+                  }}
+                >
+                  {indList.map((item, idx) => (
+                    <option key={idx} value={item.industry}>
+                      {item.industry}
+                    </option>
+                  ))}
+                </SelectBox>
+              </SelectInputWrap>
             </InputWrap>
             <InputWrap isHarf>
               <h3>
                 직원수<span>(승인기준: 팀원 10명 이상)</span>
               </h3>
-              <input
-                placeholder="ex) 1~4명"
-                value={eeNum}
-                onChange={(e) => setEeNum(e.target.value)}
-              />
+              <SelectInputWrap>
+                <DownBtn />
+                <SelectBox
+                  value={eeNum}
+                  onChange={(e) => {
+                    setEeNum(e.target.value);
+                  }}
+                >
+                  {eeList.map((item, idx) => (
+                    <option key={idx} value={item.employee}>
+                      {item.employee}
+                    </option>
+                  ))}
+                </SelectBox>
+              </SelectInputWrap>
             </InputWrap>
           </InputHarfWrap>
           <InputWrap>
@@ -162,11 +257,21 @@ const applyCompanyInfo = () => {
           <InputHarfWrap>
             <InputWrap isHarf>
               <h3>설립연도</h3>
-              <input
-                placeholder="ex) 2012년"
-                value={year}
-                onChange={(e) => setYear(e.target.value)}
-              />
+              <SelectInputWrap>
+                <DownBtn />
+                <SelectBox
+                  value={year}
+                  onChange={(e) => {
+                    setYear(e.target.value);
+                  }}
+                >
+                  {yearlist.map((item, idx) => (
+                    <option key={idx} value={item.year}>
+                      {item.year}
+                    </option>
+                  ))}
+                </SelectBox>
+              </SelectInputWrap>
             </InputWrap>
             <InputWrap isHarf>
               <h3>웹사이트 주소</h3>
@@ -320,4 +425,33 @@ const SubmitBtn = styled.div`
   font-weight: 600;
   border-radius: 3px;
   padding: 14px 20px;
+`;
+
+const SelectInputWrap = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+const SelectBox = styled.select`
+  width: 100%;
+  padding: 14px 20px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  border-radius: 3px;
+  border: 1px solid rgb(219, 219, 219);
+  background-color: #ffffff;
+  cursor: pointer;
+`;
+
+const DownBtn = styled.div`
+  content: "";
+  top: 50%;
+  right: 20px;
+  position: absolute;
+  transform: translateY(-50%);
+  border-top: 6px solid #999;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
 `;

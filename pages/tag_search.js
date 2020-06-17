@@ -18,20 +18,22 @@ const Tag_search = ({ router }) => {
       const res = await axios.get(getSearchTags);
       if (
         res.data.tag_list.filter((item) =>
-          item.list.includes(router.query.tag)
+          item.tags.includes(router.query.tag)
         ) < 1
       ) {
         Router.push("/tags");
       } else {
-        const resWdList = await axios.get(getTagWdlist);
+        const resWdList = await axios.get(
+          `${getTagWdlist}?tag=${router.query.tag}`
+        );
         setCardList(resWdList.data.position);
       }
       setTagList(res.data.tag_list);
     })();
-  }, []);
+  }, [router.query.tag]);
 
   if (
-    tagList.filter((item) => item.list.includes(router.query.tag)).length === 0
+    tagList.filter((item) => item.tags.includes(router.query.tag)).length === 0
   ) {
     return (
       <>
@@ -62,8 +64,8 @@ const Tag_search = ({ router }) => {
                 <h5>추천</h5>
                 <TagsItemWrap>
                   {tagList
-                    .filter((item) => item.list.includes(router.query.tag))[0]
-                    .list.filter((item) => item !== router.query.tag)
+                    .filter((item) => item.tags.includes(router.query.tag))[0]
+                    .tags.filter((item) => item !== router.query.tag)
                     .sort(() => Math.random() - Math.random())
                     .slice(0, 5)
                     .map((name, idx) => (

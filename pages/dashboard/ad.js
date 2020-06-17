@@ -81,13 +81,13 @@ const ad = ({ week1, week2, week3, week4, router }) => {
 
 ad.getInitialProps = () => {
   moment.tz.setDefault("Asia/Seoul");
-  moment.locale("en", {
+  moment.locale("kr", {
     week: {
       dow: 1,
     },
   });
   const week1 = [
-    moment().weekday(7).format("YYYY-MM-DD"),
+    moment().weekday(0).format("YYYY-MM-DD"),
     moment().weekday(13).format("YYYY-MM-DD"),
   ];
   const week2 = [

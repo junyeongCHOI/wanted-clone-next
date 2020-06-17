@@ -7,7 +7,7 @@ import LayoutUser from "../components/LayoutUser";
 import WdCards from "../components/WdList/WdCards";
 import WdPremiumCards from "../components/WdList/WdPremiumCards";
 import FilterBox from "../components/WdList/FilterBox";
-import { MYIP, WdListAPI } from "../config";
+import { MYIP, WdListAPI, positionadlist } from "../config";
 
 const LIMIT = 20;
 const ItemHeight = 1800;
@@ -115,9 +115,9 @@ const WdList = ({ data, PData, router }) => {
 WdList.getInitialProps = async () => {
   const [res, PRes] = await Promise.all([
     axios.get(`${WdListAPI}`),
-    axios(`${MYIP}/static/data/wdpremiumcards.json`),
+    axios.get(positionadlist),
   ]);
-  return { data: res.data.position, PData: PRes.data.items };
+  return { data: res.data.position, PData: PRes.data.advertisement };
 };
 
 export default withRouter(WdList);

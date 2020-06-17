@@ -264,23 +264,15 @@ const applyCompanyInfo = ({ router }) => {
                 </InputWrap>
               </InputHarfWrap>
               <InputHarfWrap>
-                <InputWrap isHarf>
+                <InputWrap isHarf df>
                   <h3>산업군</h3>
-                  <input
-                    placeholder="산업군"
-                    value={business}
-                    onChange={(e) => setBusiness(e.target.value)}
-                  />
+                  <input placeholder="산업군" value={business} />
                 </InputWrap>
-                <InputWrap isHarf>
+                <InputWrap isHarf df>
                   <h3>
                     직원수<span>(승인기준: 팀원 10명 이상)</span>
                   </h3>
-                  <input
-                    placeholder="회사규모"
-                    value={eeNum}
-                    onChange={(e) => setEeNum(e.target.value)}
-                  />
+                  <input placeholder="회사규모" value={eeNum} />
                 </InputWrap>
               </InputHarfWrap>
               <InputWrap>
@@ -292,13 +284,9 @@ const applyCompanyInfo = ({ router }) => {
                 />
               </InputWrap>
               <InputHarfWrap>
-                <InputWrap isHarf>
+                <InputWrap isHarf df>
                   <h3>설립연도</h3>
-                  <input
-                    placeholder="ex) 2012년"
-                    value={year}
-                    onChange={(e) => setYear(e.target.value)}
-                  />
+                  <input placeholder="ex) 2012년" value={year} />
                 </InputWrap>
                 <InputWrap isHarf>
                   <h3>웹사이트 주소</h3>

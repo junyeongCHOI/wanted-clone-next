@@ -9,7 +9,7 @@ import Loading from "../components/Loading";
 import SearchTag from "../components/SearchTag";
 
 const Tags = () => {
-  const [tagList, setTagList] = useState([]);
+  const [tagList, setTagList] = useState(false);
   //쿼리스트링은 tag로
 
   useEffect(() => {
@@ -32,6 +32,8 @@ const Tags = () => {
     );
   }
 
+  console.log(tagList);
+
   return (
     <>
       <Head>
@@ -42,12 +44,14 @@ const Tags = () => {
           <TagsContainer>
             {tagList.map((item) => (
               <TagItemsWrap>
-                <TitleSide># {item.title}</TitleSide>
+                <TitleSide># {item.category}</TitleSide>
                 <TagsSide>
-                  {item.list.map((tag) => (
+                  {item.tags.map((tag) => (
                     <SearchTag
                       name={tag}
-                      onClick={() => Router.push(`/tag_search?tag=${tag}`)}
+                      onClick={() =>
+                        Router.push(`/tag_search?tag=${encodeURI(tag)}`)
+                      }
                     />
                   ))}
                 </TagsSide>

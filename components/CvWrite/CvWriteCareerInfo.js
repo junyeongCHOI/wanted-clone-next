@@ -27,7 +27,25 @@ const CvWriteCareerInfo = ({
   typingCWPosition,
   addNewProject,
   deleteCareer,
+  getData,
 }) => {
+  const delAddNewProjectBtn = async (id) => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.delete(`${creatCvResult}/${data[UIdx].id}`, {
+        headers: {
+          Authorization: token,
+        },
+        data: {
+          id,
+        },
+      });
+      getData();
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   const pushAddNewProjectBtn = async (e) => {
     const token = localStorage.getItem("token");
     try {
@@ -119,7 +137,12 @@ const CvWriteCareerInfo = ({
           + 주요 성과 추가
         </AddMoreInfo>
         {data[UIdx].result.map((data, idx) => (
-          <CvWriteCareerResult key={idx} UIdx={UIdx} idx={idx} />
+          <CvWriteCareerResult
+            key={idx}
+            UIdx={UIdx}
+            idx={idx}
+            delAddNewProjectBtn={delAddNewProjectBtn}
+          />
         ))}
       </CWCInfoSide>
     </CvWriteCareerInfoWrap>

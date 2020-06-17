@@ -11,6 +11,7 @@ import {
 } from "../../actions";
 
 const CvWriteCareerResult = ({
+  id,
   startY,
   startM,
   endY,
@@ -25,11 +26,12 @@ const CvWriteCareerResult = ({
   typingCRProject,
   UIdx,
   idx,
+  delAddNewProjectBtn,
 }) => {
   return (
     <CvWriteCareerResultWrap>
       <DeleteRBtn>
-        <i className="xi-close-min" />
+        <i className="xi-close-min" onClick={() => delAddNewProjectBtn(id)} />
       </DeleteRBtn>
       <CDot />
       <CWCRInputWrap>
@@ -88,6 +90,7 @@ const CvWriteCareerResult = ({
 const mapStateToProps = (state, ownProps) => {
   const { UIdx, idx } = ownProps;
   return {
+    id: state.typedCvCareer[UIdx].result[idx].id,
     startY: state.typedCvCareer[UIdx].result[idx].start[0],
     startM: state.typedCvCareer[UIdx].result[idx].start[1],
     endY: state.typedCvCareer[UIdx].result[idx].end[0],

@@ -58,15 +58,6 @@ const positionCreate = () => {
   const postPosition = async () => {
     const token = localStorage.getItem("token");
     await axios.post(
-      createpositionLocation,
-      { city: "", country: "", address: postLocation },
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
-    await axios.post(
       createPosition,
       {
         role: selectedOPtion,
@@ -88,6 +79,7 @@ const positionCreate = () => {
         referrer: 500000,
         volunteer: 500000,
         total: 1000000,
+        address: locationa[0][2],
       },
       {
         headers: {
@@ -281,7 +273,7 @@ const positionCreate = () => {
               <h3>근무지</h3>
               <CareerInput
                 style={{ width: "100%", backgroundColor: "#e1e2e3" }}
-                value={locationa}
+                value={locationa.length === 0 || locationa[0][2]}
               />
               <PositionInfoWrap>
                 <h3>포지션명</h3>

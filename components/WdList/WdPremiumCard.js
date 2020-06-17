@@ -6,30 +6,27 @@ import { seekSmall } from "../../config";
 const WdPremiumCard = ({ item, widthRef }) => {
   return (
     <WdPremiumCardWrap ref={widthRef}>
-      <Link
-        as={`/WdDetail/${item.item_id}`}
-        href={`/WdDetail?id=${item.item_id}`}
-      >
+      <Link as={`/WdDetail/${item.id}`} href={`/WdDetail?id=${item.id}`}>
         <a>
           <WdPremiumCardContainer>
             <ImageWrap>
-              <MainImage url={item.item_image} />
+              <MainImage url={item.image} />
             </ImageWrap>
             <BodyContent>
-              <Logo url={item.item_logo} />
+              <Logo url={item.logo} />
               <BodyTitle>
-                {item.item_title.length > 35
-                  ? item.item_title.slice(0, 35) + "..."
-                  : item.item_title}
+                {item.name.length > 35
+                  ? item.name.slice(0, 35) + "..."
+                  : item.name}
               </BodyTitle>
               <BodyInfo>
-                {item.item_company}
+                {item.company}
                 <br />
-                {item.item_location}
+                {item.location}
                 <Dot>.</Dot>
-                {item.item_country}
+                {item.country}
               </BodyInfo>
-              <Reward>채용보상금 {item.item_reward}</Reward>
+              <Reward>채용보상금 {item.total_reward}</Reward>
             </BodyContent>
           </WdPremiumCardContainer>
         </a>

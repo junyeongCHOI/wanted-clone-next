@@ -44,6 +44,29 @@ const ProfileResume = () => {
   const [infoData, setInfoData] = useState();
   const [specInfo, setSpecInfo] = useState();
   const [isOn, setOn] = useState(false);
+  const [btnActive, setBtnActive] = useState(false);
+
+  useEffect(() => {
+    if (specInfo && resumeList && pickedResume) {
+      if (
+        infoData.user_school.school === "" ||
+        infoData.user_school.specialism === "" ||
+        infoData.user_career.company === "" ||
+        infoData.user_career.position === "" ||
+        !specInfo.job_category.name ||
+        !specInfo.career.name ||
+        specInfo.skill.length === 0 ||
+        specInfo.role.length === 0
+      ) {
+        setBtnActive(false);
+        return;
+      } else {
+        setBtnActive(true);
+        return;
+      }
+    }
+    setBtnActive(false);
+  }, [infoData, specInfo]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -66,6 +89,10 @@ const ProfileResume = () => {
   }, [pickedResume]);
 
   const goAway = async () => {
+    if (!btnActive) {
+      alert("매치업 이력서는 정보를 모두 입력해야 등록이 가능합니다.");
+      return;
+    }
     const token = localStorage.getItem("token");
     try {
       (async () => {
@@ -185,36 +212,36 @@ const ProfileResume = () => {
           <PRTitle>학교</PRTitle>
           <PRSubtitle>
             {infoData && (
-              <SustitleItem
-                isNone={infoData.user_school.school === "학교 미입력"}
-              >
-                {infoData.user_school.school}
+              <SustitleItem isNone={infoData.user_school.school === ""}>
+                {infoData.user_school.school === ""
+                  ? "학교 미입력"
+                  : infoData.user_school.school}
               </SustitleItem>
             )}
             |
             {infoData && (
-              <SustitleItem
-                isNone={infoData.user_school.specialism === "전공 미입력"}
-              >
-                {infoData.user_school.specialism}
+              <SustitleItem isNone={infoData.user_school.specialism === ""}>
+                {infoData.user_school.specialism === ""
+                  ? "전공 미입력"
+                  : infoData.user_school.specialism}
               </SustitleItem>
             )}
           </PRSubtitle>
           <PRTitle>직장</PRTitle>
           <PRSubtitle>
             {infoData && (
-              <SustitleItem
-                isNone={infoData.user_career.company === "직장 미입력"}
-              >
-                {infoData.user_career.company}
+              <SustitleItem isNone={infoData.user_career.company === ""}>
+                {infoData.user_career.company === ""
+                  ? "직장 미입력"
+                  : infoData.user_career.company}
               </SustitleItem>
             )}
             |
             {infoData && (
-              <SustitleItem
-                isNone={infoData.user_career.position === "직책 미입력"}
-              >
-                {infoData.user_career.position}
+              <SustitleItem isNone={infoData.user_career.position === ""}>
+                {infoData.user_career.position === ""
+                  ? "직책 미입력"
+                  : infoData.user_career.position}
               </SustitleItem>
             )}
           </PRSubtitle>

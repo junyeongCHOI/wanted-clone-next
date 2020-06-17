@@ -8,7 +8,7 @@ const WdDetailBottom = ({ data }) => {
     <WdDetailBottomWrap>
       <Info>
         <span>마감일</span>
-        {data.always.value ? "상시" : data.always.expiry_data}
+        {data.always.value ? "상시" : data.always.expiry_date}
       </Info>
       <Info>
         <span>근무지역</span>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import styled from "styled-components";
 import { withRouter } from "next/router";
 import axios from "axios";
@@ -45,7 +45,7 @@ const AppDetail = ({ router }) => {
         },
       });
       const resDetail = await axios.get(
-        `${dashBoardResumeDetail}/${router.query.id}`,
+        `${dashBoardResumeDetail}/${router.query.rId}`,
         {
           headers: {
             Authorization: token,
@@ -58,9 +58,10 @@ const AppDetail = ({ router }) => {
   }, []);
 
   if (!userData || !detailData) {
+    console.log(detailData);
+    console.log(userData);
     return <Loading />;
   }
-
   return (
     <AppDetaillWrap>
       <AppDetailHeader>
@@ -87,13 +88,13 @@ const AppDetail = ({ router }) => {
           <h3>이메일:{detailData.email}</h3>
           <h3>연락처:{detailData.contact}</h3>
           <h3 style={{ color: "rgb(117, 117, 117)", margin: "10px 0" }}>
-            목데이터에 설명이 없음
+            {detailData.description}
           </h3>
           <InfoWrap>
             <InfoTitle>경력</InfoTitle>
             <InfoDetailSide>
               {detailData.career.map((data) => (
-                <>
+                <Fragment key={data.id}>
                   <h4>{data.company}</h4>
                   <h4 style={{ textAlign: "right" }}>
                     {data.start_year}.{data.start_month}-
@@ -103,24 +104,24 @@ const AppDetail = ({ router }) => {
                   </h4>
                   <h5>{data.position}</h5>
                   {data.result.map((subData) => (
-                    <SubDetail>
+                    <SubDetail key={subData.id}>
                       <h4>• {subData.title}</h4>
                       <h4 style={{ textAlign: "right" }}>
-                        {susData.start_year}.{susData.start_month} -{" "}
-                        {susData.end_year}.{susData.end_month}
+                        {subData.start_year}.{subData.start_month} -{" "}
+                        {subData.end_year}.{subData.end_month}
                       </h4>
                       <h5 style={{ paddingLeft: "10px" }}>{subData.content}</h5>
                     </SubDetail>
                   ))}
-                </>
+                </Fragment>
               ))}
             </InfoDetailSide>
           </InfoWrap>
           <InfoWrap>
             <InfoTitle>학력</InfoTitle>
             <InfoDetailSide>
-              {detailData.career.map((data) => (
-                <>
+              {detailData.education.map((data) => (
+                <Fragment key={data.id}>
                   <h4>{data.school}</h4>
                   <h4 style={{ textAlign: "right" }}>
                     {data.start_year}.{data.start_month}-
@@ -132,15 +133,29 @@ const AppDetail = ({ router }) => {
                     {data.specialism}
                     {data.subject ? ` / ${data.subject}` : ""}
                   </h5>
-                </>
+                </Fragment>
+              ))}
+            </InfoDetailSide>
+          </InfoWrap>
+          <InfoWrap>
+            <InfoTitle>수상 및 기타</InfoTitle>
+            <InfoDetailSide>
+              {detailData.award.map((data) => (
+                <Fragment key={data.id}>
+                  <h4>{data.name}</h4>
+                  <h4 style={{ textAlign: "right" }}>
+                    {data.date_year}.{data.date_month}
+                  </h4>
+                  <h5>{data.content}</h5>
+                </Fragment>
               ))}
             </InfoDetailSide>
           </InfoWrap>
           <InfoWrap>
             <InfoTitle>링크</InfoTitle>
             <InfoDetailSide>
-              {detailData.career.map((data) => (
-                <h4>{data.url === null ? "" : data.url}</h4>
+              {detailData.link.map((data, idx) => (
+                <h4 key={idx}>{data.url === null ? "" : data.url}</h4>
               ))}
             </InfoDetailSide>
           </InfoWrap>

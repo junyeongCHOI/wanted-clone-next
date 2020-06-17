@@ -48,9 +48,14 @@ const offer = () => {
           Authorization: token,
         },
       });
-      setReqList(res1.data.is_resume_request);
+      setReqList(res1.data.companies);
       setLikeList(res2.data.companies);
       setProList(res3.data.companies);
+      setShowList([
+        ...res1.data.companies,
+        ...res2.data.companies,
+        ...res3.data.companies,
+      ]);
     })();
   }, []);
 
