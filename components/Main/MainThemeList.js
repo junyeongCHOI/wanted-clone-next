@@ -68,6 +68,7 @@ const MainThemItemWrap = styled.div`
   width: 50%;
   padding: 10px;
   color: #333333;
+  cursor: pointer;
 
   h2 {
     font-size: 23px;

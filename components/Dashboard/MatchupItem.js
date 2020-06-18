@@ -30,8 +30,24 @@ const MatchupItem = ({ data }) => {
 
   const zzim = async () => {
     if (l) {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await axios.post(
+          dashboardzzim,
+          { resume_id: data.id },
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setL(false);
+      } catch (err) {
+        alert("찜하기 실패");
+      }
       return;
     }
+
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
@@ -113,7 +129,7 @@ const MatchupItem = ({ data }) => {
         </RoleWrap>
         <BtnWrap>
           <AddBtn onClick={zzim} l={l}>
-            <i className="xi-star-o" /> {l ? "찜됨" : "찜하기"}
+            <i className="xi-star-o" /> {l ? "찜취소" : "찜하기"}
           </AddBtn>
           <ShowResume r={r} onClick={req}>
             {r ? "요청됨" : "이력서 요청하기"}
@@ -190,8 +206,8 @@ const RoleWrap = styled.div`
   display: felx;
   font-size: 16px;
   line-height: 1.4;
-  align-items: stretch;
   margin-bottom: 10px;
+
   h2 {
     color: rgb(28, 28, 28);
     span {
@@ -200,7 +216,9 @@ const RoleWrap = styled.div`
   }
 
   h3 {
+    width: calc(100% - 100px);
     color: rgb(153, 153, 153);
+    word-break: break-all;
   }
 `;
 

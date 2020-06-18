@@ -31,10 +31,6 @@ const applyCompanyInfo = ({ router }) => {
   const [imageList, setImageList] = useState([]);
 
   const delImg = async (id) => {
-    if (imageList.length <= 2) {
-      alert("이미지는 최소 2개 이상입니다.");
-      return;
-    }
     const token = localStorage.getItem("token");
     const res = await axios.post(
       companyImgDel,

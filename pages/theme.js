@@ -14,8 +14,9 @@ const Theme = ({ router }) => {
 
   useEffect(() => {
     (async () => {
-      const res = await axios.get(themedata);
-      //   const res = await axios.get(`${themedata}/${router.query.id}?offset=0&limit=40`);
+      const res = await axios.get(
+        `${themedata}/${router.query.id}?offset=0&limit=40`
+      );
       setData(res.data.theme_top);
       setListData(res.data.theme_list);
     })();

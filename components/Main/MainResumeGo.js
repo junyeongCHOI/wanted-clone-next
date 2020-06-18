@@ -1,11 +1,28 @@
 import React from "react";
 import styled from "styled-components";
+import { CvWriteBodyAPI } from "../../config";
+import Router from "next/router";
+import axios from "axios";
 
 const MainResumeGo = () => {
+  const makeNewResume = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.get(CvWriteBodyAPI, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      Router.push(`/CvWrite?id=${res.data.data.id}`);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <MainResumeGoWrap>
       <h2>프로필에 이력서 추가하고, 인사담당자에게 직접 면접 제안 받으세요</h2>
-      <GoResumeBtn>이력서 작성하기</GoResumeBtn>
+      <GoResumeBtn onClick={makeNewResume}>이력서 작성하기</GoResumeBtn>
     </MainResumeGoWrap>
   );
 };

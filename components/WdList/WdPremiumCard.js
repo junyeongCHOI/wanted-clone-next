@@ -1,36 +1,39 @@
 import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
-import { seekSmall } from "../../config";
+import Router from "next/router";
+import axios from "axios";
+import { seekSmall, positionadlist } from "../../config";
 
 const WdPremiumCard = ({ item, widthRef }) => {
+  const CountView = async () => {
+    // await axios.post(positionadlist, {
+    //   item_id: item.id,
+    // });
+    Router.push(`/WdDetail?id=${item.id}`, `/WdDetail/${item.id}`);
+  };
+
   return (
     <WdPremiumCardWrap ref={widthRef}>
-      <Link as={`/WdDetail/${item.id}`} href={`/WdDetail?id=${item.id}`}>
-        <a>
-          <WdPremiumCardContainer>
-            <ImageWrap>
-              <MainImage url={item.image} />
-            </ImageWrap>
-            <BodyContent>
-              <Logo url={item.logo} />
-              <BodyTitle>
-                {item.name.length > 35
-                  ? item.name.slice(0, 35) + "..."
-                  : item.name}
-              </BodyTitle>
-              <BodyInfo>
-                {item.company}
-                <br />
-                {item.location}
-                <Dot>.</Dot>
-                {item.country}
-              </BodyInfo>
-              <Reward>채용보상금 {item.total_reward}</Reward>
-            </BodyContent>
-          </WdPremiumCardContainer>
-        </a>
-      </Link>
+      <WdPremiumCardContainer onClick={CountView}>
+        <ImageWrap>
+          <MainImage url={item.image} />
+        </ImageWrap>
+        <BodyContent>
+          <Logo url={item.logo} />
+          <BodyTitle>
+            {item.name.length > 35 ? item.name.slice(0, 35) + "..." : item.name}
+          </BodyTitle>
+          <BodyInfo>
+            {item.company}
+            <br />
+            {item.location}
+            <Dot>.</Dot>
+            {item.country}
+          </BodyInfo>
+          <Reward>채용보상금 {item.total_reward}</Reward>
+        </BodyContent>
+      </WdPremiumCardContainer>
     </WdPremiumCardWrap>
   );
 };

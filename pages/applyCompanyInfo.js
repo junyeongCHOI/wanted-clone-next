@@ -14,12 +14,12 @@ import {
 const applyCompanyInfo = () => {
   const [companyName, setCompanyName] = useState("");
   const [country, setCountry] = useState("한국");
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState("서울");
   const [locationa, setLocation] = useState("");
   const [regNum, setRegNum] = useState("");
   const [income, setIncome] = useState("");
-  const [business, setBusiness] = useState("");
-  const [eeNum, setEeNum] = useState("");
+  const [business, setBusiness] = useState("가사, 가정");
+  const [eeNum, setEeNum] = useState("1~4명");
   const [desc, setDesc] = useState("");
   const [year, setYear] = useState("");
   const [url, setUrl] = useState("");
@@ -38,6 +38,10 @@ const applyCompanyInfo = () => {
     new daum.Postcode({
       oncomplete: function (data) {
         setLocation(data.address);
+      },
+      theme: {
+        searchBgColor: "#36f",
+        queryTextColor: "#FFFFFF",
       },
     }).open();
   };
@@ -75,8 +79,9 @@ const applyCompanyInfo = () => {
         location.href = "/dashboard";
       })();
     } catch (err) {
-      console.error(err);
-      location.href = "/dashboard";
+      if (!alert("회사가 이미 등록 됐습니다.")) {
+        location.href = "/dashboard";
+      }
     }
   };
 
@@ -93,25 +98,6 @@ const applyCompanyInfo = () => {
       setEeList(ERes.data.employees);
     })();
   }, []);
-
-  console.log({
-    name: companyName,
-    registration_number: regNum,
-    revenue: income,
-    country: country,
-    industry: business,
-    employee: eeNum,
-    description: desc,
-    foundation_year: year,
-    email: email,
-    contact_number: phone,
-    website: url,
-    keyword: keyword,
-    recommender: rec,
-    city: city,
-    address: locationa,
-    represent: 1,
-  });
 
   return (
     <>
@@ -158,7 +144,7 @@ const applyCompanyInfo = () => {
               <SelectInputWrap>
                 <DownBtn />
                 <SelectBox
-                  value={locationa}
+                  value={city}
                   onChange={(e) => {
                     setCity(e.target.value);
                   }}
