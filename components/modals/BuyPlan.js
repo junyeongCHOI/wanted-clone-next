@@ -57,6 +57,7 @@ const BuyPlan = ({ buyPlanOff }) => {
                 imp_uid: rsp.imp_uid,
                 merchant_uid: rsp.merchant_uid,
                 status: rsp.status,
+                amount: Price,
               },
             })
             .done(function (data) {
@@ -65,6 +66,9 @@ const BuyPlan = ({ buyPlanOff }) => {
                   buyPlanOff();
                 }
               } else {
+                if (confirm("결제 실패. 나가시겠습니까?")) {
+                  buyPlanOff();
+                }
                 // 서버 res에 따라 결과 표출
               }
             });
@@ -116,7 +120,7 @@ const BuyPlan = ({ buyPlanOff }) => {
               <h4>- 30회 제안 보내기 가능</h4>
               <h6>* 유효기간 : 구매일로부터 30일</h6>
             </ItemContextWrap>
-            <BuyBtn onClick={() => payment("서비스 플랜 - 라이트", 500000)}>
+            <BuyBtn onClick={() => payment("서비스 플랜 - 라이트", 550)}>
               서비스 결제하기
             </BuyBtn>
           </ItemWrap>
@@ -126,17 +130,17 @@ const BuyPlan = ({ buyPlanOff }) => {
             <h5>부가세 별도</h5>
             <Line />
             <h3>
-              <span>30</span>일간 최대 <span>100</span>건의 이력서 열람 및 면접
+              <span>60/</span>일간 최대 <span>200</span>건의 이력서 열람 및 면접
               제안
             </h3>
             <ItemContextWrap>
               <h4>- 채용 수수료 무료</h4>
               <h4>- 학력/경력 등 상세 이력 확인</h4>
-              <h4>- 100건 상세 이력서 열람</h4>
-              <h4>- 100회 제안 보내기 가능</h4>
-              <h6>* 유효기간 : 구매일로부터 30일</h6>
+              <h4>- 200건 상세 이력서 열람</h4>
+              <h4>- 200회 제안 보내기 가능</h4>
+              <h6>* 유효기간 : 구매일로부터 60일</h6>
             </ItemContextWrap>
-            <BuyBtn onClick={() => payment("서비스 플랜 - 베이직", 1000000)}>
+            <BuyBtn onClick={() => payment("서비스 플랜 - 베이직", 1100)}>
               서비스 결제하기
             </BuyBtn>
           </ItemWrap>

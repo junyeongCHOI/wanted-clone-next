@@ -7,10 +7,19 @@ import Link from "next/link";
 import axios from "axios";
 import LayoutCompany from "../../components/LayoutCompany";
 import WdCards from "../../components/WdList/WdCards";
-import { getDashboardPosition } from "../../config";
+import { getDashboardPosition, getCompanyImg } from "../../config";
 
 const Position = ({ router }) => {
   const [list, setList] = useState([]);
+  const [imageList, setImageList] = useState([]);
+
+  const makePosition = () => {
+    if (imageList.length < 2) {
+      alert("회사 이미지 최소 2개이상 필요함니다람쥐");
+    } else {
+      Router.push("/dashboard/positionCreate");
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -21,8 +30,16 @@ const Position = ({ router }) => {
         },
       });
       setList(res.data.company);
+      const resimg = await axios.get(getCompanyImg, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setImageList(resimg.data.images);
     })();
   }, []);
+
+  console.log(imageList);
 
   return (
     <>
@@ -34,11 +51,7 @@ const Position = ({ router }) => {
           <PositionContainer>
             <Top>
               <All>전체</All>
-              <Link href="/dashboard/positionCreate">
-                <a>
-                  <AddPosition>포지션 추가</AddPosition>
-                </a>
-              </Link>
+              <AddPosition onClick={makePosition}>포지션 추가</AddPosition>
             </Top>
             {list.length === 0 ? (
               <NoResult>등록된 포지션이 없습니다.</NoResult>
