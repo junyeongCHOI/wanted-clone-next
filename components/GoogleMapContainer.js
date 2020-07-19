@@ -21,6 +21,6 @@ const GoogleMapContainer = ({ google, lat, lng }) => {
 };
 
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyBHcOwAeUwpjfF42gMxiBqGBMbHEwGzja8",
+  apiKey: "A",
   language: "korean",
 })(GoogleMapContainer);
